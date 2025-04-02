@@ -1,0 +1,13 @@
+# Build dir
+cmake-build-debug/
+cmake-build/
+build/
+PyScreenReader.egg-info/
+
+# Virtual environment
+.venv/
+env/
+venv/
+
+# Idea workspace
+.idea/
