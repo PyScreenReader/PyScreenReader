@@ -6,7 +6,7 @@ import PyScreenReader as m
 
 def test_main():
     # test code
-    pass
+    print(m.__version__)
 
 
 test_main()
