@@ -79,7 +79,7 @@ std::string VirtualWidget::getRepr() {
            ", height=" + std::to_string(getHeight()) + "}";
 }
 
-void bind(pybind11::module &m) {
+void bindVirtualWidget(pybind11::module &m) {
     py::class_<VirtualWidget, std::shared_ptr<VirtualWidget>>(m, "VirtualWidget")
             .def("getTitleText", &VirtualWidget::getTitleText)
             .def("getHelpText", &VirtualWidget::getHelpText)
@@ -100,4 +100,4 @@ void bind(pybind11::module &m) {
             .def("__repr__", &VirtualWidget::getRepr);
 }
 
-REGISTER_BINDING(bind);
+REGISTER_BINDING("VirtualWidget", bindVirtualWidget)

@@ -1,4 +1,8 @@
 #include "vwidget/virtual_container_widget.h"
+#include "bindings_registry.h"
+#include <pybind11/pybind11.h>
+
+namespace py = pybind11;
 
 void VirtualContainerWidget::addChild(const std::shared_ptr<VirtualWidget>& child) {
     if (child.get() == this)
@@ -26,3 +30,11 @@ std::string VirtualContainerWidget::getRepr() {
     repr += "]}";
     return repr;
 }
+
+void bindVirtualContainerWidget(pybind11::module &m) {
+    py::class_<VirtualContainerWidget, VirtualWidget, std::shared_ptr<VirtualContainerWidget>>(m, "VirtualContainerWidget")
+            .def("addChild", &VirtualContainerWidget::addChild, py::arg("child"))
+            .def("__repr__", &VirtualContainerWidget::getRepr);
+}
+
+REGISTER_BINDING("VirtualContainerWidget", bindVirtualContainerWidget, "VirtualWidget")
