@@ -199,8 +199,9 @@ class RunClearCommand(Command):
         pass
 
     def run(self) -> None:
-        shutil.rmtree('./PyScreenReader.egg-info/')
-        shutil.rmtree('./build/')
+        shutil.rmtree('./PyScreenReader.egg-info/', ignore_errors=True)
+        shutil.rmtree('./build/', ignore_errors=True)
+        logging.info("Artifacts removed")
 
 
 setup(

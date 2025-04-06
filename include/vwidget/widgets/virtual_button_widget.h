@@ -7,4 +7,5 @@ class VirtualButtonWidget : public VirtualWidget {
 public:
     std::string getWidgetName() override;
     bool isClickable() override;
+    VirtualButtonWidget();
 };

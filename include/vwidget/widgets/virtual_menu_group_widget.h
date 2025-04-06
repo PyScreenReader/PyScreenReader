@@ -7,4 +7,5 @@ class VirtualMenuGroupWidget : public VirtualContainerWidget {
 public:
     std::string getWidgetName() override;
     bool isClickable() override;
+    VirtualMenuGroupWidget();
 };

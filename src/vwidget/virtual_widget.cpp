@@ -97,7 +97,9 @@ void bindVirtualWidget(pybind11::module &m) {
             .def("setHeight", &VirtualWidget::setHeight)
             .def("setParent", &VirtualWidget::setParent)
             .def("setVisible", &VirtualWidget::setVisible)
-            .def("__repr__", &VirtualWidget::getRepr);
+            .def("__repr__", &VirtualWidget::getRepr)
+            .def("getWidgetName", &VirtualWidget::getWidgetName)
+            .def("isClickable", &VirtualWidget::isVisible);
 }
 
 REGISTER_BINDING("VirtualWidget", bindVirtualWidget)
