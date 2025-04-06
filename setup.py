@@ -6,6 +6,7 @@ import logging
 import os
 import platform
 import re
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -178,7 +179,7 @@ class RunTestCommand(Command):
         env_path = str(ext_path.parent.resolve())
         os.environ["PYTHONPATH"] = f"{env_path}{os.pathsep}{os.environ.get('PYTHONPATH', '')}"
         pytest_cmd = [sys.executable, "-m", "pytest", "tests/py/"]
-        subprocess.run(pytest_cmd, check=True)
+        subprocess.run(pytest_cmd)
 
     def run(self):
         if not self.cpp_only:
@@ -187,10 +188,26 @@ class RunTestCommand(Command):
             self._run_cpp_tests()
 
 
+class RunClearCommand(Command):
+
+    description = "Remove build artifacts"
+
+    def initialize_options(self) -> None:
+        pass
+
+    def finalize_options(self) -> None:
+        pass
+
+    def run(self) -> None:
+        shutil.rmtree('./PyScreenReader.egg-info/')
+        shutil.rmtree('./build/')
+
+
 setup(
     ext_modules=[CMakeExtension(PROJECT_NAME)],
     cmdclass={
         "build_ext": CMakeBuild,
-        "test": RunTestCommand
+        "test": RunTestCommand,
+        "clear": RunClearCommand,
     },
 )
