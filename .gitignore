@@ -11,3 +11,6 @@ venv/
 
 # Idea workspace
 .idea/
+
+# Test dirs
+.pytest_cache

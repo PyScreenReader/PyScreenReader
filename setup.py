@@ -1,14 +1,16 @@
 # Copyright (c) 2016 The Pybind Development Team. All rights reserved.
 # Original license: https://github.com/pybind/cmake_example/blob/master/LICENSE
-# Modified by Minghao Li: modified project-specific information
-
+# Modified by Minghao Li: modified project-specific information and commands
+import glob
+import logging
 import os
+import platform
 import re
 import subprocess
 import sys
 from pathlib import Path
 
-from setuptools import Extension, setup
+from setuptools import Extension, setup, Command
 from setuptools.command.build_ext import build_ext
 
 # Convert distutils Windows platform specifiers to CMake -A arguments
@@ -18,6 +20,8 @@ PLAT_TO_CMAKE = {
     "win-arm32": "ARM",
     "win-arm64": "ARM64",
 }
+
+PROJECT_NAME = "PyScreenReader"
 
 
 class CMakeExtension(Extension):
@@ -121,7 +125,71 @@ class CMakeBuild(build_ext):
         )
 
 
+class RunTestCommand(Command):
+    description = "Run test cases"
+
+    user_options = [
+        ("cpp-only", None, "Only run C++ tests (not implemented yet)"),
+        ("py-only", None, "Only run Python tests"),
+    ]
+
+    def finalize_options(self) -> None:
+        if self.cpp_only and self.py_only :
+            raise ValueError(
+                "Cannot specify both --cpp-only and --py-only"
+            )
+
+    def initialize_options(self):
+        self.cpp_only = False
+        self.py_only = False
+
+    def _get_platform_extension(self):
+        system = platform.system()
+        if system == "Darwin":
+            return ".so"
+        elif system == "Windows":
+            return ".pyd"
+        elif system == "Linux":
+            return ".abi3.so"
+        else:
+            raise RuntimeError(f"Unsupported platform: {system}")
+
+    def _run_cpp_tests(self):
+        raise NotImplementedError("C++ tests are not implemented yet")
+
+    def _run_py_tests(self):
+        build_path = Path("build")
+        platform_ext = self._get_platform_extension()
+        pattern = str(build_path / "lib.*" / ("*" + platform_ext))
+        ext_path_candidates = glob.glob(pattern)
+
+        if ext_path_candidates:
+            logging.warning(f"Assuming the compiled artifact at {ext_path_candidates[0]} is up-to-date. Otherwise, "
+                            "please consider re-build.")
+        else:
+            logging.warning("Did not find compiled artifact. Trying to compile it now...")
+            self.run_command('build_ext')
+            ext_path_candidates = glob.glob(pattern)
+            if not ext_path_candidates:
+                raise RuntimeError("Compilation failed. No extension module found after build.")
+
+        ext_path = Path(ext_path_candidates[0])
+        env_path = str(ext_path.parent.resolve())
+        os.environ["PYTHONPATH"] = f"{env_path}{os.pathsep}{os.environ.get('PYTHONPATH', '')}"
+        pytest_cmd = [sys.executable, "-m", "pytest", "tests/"]
+        subprocess.run(pytest_cmd, check=True)
+
+    def run(self):
+        if not self.cpp_only:
+            self._run_py_tests()
+        if not self.py_only:
+            self._run_cpp_tests()
+
+
 setup(
-    ext_modules=[CMakeExtension("PyScreenReader")],
-    cmdclass={"build_ext": CMakeBuild},
+    ext_modules=[CMakeExtension(PROJECT_NAME)],
+    cmdclass={
+        "build_ext": CMakeBuild,
+        "test": RunTestCommand
+    },
 )
