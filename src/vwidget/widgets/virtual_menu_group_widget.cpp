@@ -4,8 +4,6 @@
 
 namespace py = pybind11;
 
-VirtualMenuGroupWidget::VirtualMenuGroupWidget() = default;
-
 std::string VirtualMenuGroupWidget::getWidgetName() {
     return "VirtualMenuGroupWidget";
 }

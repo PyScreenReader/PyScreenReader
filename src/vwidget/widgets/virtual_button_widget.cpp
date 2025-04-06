@@ -5,8 +5,6 @@
 
 namespace py = pybind11;
 
-VirtualButtonWidget::VirtualButtonWidget() = default;
-
 std::string VirtualButtonWidget::getWidgetName() {
     return "VirtualButtonWidget";
 }
