@@ -134,7 +134,7 @@ class RunTestCommand(Command):
     ]
 
     def finalize_options(self) -> None:
-        if self.cpp_only and self.py_only :
+        if self.cpp_only and self.py_only:
             raise ValueError(
                 "Cannot specify both --cpp-only and --py-only"
             )
@@ -143,7 +143,8 @@ class RunTestCommand(Command):
         self.cpp_only = False
         self.py_only = False
 
-    def _get_platform_extension(self):
+    @staticmethod
+    def _get_platform_extension():
         system = platform.system()
         if system == "Darwin":
             return ".so"
@@ -159,7 +160,7 @@ class RunTestCommand(Command):
 
     def _run_py_tests(self):
         build_path = Path("build")
-        platform_ext = self._get_platform_extension()
+        platform_ext = RunTestCommand._get_platform_extension()
         pattern = str(build_path / "lib.*" / ("*" + platform_ext))
         ext_path_candidates = glob.glob(pattern)
 
@@ -176,7 +177,7 @@ class RunTestCommand(Command):
         ext_path = Path(ext_path_candidates[0])
         env_path = str(ext_path.parent.resolve())
         os.environ["PYTHONPATH"] = f"{env_path}{os.pathsep}{os.environ.get('PYTHONPATH', '')}"
-        pytest_cmd = [sys.executable, "-m", "pytest", "tests/"]
+        pytest_cmd = [sys.executable, "-m", "pytest", "tests/py/"]
         subprocess.run(pytest_cmd, check=True)
 
     def run(self):
