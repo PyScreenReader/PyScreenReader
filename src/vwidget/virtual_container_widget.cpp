@@ -10,31 +10,14 @@ void VirtualContainerWidget::addChild(const std::shared_ptr<VirtualWidget>& chil
     children_.push_back(child);
 }
 
-std::string VirtualContainerWidget::getRepr() {
-    std::string repr = VirtualWidget::getRepr() +
-                       "{title=" + getTitleText() +
-                       ", help=" + getHelpText() +
-                       ", x=" + std::to_string(getX()) +
-                       ", y=" + std::to_string(getY()) +
-                       ", width=" + std::to_string(getWidth()) +
-                       ", height=" + std::to_string(getHeight()) +
-                       ", children=[";
-
-    for (size_t i = 0; i < children_.size(); ++i) {
-        repr += children_[i]->getRepr();
-        if (i < children_.size() - 1) {
-            repr += ", ";
-        }
-    }
-
-    repr += "]}";
-    return repr;
+std::vector<std::shared_ptr<VirtualWidget>> &VirtualContainerWidget::getChildren() {
+    return children_;
 }
 
 void bindVirtualContainerWidget(pybind11::module &m) {
     py::class_<VirtualContainerWidget, VirtualWidget, std::shared_ptr<VirtualContainerWidget>>(m, "VirtualContainerWidget")
             .def("addChild", &VirtualContainerWidget::addChild, py::arg("child"))
-            .def("__repr__", &VirtualContainerWidget::getRepr);
+            .def("getChildren", &VirtualContainerWidget::addChild);
 }
 
 REGISTER_BINDING("VirtualContainerWidget", bindVirtualContainerWidget, "VirtualWidget")

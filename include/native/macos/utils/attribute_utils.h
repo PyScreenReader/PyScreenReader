@@ -13,7 +13,14 @@
  * @return if the operation is returning kAXErrorSuccess
  */
 template<typename T>
-bool safeGetAttribute(AXUIElementRef element, CFStringRef attrName, T* value);
+bool safeGetAttribute(AXUIElementRef element, CFStringRef attrName, T* value) {
+    CFTypeRef valueRef;
+    AXError err = AXUIElementCopyAttributeValue(element, attrName, &valueRef);
+    if (err != kAXErrorSuccess) return false;
+
+    *value = (T)valueRef;
+    return true;
+}
 
 /**
  * Get std string from CFStringRef safely

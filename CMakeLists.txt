@@ -11,7 +11,18 @@ pybind11_add_module(PyScreenReader ${SOURCE_FILES})
 target_compile_definitions(PyScreenReader
         PRIVATE VERSION_INFO=${VERSION_INFO})
 
-# Link CoreFoundation system library when compiling on MacOS
 if(APPLE)
-    target_link_libraries(PyScreenReader PRIVATE "-framework CoreFoundation")
+    find_library(COREFOUNDATION CoreFoundation)
+    find_library(APPLICATIONSERVICES ApplicationServices)
+
+    target_link_libraries(PyScreenReader
+            PRIVATE
+            ${COREFOUNDATION}
+            ${APPLICATIONSERVICES}
+    )
+
+    target_include_directories(PyScreenReader
+            PRIVATE
+            /System/Library/Frameworks/CoreFoundation.framework/Headers
+    )
 endif()
