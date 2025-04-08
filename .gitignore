@@ -14,3 +14,9 @@ venv/
 
 # Test dirs
 .pytest_cache
+
+.clwb/
+bazel-bin/
+bazel-out/
+bazel-pyscreenreader/
+bazel-testlogs/
