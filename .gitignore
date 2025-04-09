@@ -14,3 +14,5 @@ venv/
 
 # Test dirs
 .pytest_cache
+__pycache__/
+
