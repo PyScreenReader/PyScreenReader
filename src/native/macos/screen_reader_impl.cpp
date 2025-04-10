@@ -1,4 +1,8 @@
 #include "native/macos/screen_reader_impl.h"
+
+#include <stdexcept>
+#if __APPLE__
+
 #include "native/macos/utils/system_utils.h"
 #include "native/macos/vwidget_generator.h"
 
@@ -24,3 +28,4 @@ std::shared_ptr<VirtualRootWidget> ScreenReaderImpl::getVirtualWidgetTreeByTitle
 std::shared_ptr<VirtualRootWidget> ScreenReaderImpl::getVirtualWidgetTreeByClassName(const std::string &className) const {
     throw std::logic_error("Not yet implemented");
 }
+#endif

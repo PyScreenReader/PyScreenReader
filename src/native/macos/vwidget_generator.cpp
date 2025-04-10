@@ -5,6 +5,7 @@
 #include "native/macos/utils/attribute_utils.h"
 
 
+#if __APPLE__
 
 std::shared_ptr<VirtualRootWidget> VWidgetGenerator::generateVWidgetTree(AXUIElementRef rootElement) {
     auto root = std::make_shared<VirtualRootWidget>();
@@ -86,3 +87,4 @@ std::shared_ptr<VirtualWidget> VWidgetGenerator::getVWidget(AXUIElementRef eleme
     return result;
 }
 
+#endif

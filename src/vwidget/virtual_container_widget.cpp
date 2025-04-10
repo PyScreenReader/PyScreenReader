@@ -1,6 +1,7 @@
 #include "vwidget/virtual_container_widget.h"
 //#include "bindings_registry.h"
 #include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
 
 namespace py = pybind11;
 
@@ -17,7 +18,7 @@ std::vector<std::shared_ptr<VirtualWidget>> &VirtualContainerWidget::getChildren
 void bindVirtualContainerWidget(pybind11::module &m) {
     py::class_<VirtualContainerWidget, VirtualWidget, std::shared_ptr<VirtualContainerWidget>>(m, "VirtualContainerWidget")
             .def("addChild", &VirtualContainerWidget::addChild, py::arg("child"))
-            .def("getChildren", &VirtualContainerWidget::addChild);
+            .def("getChildren", &VirtualContainerWidget::getChildren);
 }
 
 REGISTER_BINDING("VirtualContainerWidget", bindVirtualContainerWidget, "VirtualWidget")

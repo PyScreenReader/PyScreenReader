@@ -2,10 +2,6 @@
 #include "bindings_registry.h"
 #include <pybind11/pybind11.h>
 
-// TODO: select header files by platform
-#include "native/macos/screen_reader_impl.h"
-
-
 namespace py = pybind11;
 
 std::shared_ptr<VirtualRootWidget> ScreenReader::getVirtualWidgetTreeByPID(const std::string &pid) const {

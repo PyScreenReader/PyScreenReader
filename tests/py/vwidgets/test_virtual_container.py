@@ -3,7 +3,7 @@ import pytest
 
 BASE_METHOD_NAME_VIRTUAL_CONTAINER_WIDGET = (
     'addChild',
-    '__repr__'
+    'getChildren',
 )
 
 
