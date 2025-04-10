@@ -1,4 +1,5 @@
 #pragma once
+#if __APPLE__
 #include <CoreFoundation/CoreFoundation.h>
 #include <ApplicationServices/ApplicationServices.h>
 #include <string>
@@ -30,3 +31,4 @@ bool safeGetAttribute(AXUIElementRef element, CFStringRef attrName, T* value) {
  * @return if the operation succeeded
  */
 bool safeCFStringGetCString(CFStringRef stringRef, std::string& ptr);
+#endif

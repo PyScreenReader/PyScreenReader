@@ -8,7 +8,7 @@
 #if __APPLE__
 #include "native/macos/screen_reader_impl.h"
 #elif __WIN64
-#include "native/win/screen_reader_impl.h"
+#include "native/win/screen_reader_impl_win.h"
 #endif
 
 class ScreenReader {

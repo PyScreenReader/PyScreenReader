@@ -1,9 +1,7 @@
-#include "native/macos/screen_reader_impl.h"
+#include "native/win/screen_reader_impl_win.h"
 
 #include <stdexcept>
-
-#include "native/macos/utils/system_utils.h"
-#include "native/macos/vwidget_generator.h"
+#include "native/win/vwidget_generator_win.h"
 
 std::shared_ptr<VirtualRootWidget> ScreenReaderImpl::getVirtualWidgetTreeByPID(const std::string &pid) const {
     return nullptr;
@@ -11,8 +9,10 @@ std::shared_ptr<VirtualRootWidget> ScreenReaderImpl::getVirtualWidgetTreeByPID(c
 
 std::shared_ptr<VirtualRootWidget> ScreenReaderImpl::getVirtualWidgetTreeByTitle(const std::string &title) const {
     throw std::logic_error("Not yet implemented");
+    return nullptr;
 }
 
 std::shared_ptr<VirtualRootWidget> ScreenReaderImpl::getVirtualWidgetTreeByClassName(const std::string &className) const {
     throw std::logic_error("Not yet implemented");
+    return nullptr;
 }

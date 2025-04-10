@@ -57,7 +57,7 @@ namespace VWidgetGenerator {
     };
 
 
-    std::shared_ptr<VirtualRootWidget> generateVWidgetTree(int rootElement);
+    std::shared_ptr<VirtualRootWidget> generateVWidgetTree(std::string rootElement);
 
-    std::shared_ptr<VirtualWidget> getVWidget(int element);
+    std::shared_ptr<VirtualWidget> getVWidget(std::string element);
 }

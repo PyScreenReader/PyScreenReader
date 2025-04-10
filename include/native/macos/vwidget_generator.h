@@ -2,6 +2,9 @@
 
 #include <unordered_map>
 #include <functional>
+
+#if __APPLE__
+
 #include <CoreFoundation/CoreFoundation.h>
 #include <ApplicationServices/ApplicationServices.h>
 #include <unordered_set>
@@ -61,3 +64,4 @@ namespace VWidgetGenerator {
 
     std::shared_ptr<VirtualWidget> getVWidget(AXUIElementRef element);
 }
+#endif

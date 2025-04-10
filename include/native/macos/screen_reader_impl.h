@@ -2,6 +2,9 @@
 #include <memory>
 
 #include <string>
+
+#if __APPLE__
+
 #include "vwidget/widgets/virtual_root_widget.h"
 
 class ScreenReaderImpl {
@@ -12,3 +15,5 @@ public:
     std::shared_ptr<VirtualRootWidget> getVirtualWidgetTreeByTitle(const std::string &title) const;
     std::shared_ptr<VirtualRootWidget> getVirtualWidgetTreeByClassName(const std::string &className) const;
 };
+
+#endif

@@ -1,5 +1,5 @@
 #include "native/macos/utils/system_utils.h"
-
+#if __APPLE__
 AXUIElementRef SystemUtils::getAXUIElementRefByPID(const std::string& pid) {
     pid_t pidNum;
     try {
@@ -10,3 +10,4 @@ AXUIElementRef SystemUtils::getAXUIElementRefByPID(const std::string& pid) {
     AXUIElementRef app = AXUIElementCreateApplication(pidNum);
     return app;
 }
+#endif
