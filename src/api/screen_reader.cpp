@@ -1,5 +1,8 @@
-#include "api/screen_reader.h"
-#include "bindings_registry.h"
+#include "include/api/screen_reader.h"
+
+#include <stdexcept>
+
+#include "src/bindings_registry.h"
 #include <pybind11/pybind11.h>
 
 namespace py = pybind11;

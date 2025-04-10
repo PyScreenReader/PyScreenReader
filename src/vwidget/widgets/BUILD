@@ -2,20 +2,6 @@ package(default_visibility = ["//visibility:public"])
 
 load("@pybind11_bazel//:build_defs.bzl", "pybind_extension", "pybind_library")
 
-pybind_library(
-    name = "vwidget",
-    srcs = [
-    ],
-    deps = [
-        "virtual_button_widget",
-        "virtual_menu_group_widget",
-        "virtual_menu_item_widget",
-        "virtual_root_widget",
-        "virtual_text_field_widget",
-        "virtual_text_widget",
-    ],
-)
-
 cc_library(
     name = "virtual_button_widget",
     hdrs = [

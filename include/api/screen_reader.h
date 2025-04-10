@@ -2,13 +2,13 @@
 
 #include <memory>
 
-#include "vwidget/widgets/virtual_root_widget.h"
+#include "include/vwidget/widgets/virtual_root_widget.h"
 #include <string>
 
 #if __APPLE__
-#include "native/macos/screen_reader_impl.h"
+#include "src/native/macos/screen_reader_impl.h"
 #elif __WIN64
-#include "native/win/screen_reader_impl_win.h"
+#include "src/native/win/screen_reader_impl_win.h"
 #endif
 
 class ScreenReader {
