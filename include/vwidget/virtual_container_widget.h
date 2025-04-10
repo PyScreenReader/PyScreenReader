@@ -2,6 +2,7 @@
 
 #include <vector>
 #include "virtual_widget.h"
+#include <memory>
 
 class VirtualContainerWidget : public VirtualWidget {
 private:

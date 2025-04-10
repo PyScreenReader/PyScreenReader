@@ -2,8 +2,7 @@
 
 #include <unordered_map>
 #include <functional>
-#include <CoreFoundation/CoreFoundation.h>
-#include <ApplicationServices/ApplicationServices.h>
+#include <windows.h>
 #include <unordered_set>
 #include "../../vwidget/virtual_widget.h"
 #include "../../vwidget/widgets/virtual_button_widget.h"
@@ -57,7 +56,8 @@ namespace VWidgetGenerator {
             {MENU_BAR_ROLE_ID, [](){ return std::make_shared<VirtualMenuGroupWidget>(); }}
     };
 
-    std::shared_ptr<VirtualRootWidget> generateVWidgetTree(AXUIElementRef rootElement);
 
-    std::shared_ptr<VirtualWidget> getVWidget(AXUIElementRef element);
+    std::shared_ptr<VirtualRootWidget> generateVWidgetTree(int rootElement);
+
+    std::shared_ptr<VirtualWidget> getVWidget(int element);
 }

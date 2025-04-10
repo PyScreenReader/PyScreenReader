@@ -1,6 +1,7 @@
 #pragma once
 #include <memory>
 
+#include <windows.h>
 #include <string>
 #include "vwidget/widgets/virtual_root_widget.h"
 
