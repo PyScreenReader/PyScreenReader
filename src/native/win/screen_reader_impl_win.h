@@ -8,7 +8,7 @@
 #include <uiautomationcoreapi.h>
 
 #include <string>
-#include "vwidget/widgets/virtual_root_widget.h"
+#include "include/vwidget/widgets/virtual_root_widget.h"
 
 class ScreenReaderImpl {
 public:

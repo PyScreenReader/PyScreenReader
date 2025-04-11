@@ -1,8 +1,7 @@
-#include "native/win/vwidget_generator_win.h"
+#include "src/native/win/vwidget_generator_win.h"
 
 #include <queue>
 #include <utility>
-#include "vwidget/widgets/virtual_root_widget.h"
 
 std::shared_ptr<VirtualRootWidget> VWidgetGenerator::generateVWidgetTree(std::string rootElement) {
     auto result = nullptr;

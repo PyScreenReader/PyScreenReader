@@ -1,6 +1,6 @@
 #include "include/vwidget/widgets/virtual_button_widget.h"
-#include "src/bindings_registry.h"
 #include <pybind11/pybind11.h>
+#include "src/bindings_registry.h"
 
 
 namespace py = pybind11;

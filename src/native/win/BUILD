@@ -25,6 +25,7 @@ cc_library(
         ":vwidget_generator_win.cpp",
     ],
     deps = [
+        "//src/vwidget/widgets:virtual_components"
     ],
     target_compatible_with = [
         "@platforms//cpu:x86_64",
