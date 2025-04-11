@@ -1,4 +1,7 @@
 #include "include/vwidget/virtual_container_widget.h"
+
+#include <stdexcept>
+
 #include "src/bindings_registry.h"
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>

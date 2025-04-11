@@ -4,24 +4,28 @@
 #include <functional>
 
 #if __APPLE__
-
 #include <CoreFoundation/CoreFoundation.h>
 #include <ApplicationServices/ApplicationServices.h>
+#endif
+
 #include <unordered_set>
-#include "../../vwidget/virtual_widget.h"
-#include "../../vwidget/widgets/virtual_button_widget.h"
-#include "../../vwidget/widgets/virtual_menu_item_widget.h"
-#include "../../vwidget/widgets/virtual_text_widget.h"
-#include "../../vwidget/widgets/virtual_text_field_widget.h"
-#include "../../vwidget/widgets/virtual_menu_group_widget.h"
-#include "../../vwidget/widgets/virtual_root_widget.h"
+#include "include/vwidget/virtual_widget.h"
+#include "include/vwidget/widgets/virtual_button_widget.h"
+#include "include/vwidget/widgets/virtual_menu_item_widget.h"
+#include "include/vwidget/widgets/virtual_text_widget.h"
+#include "include/vwidget/widgets/virtual_text_field_widget.h"
+#include "include/vwidget/widgets/virtual_menu_group_widget.h"
+#include "include/vwidget/widgets/virtual_root_widget.h"
 
+// Forward declare classes
+class AXUIElementRef;
 
-namespace VWidgetGenerator {
+namespace VWidgetGenerator
+{
     /**
      * List of role id constants
      */
-    inline const std::string BUTTON_ROLE_ID = "kAXButtonRole";
+    inline const std::string    BUTTON_ROLE_ID = "kAXButtonRole";
     inline const std::string CHECKBOX_ROLE_ID = "kAXCheckBoxRole";
     inline const std::string RADIO_BUTTON_ROLE_ID = "kAXRadioButtonRole";
     inline const std::string TEXT_FIELD_ROLE_ID = "kAXTextFieldRole";
@@ -36,32 +40,32 @@ namespace VWidgetGenerator {
      * A set of current supported roles
      */
     inline const std::unordered_set<std::string> SUPPORTED_ROLES = {
-            BUTTON_ROLE_ID,
-            CHECKBOX_ROLE_ID,
-            RADIO_BUTTON_ROLE_ID,
-            TEXT_FIELD_ROLE_ID,
-            STATIC_TEXT_ROLE_ID,
-            COMBO_BOX_ROLE_ID,
-            MENU_BUTTON_ROLE_ID,
-            MENU_BAR_ITEM_ROLE_ID,
-            MENU_BAR_ROLE_ID,
-            WINDOW_ROLE_ID,
+        BUTTON_ROLE_ID,
+        CHECKBOX_ROLE_ID,
+        RADIO_BUTTON_ROLE_ID,
+        TEXT_FIELD_ROLE_ID,
+        STATIC_TEXT_ROLE_ID,
+        COMBO_BOX_ROLE_ID,
+        MENU_BUTTON_ROLE_ID,
+        MENU_BAR_ITEM_ROLE_ID,
+        MENU_BAR_ROLE_ID,
+        WINDOW_ROLE_ID,
     };
 
-    inline const std::unordered_map<std::string, std::function<std::shared_ptr<VirtualWidget>()>> ROLE_TO_VWIDGET_MAP = {
-            {BUTTON_ROLE_ID,       []() { return std::make_shared<VirtualButtonWidget>(); }},
-            {CHECKBOX_ROLE_ID,     []() { return std::make_shared<VirtualButtonWidget>(); }},
-            {MENU_BUTTON_ROLE_ID,  []() { return std::make_shared<VirtualMenuItemWidget>(); }},
-            {MENU_BAR_ITEM_ROLE_ID,  []() { return std::make_shared<VirtualMenuItemWidget>(); }},
-            {COMBO_BOX_ROLE_ID,    []() { return std::make_shared<VirtualButtonWidget>(); }},
-            {RADIO_BUTTON_ROLE_ID, []() { return std::make_shared<VirtualButtonWidget>(); }},
-            {STATIC_TEXT_ROLE_ID,  []() { return std::make_shared<VirtualTextWidget>(); }},
-            {TEXT_FIELD_ROLE_ID,  []() { return std::make_shared<VirtualTextFieldWidget>(); }},
-            {MENU_BAR_ROLE_ID, [](){ return std::make_shared<VirtualMenuGroupWidget>(); }}
+    inline const std::unordered_map<std::string, std::function<std::shared_ptr<VirtualWidget>()>> ROLE_TO_VWIDGET_MAP =
+    {
+        {BUTTON_ROLE_ID, []() { return std::make_shared<VirtualButtonWidget>(); }},
+        {CHECKBOX_ROLE_ID, []() { return std::make_shared<VirtualButtonWidget>(); }},
+        {MENU_BUTTON_ROLE_ID, []() { return std::make_shared<VirtualMenuItemWidget>(); }},
+        {MENU_BAR_ITEM_ROLE_ID, []() { return std::make_shared<VirtualMenuItemWidget>(); }},
+        {COMBO_BOX_ROLE_ID, []() { return std::make_shared<VirtualButtonWidget>(); }},
+        {RADIO_BUTTON_ROLE_ID, []() { return std::make_shared<VirtualButtonWidget>(); }},
+        {STATIC_TEXT_ROLE_ID, []() { return std::make_shared<VirtualTextWidget>(); }},
+        {TEXT_FIELD_ROLE_ID, []() { return std::make_shared<VirtualTextFieldWidget>(); }},
+        {MENU_BAR_ROLE_ID, []() { return std::make_shared<VirtualMenuGroupWidget>(); }}
     };
 
     std::shared_ptr<VirtualRootWidget> generateVWidgetTree(AXUIElementRef rootElement);
 
     std::shared_ptr<VirtualWidget> getVWidget(AXUIElementRef element);
 }
-#endif

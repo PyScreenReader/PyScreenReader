@@ -1,63 +1,21 @@
 package(default_visibility = ["//visibility:public"])
 
-load("@pybind11_bazel//:build_defs.bzl", "pybind_extension", "pybind_library")
-
 cc_library(
-    name = "virtual_button_widget",
+    name = "virtual_components",
     hdrs = [
         "//include/vwidget/widgets:virtual_button_widget.h",
-    ],
-    srcs = [
-       ":virtual_button_widget.cpp",
-    ]
-)
-
-cc_library(
-    name = "virtual_menu_group_widget",
-    hdrs = [
         "//include/vwidget/widgets:virtual_menu_group_widget.h",
-    ],
-    srcs = [
-        ":virtual_menu_group_widget.cpp",
-    ]
-)
-
-cc_library(
-    name = "virtual_menu_item_widget",
-    hdrs = [
         "//include/vwidget/widgets:virtual_menu_item_widget.h",
-    ],
-    srcs = [
-        ":virtual_menu_item_widget.cpp",
-    ]
-)
-
-cc_library(
-    name = "virtual_root_widget",
-    hdrs = [
         "//include/vwidget/widgets:virtual_root_widget.h",
-    ],
-    srcs = [
-        ":virtual_root_widget.cpp",
-    ]
-)
-
-cc_library(
-    name = "virtual_text_field_widget",
-    hdrs = [
         "//include/vwidget/widgets:virtual_text_field_widget.h",
-    ],
-    srcs = [
-        ":virtual_text_field_widget.cpp",
-    ]
-)
-
-cc_library(
-    name = "virtual_text_widget",
-    hdrs = [
         "//include/vwidget/widgets:virtual_text_widget.h",
     ],
     srcs = [
-        ":virtual_text_widget.cpp",
-    ]
+        "//src/vwidget/widgets:virtual_button_widget.cpp",
+        "//src/vwidget/widgets:virtual_menu_group_widget.cpp",
+        "//src/vwidget/widgets:virtual_menu_item_widget.cpp",
+        "//src/vwidget/widgets:virtual_root_widget.cpp",
+        "//src/vwidget/widgets:virtual_text_field_widget.cpp",
+        "//src/vwidget/widgets:virtual_text_widget.cpp",
+    ],
 )
