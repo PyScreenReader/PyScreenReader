@@ -12,7 +12,7 @@ bool VirtualRootWidget::isClickable() {
     return false;
 }
 
-void bindRootWidget(pybind11::module_ &m) {
+void bindRootWidget(py::module_ &m) {
     py::class_<VirtualRootWidget, VirtualContainerWidget, std::shared_ptr<VirtualRootWidget>>(m, "VirtualRootWidget")
         .def("getWidgetName", &VirtualRootWidget::getWidgetName)
         .def("isClickable", &VirtualRootWidget::isClickable);

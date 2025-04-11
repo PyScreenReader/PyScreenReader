@@ -12,7 +12,7 @@ bool VirtualMenuItemWidget::isClickable() {
     return true;
 }
 
-void bindMenuItemWidget(pybind11::module_ &m) {
+void bindMenuItemWidget(py::module_ &m) {
     py::class_<VirtualMenuItemWidget, VirtualWidget, std::shared_ptr<VirtualMenuItemWidget>>(m, "VirtualMenuItemWidget")
             .def("getWidgetName", &VirtualMenuItemWidget::getWidgetName)
             .def("isClickable", &VirtualMenuItemWidget::isClickable);

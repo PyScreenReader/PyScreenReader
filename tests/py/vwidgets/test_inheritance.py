@@ -30,3 +30,8 @@ def test_virtual_menu_group_inheritance():
 
 def test_virtual_menu_item_inheritance():
     assert inspect.getmro(psr.VirtualMenuItemWidget)[1] == psr.VirtualWidget
+
+
+def test_virtual_group_inheritance():
+    assert inspect.getmro(psr.VirtualWindowWidget)[1] == psr.VirtualContainerWidget
+    assert inspect.getmro(psr.VirtualWindowWidget)[2] == psr.VirtualWidget
