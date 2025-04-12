@@ -40,3 +40,8 @@ def test_virtual_window_inheritance():
 def test_virtual_group_inheritance():
     assert inspect.getmro(psr.VirtualGroupWidget)[1] == psr.VirtualContainerWidget
     assert inspect.getmro(psr.VirtualGroupWidget)[2] == psr.VirtualWidget
+
+
+def test_virtual_unknown_inheritance():
+    assert inspect.getmro(psr.VirtualUnknownWidget)[1] == psr.VirtualContainerWidget
+    assert inspect.getmro(psr.VirtualUnknownWidget)[2] == psr.VirtualWidget
