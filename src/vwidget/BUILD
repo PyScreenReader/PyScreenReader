@@ -19,6 +19,6 @@ pybind_library(
     deps = [
         "//src/vwidget:virtual_container_widget",
         "//src/vwidget:virtual_widget",
-        "//src/vwidget/widgets:virtual_components",
+        "//src/vwidget/widgets:virtual_components"
     ],
 )

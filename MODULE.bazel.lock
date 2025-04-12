@@ -190,7 +190,7 @@
     "@@pybind11_bazel+//:internal_configure.bzl%internal_configure_extension": {
       "general": {
         "bzlTransitiveDigest": "wXImnqOfGKOqkiPwQBuez+TGQdj1tuLQU6OYcfhB97I=",
-        "usagesDigest": "tVQNvLoXMWAbiK39am3yovKGpwINdftfn7RpDyN+JZc=",
+        "usagesDigest": "eslJXAW/gNfcrzJjSEJRJo74rz2zQ9PH42a5gwUeQYY=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},

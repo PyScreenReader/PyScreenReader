@@ -1,4 +1,5 @@
 # Enable Bzlmod for every Bazel command
+# common --enable_workspace
 common --enable_bzlmod
 # build --cxxopt=-"std=c++17"
 common --skip_incompatible_explicit_targets

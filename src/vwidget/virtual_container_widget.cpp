@@ -2,9 +2,9 @@
 
 #include <stdexcept>
 
-#include "src/bindings_registry.h"
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
+#include "src/bindings_registry.h"
 
 namespace py = pybind11;
 
