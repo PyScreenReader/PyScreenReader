@@ -5,12 +5,30 @@
 #include "src/native/macos/utils/attribute_utils.h"
 
 
-
 std::shared_ptr<VirtualRootWidget> VWidgetGenerator::generateVWidgetTree(AXUIElementRef rootElement) {
-    auto root = std::make_shared<VirtualRootWidget>();
-    std::queue<std::pair<std::shared_ptr<VirtualWidget>, AXUIElementRef>> q;
+    auto processChildren = [](AXUIElementRef element, auto&& enqueueFunc) {
+        CFArrayRef children = nullptr;
+        if (!safeGetAttribute(element, kAXChildrenAttribute, (CFTypeRef*)&children)
+            || !children
+            || CFArrayGetCount(children) == 0) {
+            return;
+        }
 
-    q.emplace(root, rootElement);
+        std::unique_ptr<std::remove_pointer_t<CFTypeRef>, decltype(&CFRelease)> childrenGuard(reinterpret_cast<CFTypeRef>(children), CFRelease);
+
+        const CFIndex count = CFArrayGetCount(children);
+        for (CFIndex i = 0; i < count; ++i) {
+            auto child = static_cast<AXUIElementRef>(CFArrayGetValueAtIndex(children, i));
+            CFRetain(child);
+            enqueueFunc(child);
+        }
+    };
+
+    auto root = std::dynamic_pointer_cast<VirtualRootWidget>(VWidgetGenerator::getVWidget(rootElement));
+    std::queue<std::pair<std::shared_ptr<VirtualWidget>, AXUIElementRef>> q;
+    processChildren(rootElement, [&](AXUIElementRef child) {
+        q.emplace(root, child);
+    });
 
     while (!q.empty()) {
         auto [parentVWidget, curr] = q.front();
@@ -22,65 +40,59 @@ std::shared_ptr<VirtualRootWidget> VWidgetGenerator::generateVWidgetTree(AXUIEle
         parentVWidget->addChild(currVWidget);
 
         if (!parentVWidget->isVisible()) currVWidget->setVisible(false);
-
-        CFArrayRef cfChildrenArray = nullptr;
-        if (!safeGetAttribute(curr, kAXChildrenAttribute, &cfChildrenArray)) continue;
-
-        CFIndex count = CFArrayGetCount(cfChildrenArray);
-        for (CFIndex i = 0; i < count; i++) {
-            auto child = (AXUIElementRef) CFArrayGetValueAtIndex(cfChildrenArray, i);
+        processChildren(curr, [&](AXUIElementRef child) {
             q.emplace(currVWidget, child);
-        }
+        });
     }
     return root;
 }
 
 std::shared_ptr<VirtualWidget> VWidgetGenerator::getVWidget(AXUIElementRef element) {
-    CFStringRef roleName = nullptr;
-    safeGetAttribute(element, kAXRoleAttribute, &roleName);
+    CFRef<CFStringRef> roleName;
+    CFStringRef rawRole = nullptr;
+    safeGetAttribute(element, kAXRoleAttribute, &rawRole);
+    roleName.reset(rawRole);
 
-    // If there is no role name for some reason, we can ignore
-    if (roleName == nullptr) return nullptr;
+    if (!roleName) return nullptr;
+
     std::string plainRoleName;
-    // If error when parsing role string, we skip
-    if (!safeCFStringGetCString(roleName, plainRoleName)) return nullptr;
+    if (!safeCFStringGetCString(roleName.get(), plainRoleName)) {
+        return nullptr;
+    }
 
-    std::shared_ptr<VirtualWidget> result;
     auto it = ROLE_TO_VWIDGET_MAP.find(plainRoleName);
-    if (it != ROLE_TO_VWIDGET_MAP.end()) {
-        // call the corresponding handler to create virtual widget
-        result = it->second();
+    if (it == ROLE_TO_VWIDGET_MAP.end()) {
+        return nullptr;
+    }
 
-        CFBooleanRef isHidden = nullptr;
-        CFStringRef helpText = nullptr;
-        CFStringRef titleText = nullptr;
+    std::shared_ptr<VirtualWidget> result = it->second();
 
-        bool hasHiddenAttribute = safeGetAttribute(element, kAXHiddenAttribute, &isHidden);
-        bool hasHelpTextAttribute = safeGetAttribute(element, kAXHelpAttribute, &helpText);
-        bool hasTitleTextAttribute = safeGetAttribute(element, kAXTitleAttribute, &titleText);
+    CFRef<CFBooleanRef> isHidden;
+    CFRef<CFStringRef> helpText;
+    CFRef<CFStringRef> titleText;
 
-        if (hasHiddenAttribute) {
-            result->setVisible(CFBooleanGetValue(isHidden));
-            CFRelease(isHidden);
-        }
+    CFBooleanRef rawHidden = nullptr;
+    if (safeGetAttribute(element, kAXHiddenAttribute, &rawHidden)) {
+        isHidden.reset(rawHidden);
+        result->setVisible(!CFBooleanGetValue(isHidden.get()));
+    }
 
-        if (hasHelpTextAttribute) {
-            std::string plainHelpText;
-            safeCFStringGetCString(helpText, plainHelpText);
+    CFStringRef rawHelp = nullptr;
+    if (safeGetAttribute(element, kAXHelpAttribute, &rawHelp)) {
+        helpText.reset(rawHelp);
+        std::string plainHelpText;
+        if (safeCFStringGetCString(helpText.get(), plainHelpText)) {
             result->setHelpText(plainHelpText);
-            CFRelease(helpText);
-        }
-
-        if (hasTitleTextAttribute) {
-            std::string plainTitleText;
-            safeCFStringGetCString(titleText, plainTitleText);
-            result->setHelpText(plainTitleText);
-            CFRelease(titleText);
         }
     }
 
-    if (roleName) {
-        CFRelease(roleName);
+    CFStringRef rawTitle = nullptr;
+    if (safeGetAttribute(element, kAXTitleAttribute, &rawTitle)) {
+        titleText.reset(rawTitle);
+        std::string plainTitleText;
+        if (safeCFStringGetCString(titleText.get(), plainTitleText)) {
+            result->setTitleText(plainTitleText);
+        }
     }
 
     return result;

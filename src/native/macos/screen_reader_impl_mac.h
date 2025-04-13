@@ -9,7 +9,7 @@ class ScreenReaderImpl
 public:
     ScreenReaderImpl() = default;
     ~ScreenReaderImpl() = default;
-    std::shared_ptr<VirtualRootWidget> getVirtualWidgetTreeByPID(const std::string& pid) const;
-    std::shared_ptr<VirtualRootWidget> getVirtualWidgetTreeByTitle(const std::string& title) const;
-    std::shared_ptr<VirtualRootWidget> getVirtualWidgetTreeByClassName(const std::string& className) const;
+    static std::shared_ptr<VirtualRootWidget> getVirtualWidgetTreeByPID(const std::string& pid) const;
+    static std::shared_ptr<VirtualRootWidget> getVirtualWidgetTreeByTitle(const std::string& title) const;
+    static std::shared_ptr<VirtualRootWidget> getVirtualWidgetTreeByClassName(const std::string& className) const;
 };

@@ -31,3 +31,13 @@ bool safeGetAttribute(AXUIElementRef element, CFStringRef attrName, T* value) {
  * @return if the operation succeeded
  */
 bool safeCFStringGetCString(CFStringRef stringRef, std::string& ptr);
+
+
+template<typename T>
+struct CFReleaser {
+    void operator()(T obj) const {
+        if (obj) CFRelease(obj);
+    }
+};
+template<typename T>
+using CFRef = std::unique_ptr<std::remove_pointer_t<T>, CFReleaser<T>>;
