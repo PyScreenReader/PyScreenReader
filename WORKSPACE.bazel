@@ -1,0 +1,68 @@
+load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository", "new_git_repository")
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+load("@bazel_tools//tools/build_defs/repo:utils.bzl", "maybe")
+
+http_archive(
+    name = "rules_foreign_cc",
+    sha256 = "33a5690733c5cc2ede39cb62ebf89e751f2448e27f20c8b2fbbc7d136b166804",
+    strip_prefix = "rules_foreign_cc-0.5.1",
+    url = "https://github.com/bazelbuild/rules_foreign_cc/archive/0.5.1.tar.gz",
+)
+
+load("@rules_foreign_cc//foreign_cc:repositories.bzl", "rules_foreign_cc_dependencies")
+
+http_archive(
+    name = "rules_python",
+    sha256 = "3b8b4cdc991bc9def8833d118e4c850f1b7498b3d65d5698eea92c3528b8cf2c",
+    strip_prefix = "rules_python-0.30.0",
+    url = "https://github.com/bazelbuild/rules_python/releases/download/0.30.0/rules_python-0.30.0.tar.gz",
+)
+
+load("@rules_python//python:repositories.bzl", "py_repositories", "python_register_toolchains")
+
+py_repositories()
+
+register_toolchains("//toolchains:py_toolchain")
+
+register_toolchains(
+    "//ptoolchain:py_cc_toolchain_for_host_x86_64",
+)
+
+http_archive(
+    name = "pybind11_bazel",
+    sha256 = "9df284330336958c837fb70dc34c0a6254dac52a5c983b3373a8c2bbb79ac35e",
+    strip_prefix = "pybind11_bazel-2.13.6",
+    urls = ["https://github.com/pybind/pybind11_bazel/releases/download/v2.13.6/pybind11_bazel-2.13.6.zip"],
+)
+
+# We still require the pybind library.
+http_archive(
+    name = "pybind11",
+    build_file = "@pybind11_bazel//:pybind11-BUILD.bazel",
+    sha256 = "411f77380c43798506b39ec594fc7f2b532a13c4db674fcf2b1ca344efaefb68",
+    strip_prefix = "pybind11-2.12.0",
+    urls = ["https://github.com/pybind/pybind11/archive/refs/tags/v2.12.0.zip"],
+)
+
+http_archive(
+    name = "gtest",
+    sha256 = "927827c183d01734cc5cfef85e0ff3f5a92ffe6188e0d18e909c5efebf28a0c7",
+    strip_prefix = "googletest-release-1.8.1",
+    url = "https://github.com/google/googletest/archive/release-1.8.1.zip",
+)
+
+load("@rules_python//python:pip.bzl", "pip_parse")
+
+pip_parse(
+    name = "pytest_deps",
+    requirements_lock = "//tests/py:requirements_lock.txt",
+)
+
+load("@pytest_deps//:requirements.bzl", pytest_deps_install_deps = "install_deps")
+
+pytest_deps_install_deps()
+
+bind(
+    name = "python_headers",
+    actual = "@rules_python//python/cc:current_py_cc_headers",
+)
