@@ -22,3 +22,4 @@ bazel-bin/
 bazel-out/
 bazel-pyscreenreader/
 bazel-testlogs/
+#MODULE.bazel.lock/
