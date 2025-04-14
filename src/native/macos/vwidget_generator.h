@@ -3,10 +3,8 @@
 #include <unordered_map>
 #include <functional>
 
-#if __APPLE__
 #include <CoreFoundation/CoreFoundation.h>
 #include <ApplicationServices/ApplicationServices.h>
-#endif
 
 #include <unordered_set>
 #include "include/vwidget/virtual_widget.h"

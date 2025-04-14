@@ -12,10 +12,6 @@ pybind_library(
     deps = [
         ":vwidget_generator_win"
     ],
-    target_compatible_with = [
-        "@platforms//cpu:x86_64",
-        "@platforms//os:windows",
-    ],
 )
 
 pybind_library(
@@ -28,9 +24,5 @@ pybind_library(
     ],
     deps = [
         "//src/vwidget/widgets:virtual_components"
-    ],
-    target_compatible_with = [
-        "@platforms//cpu:x86_64",
-        "@platforms//os:windows",
     ],
 )
