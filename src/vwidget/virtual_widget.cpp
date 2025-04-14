@@ -1,6 +1,5 @@
 #include "include/vwidget/virtual_widget.h"
 #include "src/bindings_registry.h"
-
 #include <pybind11/pybind11.h>
 
 namespace py = pybind11;

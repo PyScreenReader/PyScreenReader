@@ -3,11 +3,15 @@ package(default_visibility = ["//visibility:public"])
 load("@pybind11_bazel//:build_defs.bzl", "pybind_extension", "pybind_library")
 load("@rules_python//python:py_library.bzl", "py_library")
 
-cc_library(
+pybind_library(
     name = "screen_reader",
     hdrs = ["//include/api:screen_reader.h"],
     srcs = [":screen_reader.cpp"],
-    deps = ["//src:bindings_registry"],
+    deps = [
+        "//src:bindings_registry",
+        "//src/vwidget:vwidget_bind",
+        "//src/native/win:screen_reader_impl_win",
+    ],
 )
 
 pybind_library(

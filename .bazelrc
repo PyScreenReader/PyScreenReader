@@ -7,3 +7,4 @@ common --enable_bzlmod
 # common --skip_incompatible_explicit_targets
 # common --features=external_include_paths
 common --lockfile_mode=update
+build --copt="/std:c++17"

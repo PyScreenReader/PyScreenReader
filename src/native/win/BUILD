@@ -10,6 +10,7 @@ pybind_library(
         ":screen_reader_impl_win.cpp",
     ],
     deps = [
+        ":vwidget_generator_win"
     ],
     target_compatible_with = [
         "@platforms//cpu:x86_64",

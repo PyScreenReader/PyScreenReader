@@ -4,7 +4,7 @@
 
 #include "include/vwidget/widgets/virtual_root_widget.h"
 #include <string>
-#define _WIN64
+
 #if defined(__APPLE__)
 #include "src/native/macos/screen_reader_impl.h"
 #elif defined(_WIN64) || defined(_WIN32) || defined(__CYGWIN__)
