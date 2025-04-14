@@ -4,16 +4,16 @@
 
 #include "include/vwidget/widgets/virtual_root_widget.h"
 #include <string>
-
-#if __APPLE__
+#define _WIN64
+#if defined(__APPLE__)
 #include "src/native/macos/screen_reader_impl.h"
-#elif __WIN64
+#elif defined(_WIN64) || defined(_WIN32) || defined(__CYGWIN__)
 #include "src/native/win/screen_reader_impl_win.h"
 #endif
 
+class ScreenReaderImpl;
+
 class ScreenReader {
-private:
-    ScreenReaderImpl screenReaderImpl;
 public:
     ScreenReader() = default;
     ~ScreenReader() = default;
@@ -40,4 +40,7 @@ public:
  * @return pointer to the VirtualRootWidget corresponding to the given class name
  */
     std::shared_ptr<VirtualRootWidget> getVirtualWidgetTreeByClassName(const std::string &className) const;
+
+private:
+    ScreenReaderImpl screenReaderImpl;
 };

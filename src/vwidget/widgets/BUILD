@@ -1,6 +1,7 @@
 package(default_visibility = ["//visibility:public"])
+load("@pybind11_bazel//:build_defs.bzl", "pybind_library")
 
-cc_library(
+pybind_library(
     name = "virtual_components",
     hdrs = [
         "//include/vwidget/widgets:virtual_button_widget.h",

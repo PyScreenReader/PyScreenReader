@@ -5,29 +5,27 @@
 # For more details, please check https://github.com/bazelbuild/bazel/issues/18958
 ###############################################################################
 
-#module(
-#    name = "py_screen_reader",
-#    version = "head",
-#    repo_name = "PyScreenReader",
-#)
+module(
+    name = "py_screen_reader",
+    version = "head",
+    repo_name = "PyScreenReader",
+)
 #
-#bazel_dep(name = "googletest", version = "1.15.2")
-#bazel_dep(name = "platforms", version = "0.0.11")
-#bazel_dep(name = "rules_python", version = "1.3.0")
-#bazel_dep(name = "pybind11_bazel", version = "2.13.6")
-#
-#pybind11_configure = use_extension("@pybind11_bazel//:internal_configure.bzl", "internal_configure_extension")
-#use_repo(pybind11_configure, "pybind11")
-#
-#python = use_extension("@rules_python//python/extensions:python.bzl", "python")
-#python.toolchain(
-#    python_version = "3.11",
-#)
-#
-#pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
-#pip.parse(
-#    hub_name = "py_tests_deps",
-#    python_version = "3.11",
-#    requirements_lock = "//tests/py:requirements_lock.txt",
-#)
-#use_repo(pip, "py_tests_deps")
+bazel_dep(name = "googletest", version = "1.15.2")
+bazel_dep(name = "platforms", version = "0.0.11")
+bazel_dep(name = "rules_python", version = "1.3.0")
+bazel_dep(name = "pybind11_bazel", version = "2.13.6")
+
+pybind11_configure = use_extension("@pybind11_bazel//:internal_configure.bzl", "internal_configure_extension")
+use_repo(pybind11_configure, "pybind11")
+
+python = use_extension("@rules_python//python/extensions:python.bzl", "python")
+python.toolchain(python_version = "3.11", is_default = True)
+
+pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
+pip.parse(
+    hub_name = "pytest_deps",
+    python_version = "3.11",
+    requirements_lock = "//tests/py:requirements_lock.txt",
+)
+use_repo(pip, "pytest_deps")

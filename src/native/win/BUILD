@@ -1,6 +1,7 @@
 package(default_visibility = ["//visibility:public"])
+load("@pybind11_bazel//:build_defs.bzl", "pybind_library")
 
-cc_library(
+pybind_library(
     name = "screen_reader_impl_win",
     hdrs = [
         ":screen_reader_impl_win.h",
@@ -16,7 +17,7 @@ cc_library(
     ],
 )
 
-cc_library(
+pybind_library(
     name = "vwidget_generator_win",
     hdrs = [
         ":vwidget_generator_win.h",

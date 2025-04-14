@@ -1,6 +1,7 @@
 package(default_visibility = ["//visibility:public"])
 
 load("@pybind11_bazel//:build_defs.bzl", "pybind_extension", "pybind_library")
+load("@rules_python//python:py_library.bzl", "py_library")
 
 cc_library(
     name = "screen_reader",
@@ -17,9 +18,15 @@ pybind_library(
 )
 # Main extension entrypoint - accessed via 'py_screen_reader' module
 pybind_extension(
-    name = "py_screen_reader",
+    name = "py_screen_reader_lib",
     deps = [
         "//src/vwidget:vwidget_bind",
         "//src/api:screen_reader_bind",
     ],
+)
+
+py_library(
+    name = "py_screen_reader",
+    data = [":py_screen_reader_lib"],
+    imports = ["."],
 )

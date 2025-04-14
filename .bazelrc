@@ -1,8 +1,9 @@
 # Enable Bzlmod for every Bazel command
 # startup --windows_enable_symlinks
-# build --enable_runfiles
+build --enable_runfiles
 # common --enable_workspace
-# common --enable_bzlmod
+common --enable_bzlmod
 # build --cxxopt=-"std=c++17"
 # common --skip_incompatible_explicit_targets
 # common --features=external_include_paths
+common --lockfile_mode=update
