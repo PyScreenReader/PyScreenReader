@@ -1,7 +1,7 @@
 #include "src/native/macos/utils/attribute_utils.h"
 
 
-bool safeCFStringGetCString(CFStringRef stringRef, std::string& ptr) {
+bool AttributeUtils::convertCFStringToCPPString(CFStringRef stringRef, std::string& ptr) {
     if (stringRef == nullptr) return false;
     const char *cStr = CFStringGetCStringPtr(stringRef, kCFStringEncodingUTF8);
 

@@ -5,6 +5,48 @@
 #include "src/native/macos/utils/attribute_utils.h"
 
 
+using namespace AttributeUtils;
+
+std::shared_ptr<VirtualWidget> VWidgetGenerator::handleStaticText(AXUIElementRef element) {
+    auto result = std::make_shared<VirtualTextWidget>();
+
+    getAXAttribute<CFStringRef, std::string>(
+            element,
+            kAXValueAttribute,
+            convertCFStringToCPPString,
+            [&](const std::string& text) {
+                result->setTitleText(text);
+            }
+    );
+
+    return result;
+}
+
+std::shared_ptr<VirtualWidget> VWidgetGenerator::handleUnknown(AXUIElementRef element) {
+    return std::make_shared<VirtualUnknownWidget>();
+}
+
+std::shared_ptr<VirtualWidget> VWidgetGenerator::handleButtonLiked(AXUIElementRef element) {
+    auto result = std::make_shared<VirtualButtonWidget>();
+    if (!getAXAttribute<CFStringRef, std::string>(
+            element,
+            kAXTitleAttribute,
+            convertCFStringToCPPString,
+            [&](const std::string& title) {
+                result->setTitleText(title);
+            })) {
+        // if there is no kAXTitleAttribute, let's also try kAXValueAttribute
+        getAXAttribute<CFStringRef, std::string>(
+                element,
+                kAXValueAttribute,
+                convertCFStringToCPPString,
+                [&](const std::string& value) {
+                    result->setTitleText(value);
+                });
+    }
+    return result;
+}
+
 std::shared_ptr<VirtualRootWidget> VWidgetGenerator::generateVWidgetTree(AXUIElementRef rootElement) {
     auto processChildren = [](AXUIElementRef element, auto&& enqueueFunc) {
         CFArrayRef children = nullptr;
@@ -35,6 +77,7 @@ std::shared_ptr<VirtualRootWidget> VWidgetGenerator::generateVWidgetTree(AXUIEle
         q.pop();
 
         auto currVWidget = getVWidget(curr);
+
         if (currVWidget == nullptr) continue;
         currVWidget->setParent(parentVWidget);
         parentVWidget->addChild(currVWidget);
@@ -43,6 +86,7 @@ std::shared_ptr<VirtualRootWidget> VWidgetGenerator::generateVWidgetTree(AXUIEle
         processChildren(curr, [&](AXUIElementRef child) {
             q.emplace(currVWidget, child);
         });
+        CFRelease(curr);
     }
     return root;
 }
@@ -56,7 +100,7 @@ std::shared_ptr<VirtualWidget> VWidgetGenerator::getVWidget(AXUIElementRef eleme
     if (!roleName) return nullptr;
 
     std::string plainRoleName;
-    if (!safeCFStringGetCString(roleName.get(), plainRoleName)) {
+    if (!convertCFStringToCPPString(roleName.get(), plainRoleName)) {
         return nullptr;
     }
 
@@ -65,35 +109,38 @@ std::shared_ptr<VirtualWidget> VWidgetGenerator::getVWidget(AXUIElementRef eleme
         return nullptr;
     }
 
-    std::shared_ptr<VirtualWidget> result = it->second();
+    std::shared_ptr<VirtualWidget> result = it->second(element);
 
-    CFRef<CFBooleanRef> isHidden;
-    CFRef<CFStringRef> helpText;
-    CFRef<CFStringRef> titleText;
+    getAXAttribute<CFBooleanRef, bool>(
+            element,
+            kAXHiddenAttribute,
+            [](CFBooleanRef ref, bool& out) {
+                out = !CFBooleanGetValue(ref); // Negated for visible
+                return true;
+            },
+            [&](bool isVisible) {
+                result->setVisible(isVisible);
+            }
+    );
 
-    CFBooleanRef rawHidden = nullptr;
-    if (safeGetAttribute(element, kAXHiddenAttribute, &rawHidden)) {
-        isHidden.reset(rawHidden);
-        result->setVisible(!CFBooleanGetValue(isHidden.get()));
-    }
+    getAXAttribute<CFStringRef, std::string>(
+            element,
+            kAXHelpAttribute,
+            convertCFStringToCPPString,
+            [&](const std::string& helpText) {
+                result->setHelpText(helpText);
+            }
+    );
 
-    CFStringRef rawHelp = nullptr;
-    if (safeGetAttribute(element, kAXHelpAttribute, &rawHelp)) {
-        helpText.reset(rawHelp);
-        std::string plainHelpText;
-        if (safeCFStringGetCString(helpText.get(), plainHelpText)) {
-            result->setHelpText(plainHelpText);
-        }
-    }
-
-    CFStringRef rawTitle = nullptr;
-    if (safeGetAttribute(element, kAXTitleAttribute, &rawTitle)) {
-        titleText.reset(rawTitle);
-        std::string plainTitleText;
-        if (safeCFStringGetCString(titleText.get(), plainTitleText)) {
-            result->setTitleText(plainTitleText);
-        }
-    }
+    getAXAttribute<CFStringRef, std::string>(
+            element,
+            kAXTitleAttribute,
+            convertCFStringToCPPString,
+            [&](const std::string& title) {
+                result->setTitleText(title);
+            }
+    );
 
     return result;
 }
+
