@@ -6,8 +6,8 @@ load("@rules_python//python:py_library.bzl", "py_library")
 
 compile_pip_requirements(
     name = "requirements",
-    src = "requirements.in",
-    requirements_txt = "requirements_lock.txt",
+    src = "//tests/py:requirements.in",
+    requirements_txt = "//tests/py:requirements_lock.txt",
 )
 
 py_library(
@@ -22,6 +22,13 @@ py_library(
     srcs = [
         "//tests/py:test_utils.py",
     ],
+    deps = [
+        "//tests/py:pytest_constants",
+        requirement("pytest"),
+    ],
+    data = [
+        "//:PyScreenReader",
+    ]
 )
 
 # Attach the so/pyd bindings as data

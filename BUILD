@@ -5,7 +5,7 @@ package(default_visibility = ["//visibility:public"])
 # Compiles C++ native code to .so files
 pybind_extension(
     name = "PyScreenReader",
-    srcs = ["//src:bindings.cpp"],
+    srcs = ["//src:bindings.cpp", "//src/api:screen_reader.cpp",],
     deps = [
         "//src/vwidget:vwidget_bind",
         "//src:bindings_registry",

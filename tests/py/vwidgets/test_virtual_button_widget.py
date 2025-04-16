@@ -1,5 +1,5 @@
 import PyScreenReader as psr
-from test_utils import assert_getters_setters, assert_method_definitions
+from tests.py.test_utils import assert_getters_setters, assert_method_definitions
 
 
 def test_functionality():

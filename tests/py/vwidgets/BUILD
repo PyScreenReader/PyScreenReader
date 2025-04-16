@@ -3,12 +3,6 @@ load("@pytest_deps//:requirements.bzl", "requirement")
 load("@rules_python//python:pip.bzl", "compile_pip_requirements")
 load("@rules_python//python:py_test.bzl", "py_test")
 
-compile_pip_requirements(
-    name = "requirements",
-    src = "requirements.in",
-    requirements_txt = "requirements_lock.txt",
-)
-
 py_test(
     name = "test_inheritance",
     srcs = ["//tests/py/vwidgets:test_inheritance.py"],
