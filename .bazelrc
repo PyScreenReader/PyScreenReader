@@ -2,6 +2,6 @@
 build --enable_runfiles
 common --enable_bzlmod
 common --lockfile_mode=update
-build --copt="/std:c++17"
-# common --enable_platform_specific_config
+common --enable_platform_specific_config
+build:windows --copt="/std:c++17"
 common --skip_incompatible_explicit_targets

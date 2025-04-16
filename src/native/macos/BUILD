@@ -10,7 +10,9 @@ pybind_library(
         ":screen_reader_impl_mac.cpp",
     ],
     deps = [
-        "//src/native/macos/utils:utils"
+        "//src/native/macos/utils:utils",
+        "//src/vwidget/widgets:virtual_components",
+        "//src/native/macos:vwidget_generator",
     ],
 )
 
@@ -23,6 +25,7 @@ pybind_library(
         ":vwidget_generator.cpp",
     ],
     deps = [
-        "//src/native/macos/utils:utils"
+        "//src/native/macos/utils:utils",
+        "//src/vwidget/widgets:virtual_components"
     ],
 )

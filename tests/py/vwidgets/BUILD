@@ -13,37 +13,45 @@ py_test(
     name = "test_inheritance",
     srcs = ["//tests/py/vwidgets:test_inheritance.py"],
     deps = [
-        "//src/api:py_screen_reader",
         requirement("pytest"),
     ],
+    data = [
+      "//:PyScreenReader",
+    ]
 )
 
 py_test(
     name = "test_virtual_button_widget",
     srcs = ["//tests/py/vwidgets:test_virtual_button_widget.py"],
     deps = [
-        "//src/api:py_screen_reader",
         "//tests/py:test_utils",
         requirement("pytest"),
     ],
+    data = [
+      "//:PyScreenReader",
+    ]
 )
 
 py_test(
     name = "test_virtual_container",
     srcs = ["//tests/py/vwidgets:test_virtual_container.py"],
     deps = [
-        "//src/api:py_screen_reader",
         requirement("pytest"),
     ],
+    data = [
+      "//:PyScreenReader",
+    ]
 )
 
 py_test(
     name = "test_virtual_widget",
     srcs = ["//tests/py/vwidgets:test_virtual_widget.py"],
     deps = [
-        "//src/api:py_screen_reader",
         requirement("pytest"),
     ],
+    data = [
+      "//:PyScreenReader",
+    ]
 )
 
 

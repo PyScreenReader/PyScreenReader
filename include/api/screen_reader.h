@@ -6,7 +6,7 @@
 #include <string>
 
 #if defined(__APPLE__)
-#include "src/native/macos/screen_reader_impl.h"
+#include "src/native/macos/screen_reader_impl_mac.h"
 #elif defined(_WIN64) || defined(_WIN32) || defined(__CYGWIN__)
 #include "src/native/win/screen_reader_impl_win.h"
 #endif

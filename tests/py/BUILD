@@ -24,11 +24,14 @@ py_library(
     ],
 )
 
+# Attach the so/pyd bindings as data
 py_test(
     name = "test_screen_reader",
     srcs = ["//tests/py:test_screen_reader.py"],
     deps = [
-        "//src/api:py_screen_reader",
         requirement("pytest"),
     ],
+    data = [
+        "//:PyScreenReader",
+    ]
 )
