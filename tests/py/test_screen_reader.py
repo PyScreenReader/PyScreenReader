@@ -1,4 +1,5 @@
 import PyScreenReader as psr
 
-screen_reader = psr.ScreenReader()
-print(screen_reader.getVirtualWidgetTreeByPID("15126"))
+def test_screen_reader():
+    screen_reader = psr.ScreenReader()
+    print(screen_reader.getVirtualWidgetTreeByPID("15126"))
