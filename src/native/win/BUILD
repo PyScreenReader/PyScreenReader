@@ -10,8 +10,12 @@ pybind_library(
         ":screen_reader_impl_win.cpp",
     ],
     deps = [
-        ":vwidget_generator_win"
+        ":vwidget_generator_win",
     ],
+    linkopts = [
+            "ole32.lib",
+            "oleaut32.lib",
+        ],
 )
 
 pybind_library(
@@ -23,6 +27,6 @@ pybind_library(
         ":vwidget_generator_win.cpp",
     ],
     deps = [
-        "//src/vwidget/widgets:virtual_components"
+        "//src/vwidget/widgets:virtual_components",
     ],
 )

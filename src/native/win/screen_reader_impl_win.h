@@ -1,20 +1,21 @@
 #pragma once
 #include <memory>
 
-#include <windows.h>
-#include <oleacc.h>
-#include <uiautomationclient.h>
-#include <uiautomationcore.h>
-#include <uiautomationcoreapi.h>
-
 #include <string>
 #include "include/vwidget/widgets/virtual_root_widget.h"
+#include <uiautomationclient.h>
 
 class ScreenReaderImpl {
 public:
-    ScreenReaderImpl() = default;
-    ~ScreenReaderImpl() = default;
+    ScreenReaderImpl();
+    ~ScreenReaderImpl();
     [[nodiscard]] std::shared_ptr<VirtualRootWidget> getVirtualWidgetTreeByPID(const std::string &pid) const;
     [[nodiscard]] std::shared_ptr<VirtualRootWidget> getVirtualWidgetTreeByTitle(const std::string &title) const;
     [[nodiscard]] std::shared_ptr<VirtualRootWidget> getVirtualWidgetTreeByClassName(const std::string &className) const;
+private:
+    // HRESULT CleanupScreenReader();
+    // CAUTION: Do not pass in the root (desktop) element. Traversing the entire subtree
+    // of the desktop could take a very long time and even lead to a stack overflow.
+    void ListDescendants(IUIAutomationElement* pParent, int indent, int depth) const;
+    IUIAutomation* automation_;
 };
