@@ -23,6 +23,3 @@ pytest_test(
     name = "test_virtual_widget",
     srcs = ["test_virtual_widget.py"]
 )
-
-
-
