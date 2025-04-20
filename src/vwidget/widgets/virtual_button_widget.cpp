@@ -13,7 +13,7 @@ bool VirtualButtonWidget::isClickable() {
     return true;
 }
 
-void bindVirtualButtonWidget(pybind11::module_ &m) {
+void bindVirtualButtonWidget(py::module_ &m) {
     py::class_<VirtualButtonWidget, VirtualWidget, std::shared_ptr<VirtualButtonWidget>>(m, "VirtualButtonWidget")
         .def(py::init())
         .def("getWidgetName", &VirtualButtonWidget::getWidgetName)

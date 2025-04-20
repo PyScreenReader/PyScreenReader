@@ -1,52 +1,25 @@
 package(default_visibility = ["//visibility:public"])
 load("@pytest_deps//:requirements.bzl", "requirement")
 load("@rules_python//python:pip.bzl", "compile_pip_requirements")
-load("@rules_python//python:py_test.bzl", "py_test")
+load("//tests/py/tools:pytest_defs.bzl", "pytest_test")
 
-py_test(
+pytest_test(
     name = "test_inheritance",
-    srcs = ["//tests/py/vwidgets:test_inheritance.py"],
-    deps = [
-        requirement("pytest"),
-    ],
-    data = [
-      "//:PyScreenReader",
-    ]
+    srcs = ["test_inheritance.py"]
 )
 
-py_test(
+pytest_test(
     name = "test_virtual_button_widget",
-    srcs = ["//tests/py/vwidgets:test_virtual_button_widget.py"],
-    deps = [
-        "//tests/py:test_utils",
-        requirement("pytest"),
-    ],
-    data = [
-      "//:PyScreenReader",
-    ]
+    srcs = ["test_virtual_button_widget.py"],
+    deps = ["//tests/py/tools:test_utils"],
 )
 
-py_test(
+pytest_test(
     name = "test_virtual_container",
-    srcs = ["//tests/py/vwidgets:test_virtual_container.py"],
-    deps = [
-        requirement("pytest"),
-    ],
-    data = [
-      "//:PyScreenReader",
-    ]
+    srcs = ["test_virtual_container.py"],
 )
 
-py_test(
+pytest_test(
     name = "test_virtual_widget",
-    srcs = ["//tests/py/vwidgets:test_virtual_widget.py"],
-    deps = [
-        requirement("pytest"),
-    ],
-    data = [
-      "//:PyScreenReader",
-    ]
+    srcs = ["test_virtual_widget.py"]
 )
-
-
-

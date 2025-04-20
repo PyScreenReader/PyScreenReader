@@ -12,7 +12,7 @@ bool VirtualTextFieldWidget::isClickable() {
     return true;
 }
 
-void bindTextFieldWidget(pybind11::module_ &m) {
+void bindTextFieldWidget(py::module_ &m) {
     py::class_<VirtualTextFieldWidget, VirtualWidget, std::shared_ptr<VirtualTextFieldWidget>>(m, "VirtualTextFieldWidget")
             .def("getWidgetName", &VirtualTextFieldWidget::getWidgetName)
             .def("isClickable", &VirtualTextFieldWidget::isClickable);

@@ -10,7 +10,7 @@ module(
     version = "head",
     repo_name = "PyScreenReader",
 )
-#
+
 bazel_dep(name = "googletest", version = "1.15.2")
 bazel_dep(name = "platforms", version = "0.0.11")
 bazel_dep(name = "rules_python", version = "1.3.0")

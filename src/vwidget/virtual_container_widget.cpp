@@ -18,7 +18,7 @@ std::vector<std::shared_ptr<VirtualWidget>> &VirtualContainerWidget::getChildren
     return children_;
 }
 
-void bindVirtualContainerWidget(pybind11::module &m) {
+void bindVirtualContainerWidget(py::module &m) {
     py::class_<VirtualContainerWidget, VirtualWidget, std::shared_ptr<VirtualContainerWidget>>(m, "VirtualContainerWidget")
             .def("addChild", &VirtualContainerWidget::addChild, py::arg("child"))
             .def("getChildren", &VirtualContainerWidget::getChildren);

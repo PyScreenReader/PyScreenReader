@@ -72,13 +72,14 @@ void VirtualWidget::setVisible(bool visible) {
 std::string VirtualWidget::getRepr() {
     return getWidgetName() + "{title=" + getTitleText() +
            ", helpText=" + getHelpText() +
+           ", isVisible=" + (isVisible() ? "true" : "false") +
            ", x=" + std::to_string(getX()) +
            ", y=" + std::to_string(getY()) +
            ", width=" + std::to_string(getWidth()) +
            ", height=" + std::to_string(getHeight()) + "}";
 }
 
-void bindVirtualWidget(pybind11::module &m) {
+void bindVirtualWidget(py::module &m) {
     py::class_<VirtualWidget, std::shared_ptr<VirtualWidget>>(m, "VirtualWidget")
             .def("getTitleText", &VirtualWidget::getTitleText)
             .def("getHelpText", &VirtualWidget::getHelpText)
