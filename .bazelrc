@@ -1,0 +1,8 @@
+# Enable Bzlmod for every Bazel command
+build --enable_runfiles
+common --enable_bzlmod
+common --lockfile_mode=update
+common --enable_platform_specific_config
+build:windows --copt="/std:c++17"
+common --skip_incompatible_explicit_targets
+build:macos --cxxopt="--std=c++17"

@@ -1,5 +1,5 @@
-#include "vwidget/widgets/virtual_text_field_widget.h"
-#include "bindings_registry.h"
+#include "include/vwidget/widgets/virtual_text_field_widget.h"
+#include "src/bindings_registry.h"
 #include <pybind11/pybind11.h>
 
 namespace py = pybind11;

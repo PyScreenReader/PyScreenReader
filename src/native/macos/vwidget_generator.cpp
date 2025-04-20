@@ -1,8 +1,8 @@
 #include <queue>
 #include <utility>
-#include "vwidget/widgets/virtual_root_widget.h"
-#include "native/macos/vwidget_generator.h"
-#include "native/macos/utils/attribute_utils.h"
+#include "include/vwidget/widgets/virtual_root_widget.h"
+#include "src/native/macos/vwidget_generator.h"
+#include "src/native/macos/utils/attribute_utils.h"
 
 
 
@@ -85,4 +85,3 @@ std::shared_ptr<VirtualWidget> VWidgetGenerator::getVWidget(AXUIElementRef eleme
 
     return result;
 }
-

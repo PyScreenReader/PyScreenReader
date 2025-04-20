@@ -1,6 +1,10 @@
-#include "native/macos/screen_reader_impl.h"
-#include "native/macos/utils/system_utils.h"
-#include "native/macos/vwidget_generator.h"
+#include "src/native/macos/screen_reader_impl_mac.h"
+
+#include <stdexcept>
+
+
+#include "src/native/macos/utils/system_utils.h"
+#include "src/native/macos/vwidget_generator.h"
 
 std::shared_ptr<VirtualRootWidget> ScreenReaderImpl::getVirtualWidgetTreeByPID(const std::string &pid) const {
     if(pid.empty()) {

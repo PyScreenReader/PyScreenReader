@@ -2,7 +2,7 @@ import pytest
 from typing import Type
 import PyScreenReader as psr
 
-from constants import METHOD_NAMES_IN_VIRTUAL_WIDGET_SUBCLASSES
+from tests.py.tools.constants import METHOD_NAMES_IN_VIRTUAL_WIDGET_SUBCLASSES
 
 
 def assert_getters_setters(subclass: Type[psr.VirtualWidget], true_widget_name, true_is_clickable):

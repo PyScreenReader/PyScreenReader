@@ -1,5 +1,10 @@
 #include "bindings_registry.h"
+
+#include <algorithm>
 #include <queue>
+#include <stdexcept>
+#include <string>
+#include <unordered_map>
 
 std::unordered_map<std::string, BindingsRegistry::BindingFunc> &getBindingFuncRegistry() {
     static std::unordered_map<std::string, BindingsRegistry::BindingFunc> bindingFuncRegistry_;

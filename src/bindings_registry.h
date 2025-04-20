@@ -5,6 +5,8 @@
 #include <pybind11/pybind11.h>
 #include <set>
 #include <map>
+#include <memory>
+#include <string>
 
 namespace py = pybind11;
 

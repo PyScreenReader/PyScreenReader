@@ -16,3 +16,14 @@ venv/
 .pytest_cache
 __pycache__/
 
+# Bazel
+.clwb/
+bazel-bin
+bazel-out
+bazel-PyScreenReader
+bazel-testlogs
+bazel-bin/
+bazel-out/
+bazel-PyScreenReader/
+bazel-testlogs/
+MODULE.bazel.lock

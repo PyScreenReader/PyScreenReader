@@ -1,10 +1,9 @@
-#include "api/screen_reader.h"
-#include "bindings_registry.h"
+#include "include/api/screen_reader.h"
+
+#include <stdexcept>
+
+#include "src/bindings_registry.h"
 #include <pybind11/pybind11.h>
-
-// TODO: select header files by platform
-#include "native/macos/screen_reader_impl.h"
-
 
 namespace py = pybind11;
 
