@@ -16,38 +16,23 @@ pybind_extension(
     ],
 )
 
-# Python library wrapper for the .so/.pyd extension
-py_library(
-    name = "pyscreenreader_pylib",
-    srcs = ["__init__.py"],
-    deps = [],
-    data = [":PyScreenReader"],
-    imports = ["."],
-    visibility = ["//visibility:private"],
-)
-
-py_package(
-    name = "pyscreenreader_pkg",
-    visibility = ["//visibility:private"],
-    deps = [":pyscreenreader_pylib"]
-)
-
 # pack the extension to a wheel
 # See Platform Compatibility Tags: https://packaging.python.org/en/latest/specifications/platform-compatibility-tags/
 # See Package Formats: https://packaging.python.org/en/latest/discussions/package-formats/
 # See sysconfig.platform(): https://docs.python.org/3/library/sysconfig.html#sysconfig.get_platform
 py_wheel(
-    name = "pack",
+    name = "wheel",
     abi = "abi3",
     author = "The PyScreenReader Team",
+    license = "MIT",
 
     distribution = "PyScreenReader",
-    license = "MIT",
+# TODO: revisit platform constraints
     platform = select({
         "@platforms//os:macos": "macosx_11_0_universal2",
         "@platforms//os:windows": "win-amd64",
     }),
-    python_tag = "cp311",
+    python_tag = "cp313",
     version = "0.0.1",
     deps = [":PyScreenReader"],
 )
@@ -55,6 +40,6 @@ py_wheel(
 py_wheel_dist(
     name = "dist",
     out = "dist",
-    wheel = ":pack"
+    wheel = ":wheel"
 )
 
