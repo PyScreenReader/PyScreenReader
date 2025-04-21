@@ -9,6 +9,9 @@ PyScreenReader.egg-info/
 env/
 venv/
 
+# PyEnv config
+.python-version
+
 # Idea workspace
 .idea/
 
