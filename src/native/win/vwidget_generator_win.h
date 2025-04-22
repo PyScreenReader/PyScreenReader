@@ -11,7 +11,7 @@
 #include "include/vwidget/widgets/virtual_text_field_widget.h"
 #include "include/vwidget/widgets/virtual_menu_group_widget.h"
 #include "include/vwidget/widgets/virtual_root_widget.h"
-
+#include <uiautomationclient.h>
 
 namespace VWidgetGenerator {
     /**
@@ -57,7 +57,7 @@ namespace VWidgetGenerator {
     };
 
 
-    std::shared_ptr<VirtualRootWidget> generateVWidgetTree(std::string rootElement);
+    std::shared_ptr<VirtualRootWidget> generateVWidgetTree(IUIAutomationElement* rootElement);
 
-    std::shared_ptr<VirtualWidget> getVWidget(std::string element);
+    std::shared_ptr<VirtualWidget> getVWidget(IUIAutomationElement* element);
 }

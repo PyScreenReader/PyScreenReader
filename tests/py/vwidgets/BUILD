@@ -23,3 +23,8 @@ pytest_test(
     name = "test_virtual_widget",
     srcs = ["test_virtual_widget.py"]
 )
+
+pytest_test(
+    name = "test_virtual_unknown_widget",
+    srcs = ["test_virtual_unknown_widget.py"]
+)
