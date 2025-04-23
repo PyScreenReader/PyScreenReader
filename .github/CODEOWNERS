@@ -1,0 +1,7 @@
+
+* @Lmh-java @Andrewyx
+
+# Andrew reviews Windows-related changes
+# Minghao reviews MacOS-related changes
+src/native/win @Andrewyx
+src/native/macos @Lmh-java
