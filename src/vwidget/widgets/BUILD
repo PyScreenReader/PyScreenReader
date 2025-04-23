@@ -18,6 +18,8 @@ pybind_library(
         "//src/vwidget/widgets:virtual_menu_item_widget.cpp",
         "//src/vwidget/widgets:virtual_text_field_widget.cpp",
         "//src/vwidget/widgets:virtual_text_widget.cpp",
+        "//src/vwidget/widgets:virtual_window_widget.cpp",
+        "//src/vwidget/widgets:virtual_unknown_wiget.cpp",
     ],
     deps = [
         "//src/vwidget:virtual_widget",

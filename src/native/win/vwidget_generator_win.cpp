@@ -1,39 +1,49 @@
 #include "src/native/win/vwidget_generator_win.h"
 
 #include <queue>
+#include <stdexcept>
 #include <utility>
 
-std::shared_ptr<VirtualRootWidget> VWidgetGenerator::generateVWidgetTree(IUIAutomationElement* rootElement) {
-    auto root = std::make_shared<VirtualRootWidget>();
-    std::queue<std::pair<std::shared_ptr<VirtualWidget>, IUIAutomationElement*>> q;
+#include "include/vwidget/widgets/virtual_window_widget.h"
 
-    q.emplace(root, rootElement);
+namespace generator
+{
+    std::shared_ptr<VirtualRootWidget> generator::GenerateVWidgetTree(
+        IUIAutomationElement* root_element, const std::shared_ptr<IUIAutomationTreeWalker>& tree_walker)
+    {
+        auto root = std::make_shared<VirtualRootWidget>();
+        std::queue<std::pair<std::shared_ptr<VirtualWidget>, IUIAutomationElement*>> q;
+        q.emplace(root, root_element);
 
-    while (!q.empty()) {
-        auto [parentVWidget, curr] = q.front();
-        q.pop();
+        while (!q.empty())
+        {
+            // This is the first child of the clade
+            auto [parent_vwidget, curr] = q.front();
+            q.pop();
 
-        auto currVWidget = getVWidget(curr);
-        if (currVWidget == nullptr) continue;
-        currVWidget->setParent(parentVWidget);
-        parentVWidget->addChild(currVWidget);
+            std::shared_ptr<VirtualWidget> curr_vwidget = nullptr;
+            IUIAutomationElement* next_sibling = curr;
+            IUIAutomationElement* first_child_element = nullptr;
+            while (next_sibling != nullptr)
+            {
+                // Check next sibling, add their first child to queue and bind parent/child
+                curr_vwidget = MakeVWidget(next_sibling);
+                curr_vwidget->setParent(parent_vwidget);
+                parent_vwidget->addChild(curr_vwidget);
 
-        if (!parentVWidget->isVisible()) currVWidget->setVisible(false);
-
-        // CFArrayRef cfChildrenArray = nullptr;
-        // if (!safeGetAttribute(curr, kAXChildrenAt    tribute, &cfChildrenArray)) continue;
-        //
-        // CFIndex count = CFArrayGetCount(cfChildrenArray);
-        // for (CFIndex i = 0; i < count; i++) {
-        //     auto child = (AXUIElementRef) CFArrayGetValueAtIndex(cfChildrenArray, i);
-        //     q.emplace(currVWidget, child);
-        // }
+                if (S_OK == tree_walker->GetFirstChildElement(next_sibling, &first_child_element) &&
+                    first_child_element)
+                {
+                    q.emplace(curr_vwidget, first_child_element);
+                }
+                tree_walker->GetNextSiblingElement(curr, &next_sibling);
+            }
+        }
+        return root;
     }
-    return root;
-}
 
-std::shared_ptr<VirtualWidget> VWidgetGenerator::getVWidget(IUIAutomationElement* element) {
-    auto result = nullptr;
-    return result;
+    std::shared_ptr<VirtualWidget> generator::MakeVWidget(IUIAutomationElement* element)
+    {
+        return std::make_shared<VirtualWindowWidget>();
+    }
 }
-
