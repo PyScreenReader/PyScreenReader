@@ -1,5 +1,6 @@
 #include "src/native/win/vwidget_generator_win.h"
 
+#include <iostream>
 #include <queue>
 #include <stdexcept>
 #include <utility>
@@ -22,21 +23,21 @@ namespace generator
             q.pop();
 
             std::shared_ptr<VirtualWidget> curr_vwidget = nullptr;
-            IUIAutomationElement* next_sibling = curr;
+            IUIAutomationElement* current_element = curr;
             IUIAutomationElement* first_child_element = nullptr;
-            while (next_sibling != nullptr)
+            while (current_element)
             {
                 // Check next sibling, add their first child to queue and bind parent/child
-                curr_vwidget = MakeVWidget(next_sibling);
+                curr_vwidget = MakeVWidget(current_element);
                 curr_vwidget->setParent(parent_vwidget);
                 parent_vwidget->addChild(curr_vwidget);
 
-                if (S_OK == tree_walker->GetFirstChildElement(next_sibling, &first_child_element) &&
+                if (tree_walker->GetFirstChildElement(current_element, &first_child_element) == S_OK &&
                     first_child_element)
                 {
                     q.emplace(curr_vwidget, first_child_element);
                 }
-                tree_walker->GetNextSiblingElement(curr, &next_sibling);
+                tree_walker->GetNextSiblingElement(current_element, &current_element);
             }
         }
         return root;
@@ -44,6 +45,7 @@ namespace generator
 
     std::shared_ptr<VirtualWidget> generator::MakeVWidget(IUIAutomationElement* element)
     {
+        std::cout << "MADE ELEMENT" << std::endl;
         return std::make_shared<VirtualWindowWidget>();
     }
 }

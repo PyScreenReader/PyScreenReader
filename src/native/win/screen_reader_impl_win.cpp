@@ -115,6 +115,7 @@ namespace screen_reader
 
         std::shared_ptr<VirtualRootWidget> root = generator::GenerateVWidgetTree(
             pid_match, std::shared_ptr<IUIAutomationTreeWalker>(tree_walker));
+
         pid_match->Release();
         tree_walker->Release();
         return root;
