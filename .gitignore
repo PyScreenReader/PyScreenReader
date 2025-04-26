@@ -27,3 +27,6 @@ bazel-out/
 bazel-PyScreenReader/
 bazel-testlogs/
 MODULE.bazel.lock
+
+# PyEnv
+.python-version
