@@ -3,6 +3,7 @@
 #include <CoreFoundation/CoreFoundation.h>
 #include <ApplicationServices/ApplicationServices.h>
 #include <string>
+#include <functional>
 
 namespace AttributeUtils {
 /**
