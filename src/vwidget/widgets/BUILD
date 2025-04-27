@@ -10,9 +10,9 @@ pybind_library(
         "//include/vwidget/widgets:virtual_menu_item_widget.h",
         "//include/vwidget/widgets:virtual_text_field_widget.h",
         "//include/vwidget/widgets:virtual_text_widget.h",
-        "//include/vwidget/widgets:virtual_window_widget.h",
-        "//include/vwidget/widgets:virtual_unknown_widget.h",
         "//include/vwidget/widgets:virtual_group_widget.h",
+        "//include/vwidget/widgets:virtual_unknown_widget.h",
+        "//include/vwidget/widgets:virtual_window_widget.h",
     ],
     srcs = glob(["*.cpp"]),
     deps = [

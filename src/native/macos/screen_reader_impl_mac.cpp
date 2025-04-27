@@ -8,6 +8,7 @@
 namespace screen_reader
 {
     std::shared_ptr<VirtualRootWidget> ScreenReaderImpl::getVirtualWidgetTreeByPID(const std::string &pid) const {
+        // TODO: improve memory management
         if(pid.empty()) {
             throw std::invalid_argument("PID cannot be empty");
         }
