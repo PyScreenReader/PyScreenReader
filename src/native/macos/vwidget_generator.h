@@ -14,6 +14,9 @@
 #include "include/vwidget/widgets/virtual_text_field_widget.h"
 #include "include/vwidget/widgets/virtual_menu_group_widget.h"
 #include "include/vwidget/widgets/virtual_root_widget.h"
+#include "include/vwidget/widgets/virtual_unknown_widget.h"
+#include "include/vwidget/widgets/virtual_window_widget.h"
+#include "include/vwidget/widgets/virtual_group_widget.h"
 
 namespace VWidgetGenerator
 {
@@ -30,6 +33,8 @@ namespace VWidgetGenerator
     inline const std::string MENU_BAR_ITEM_ROLE_ID = "kAXMenuBarItemRole";
     inline const std::string MENU_BAR_ROLE_ID = "kAXMenuBarRole";
     inline const std::string WINDOW_ROLE_ID = "kAXWindowRole";
+    inline const std::string GROUP_ROLE_ID = "kAXGroupRole";
+    inline const std::string UNKNOWN_ROLE_ID = "kAXUnknownRole";
 
     /**
      * A set of current supported roles
@@ -45,6 +50,8 @@ namespace VWidgetGenerator
         MENU_BAR_ITEM_ROLE_ID,
         MENU_BAR_ROLE_ID,
         WINDOW_ROLE_ID,
+        GROUP_ROLE_ID,
+        UNKNOWN_ROLE_ID,
     };
 
     inline const std::unordered_map<std::string, std::function<std::shared_ptr<VirtualWidget>()>> ROLE_TO_VWIDGET_MAP =
@@ -57,7 +64,10 @@ namespace VWidgetGenerator
         {RADIO_BUTTON_ROLE_ID, []() { return std::make_shared<VirtualButtonWidget>(); }},
         {STATIC_TEXT_ROLE_ID, []() { return std::make_shared<VirtualTextWidget>(); }},
         {TEXT_FIELD_ROLE_ID, []() { return std::make_shared<VirtualTextFieldWidget>(); }},
-        {MENU_BAR_ROLE_ID, []() { return std::make_shared<VirtualMenuGroupWidget>(); }}
+        {MENU_BAR_ROLE_ID, []() { return std::make_shared<VirtualMenuGroupWidget>(); }},
+        {WINDOW_ROLE_ID, []() { return std::make_shared<VirtualWindowWidget>(); }},
+        {GROUP_ROLE_ID, []() { return std::make_shared<VirtualGroupWidget>(); }},
+        {UNKNOWN_ROLE_ID, []() { return std::make_shared<VirtualUnknownWidget>(); }}
     };
 
     std::shared_ptr<VirtualRootWidget> generateVWidgetTree(AXUIElementRef rootElement);
