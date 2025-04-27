@@ -103,7 +103,7 @@ namespace screen_reader
         varProp.intVal = std::stoi(pid);
 
         // Find the top COM element with the matching PID
-        IUIAutomationCondition* pid_condition;
+        IUIAutomationCondition* pid_condition = nullptr;
         IUIAutomationElement* pid_match = nullptr;
         HRESULT hr = automation_->CreatePropertyCondition(UIA_ProcessIdPropertyId, varProp, &pid_condition);
         if (FAILED(hr) || !pid_condition) throw std::runtime_error("Failed CreatePropertyCondition");
@@ -111,12 +111,14 @@ namespace screen_reader
         if (FAILED(hr) || !pid_match) throw std::runtime_error("Failed could not find process");
 
         IUIAutomationTreeWalker* tree_walker = nullptr;
-        automation_->get_ContentViewWalker(&tree_walker);
+        hr = automation_->get_ContentViewWalker(&tree_walker);
+        if (FAILED(hr)) throw std::runtime_error("Failed could not get tree walker");
 
         std::shared_ptr<VirtualRootWidget> root = generator::GenerateVWidgetTree(
-            pid_match, std::shared_ptr<IUIAutomationTreeWalker>(tree_walker));
+            pid_match, tree_walker);
 
         pid_match->Release();
+        pid_condition->Release();
         tree_walker->Release();
         return root;
     }

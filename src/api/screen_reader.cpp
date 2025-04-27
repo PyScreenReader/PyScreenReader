@@ -8,7 +8,7 @@
 namespace py = pybind11;
 
 std::shared_ptr<VirtualRootWidget> ScreenReader::getVirtualWidgetTreeByPID(const std::string &pid) const {
-    return screenReaderImpl.getVirtualWidgetTreeByPID(pid);
+    return screen_reader_impl_.getVirtualWidgetTreeByPID(pid);
 }
 
 std::shared_ptr<VirtualRootWidget> ScreenReader::getVirtualWidgetTreeByTitle(const std::string &title) const {

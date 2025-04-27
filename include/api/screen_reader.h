@@ -42,5 +42,5 @@ public:
     std::shared_ptr<VirtualRootWidget> getVirtualWidgetTreeByClassName(const std::string &className) const;
 
 private:
-    screen_reader::ScreenReaderImpl screenReaderImpl;
+    screen_reader::ScreenReaderImpl screen_reader_impl_;
 };

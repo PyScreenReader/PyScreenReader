@@ -59,7 +59,7 @@ namespace generator
 
 
     std::shared_ptr<VirtualRootWidget> GenerateVWidgetTree(IUIAutomationElement* root_element,
-                                                           const std::shared_ptr<IUIAutomationTreeWalker>& tree_walker);
+                                                           IUIAutomationTreeWalker* tree_walker);
 
-    std::shared_ptr<VirtualWidget> MakeVWidget(IUIAutomationElement* element);
+    std::shared_ptr<VirtualWidget> CreateVirtualWidget(IUIAutomationElement* element);
 }

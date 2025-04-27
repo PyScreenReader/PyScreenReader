@@ -17,7 +17,7 @@ namespace screen_reader
             throw std::runtime_error("Failed to create AXUIElement");
         }
 
-        std::shared_ptr<VirtualRootWidget> root = VWidgetGenerator::generateVWidgetTree(axuiElement);
+        std::shared_ptr<VirtualRootWidget> root = generator::generateVWidgetTree(axuiElement);
         CFRelease(axuiElement);
         return root;
     }

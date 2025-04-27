@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include "vwidget/virtual_container_widget.h"
+#include "include/vwidget/virtual_container_widget.h"
 
 class VirtualGroupWidget : public VirtualContainerWidget {
 public:

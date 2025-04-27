@@ -15,7 +15,7 @@
 #include "include/vwidget/widgets/virtual_menu_group_widget.h"
 #include "include/vwidget/widgets/virtual_root_widget.h"
 
-namespace VWidgetGenerator
+namespace generator
 {
     /**
      * List of role id constants

@@ -18,7 +18,7 @@ namespace screen_reader
         // CAUTION: Do not pass in the root (desktop) element. Traversing the entire subtree
         // of the desktop could take a very long time and even lead to a stack overflow.
         void ListDescendants(IUIAutomationElement* pParent, int indent, int depth) const;
-        std::unique_ptr<IUIAutomation> automation_;
+        IUIAutomation* automation_;
         IUIAutomationElement* root_element_;
     };
 }
