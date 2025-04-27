@@ -44,56 +44,6 @@ namespace screen_reader
         }
     }
 
-    void ScreenReaderImpl::ListDescendants(IUIAutomationElement* pParent, int indent, int depth) const
-    {
-        if (pParent == nullptr || depth <= 0)
-            return;
-
-        IUIAutomationTreeWalker* pControlWalker = nullptr;
-        IUIAutomationElement* pNode = nullptr;
-
-        automation_->get_ControlViewWalker(&pControlWalker);
-        if (pControlWalker == nullptr) return;
-
-        pControlWalker->GetFirstChildElement(pParent, &pNode);
-        if (pNode == nullptr)
-        {
-            if (pControlWalker != nullptr)
-                pControlWalker->Release();
-            return;
-        }
-
-        while (pNode)
-        {
-            BSTR type;
-            BSTR name;
-            CONTROLTYPEID type_id;
-            int pid;
-            pNode->get_CurrentLocalizedControlType(&type);
-            pNode->get_CurrentName(&name);
-            pNode->get_CurrentProcessId(&pid);
-            pNode->get_CurrentControlType(&type_id);
-
-            for (int x = 0; x <= indent; x++)
-            {
-                printf("   ");
-            }
-            printf("%S --> %S, TypeID: %d, PID: %d \n", type, name, type_id, pid);
-            SysFreeString(type);
-            SysFreeString(name);
-
-            ListDescendants(pNode, indent + 1, depth - 1);
-            IUIAutomationElement* pNext;
-            pControlWalker->GetNextSiblingElement(pNode, &pNext);
-            pNode->Release();
-            pNode = pNext;
-        }
-        if (pControlWalker != nullptr)
-            pControlWalker->Release();
-        if (pNode != nullptr)
-            pNode->Release();
-    }
-
     std::shared_ptr<VirtualRootWidget> ScreenReaderImpl::getVirtualWidgetTreeByPID(const std::string& pid) const
     {
         if (pid.empty()) throw std::invalid_argument("PID cannot be empty");
@@ -102,23 +52,23 @@ namespace screen_reader
         varProp.vt = VT_INT;
         varProp.intVal = std::stoi(pid);
 
+        IUIAutomationCondition* match_condition = nullptr;
+        IUIAutomationElement* matched_element = nullptr;
         // Find the top COM element with the matching PID
-        IUIAutomationCondition* pid_condition = nullptr;
-        IUIAutomationElement* pid_match = nullptr;
-        HRESULT hr = automation_->CreatePropertyCondition(UIA_ProcessIdPropertyId, varProp, &pid_condition);
-        if (FAILED(hr) || !pid_condition) throw std::runtime_error("Failed CreatePropertyCondition");
-        hr = root_element_->FindFirst(TreeScope_Children, pid_condition, &pid_match);
-        if (FAILED(hr) || !pid_match) throw std::runtime_error("Failed could not find process");
+        HRESULT hr = automation_->CreatePropertyCondition(UIA_ProcessIdPropertyId, varProp, &match_condition);
+        if (FAILED(hr) || !match_condition) throw std::runtime_error("Failed CreatePropertyCondition");
+        hr = root_element_->FindFirst(TreeScope_Children, match_condition, &matched_element);
+        if (FAILED(hr) || !matched_element) throw std::runtime_error("Failed could not find process");
 
         IUIAutomationTreeWalker* tree_walker = nullptr;
         hr = automation_->get_ContentViewWalker(&tree_walker);
         if (FAILED(hr)) throw std::runtime_error("Failed could not get tree walker");
 
         std::shared_ptr<VirtualRootWidget> root = generator::GenerateVWidgetTree(
-            pid_match, tree_walker);
+            matched_element, tree_walker);
 
-        pid_match->Release();
-        pid_condition->Release();
+        matched_element->Release();
+        match_condition->Release();
         tree_walker->Release();
         return root;
     }

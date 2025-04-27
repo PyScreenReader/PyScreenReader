@@ -4,7 +4,7 @@ load("@pybind11_bazel//:build_defs.bzl", "pybind_library_test")
 pybind_library_test(
     name = "test_screen_reader",
     size = "small",
-    srcs = ["//tests/gtest:test_screen_reader.cpp"],
+    srcs = ["//src/native/win/gtest:test_screen_reader.cpp"],
     deps = [
         "//src/api:screen_reader",
         "@googletest//:gtest",

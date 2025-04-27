@@ -5,8 +5,6 @@
 #include <stdexcept>
 #include <utility>
 
-#include "include/vwidget/widgets/virtual_window_widget.h"
-
 namespace generator
 {
     std::shared_ptr<VirtualRootWidget> generator::GenerateVWidgetTree(
@@ -45,6 +43,12 @@ namespace generator
 
     std::shared_ptr<VirtualWidget> generator::CreateVirtualWidget(IUIAutomationElement* element)
     {
-        return std::make_shared<VirtualWindowWidget>();
+        CONTROLTYPEID type_id;
+        element->get_CurrentControlType(&type_id);
+        auto it = VIRTUAL_WIDGET_FACTORY.find(type_id);
+        if (it == VIRTUAL_WIDGET_FACTORY.end()) throw std::runtime_error("Unknown control type");
+
+        std::shared_ptr<VirtualWidget> result = it->second(element);
+        return result;
     }
 }
