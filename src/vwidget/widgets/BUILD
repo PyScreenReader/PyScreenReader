@@ -10,6 +10,9 @@ pybind_library(
         "//include/vwidget/widgets:virtual_menu_item_widget.h",
         "//include/vwidget/widgets:virtual_text_field_widget.h",
         "//include/vwidget/widgets:virtual_text_widget.h",
+        "//include/vwidget/widgets:virtual_group_widget.h",
+        "//include/vwidget/widgets:virtual_unknown_widget.h",
+        "//include/vwidget/widgets:virtual_window_widget.h",
     ],
     srcs = [
         "//src/vwidget/widgets:virtual_root_widget.cpp",
@@ -18,6 +21,9 @@ pybind_library(
         "//src/vwidget/widgets:virtual_menu_item_widget.cpp",
         "//src/vwidget/widgets:virtual_text_field_widget.cpp",
         "//src/vwidget/widgets:virtual_text_widget.cpp",
+        "//src/vwidget/widgets:virtual_group_widget.cpp",
+        "//src/vwidget/widgets:virtual_unknown_widget.cpp",
+        "//src/vwidget/widgets:virtual_window_widget.cpp",
     ],
     deps = [
         "//src/vwidget:virtual_widget",
