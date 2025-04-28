@@ -14,8 +14,5 @@ repos:
     hooks:
       - id: clang-format
         args: [--style=Google]
-      - id: cppcheck
-#      - id: clang-tidy
-#        files: \.(cpp|hpp|cc|hh|cxx|hxx)$
-#        args: ["-p=.", "--extra-arg=-Wno-everything", "--quiet"]
-      - id: cpplint
+      - id: clang-tidy
+        files: \.(cpp|hpp|cc|hh|cxx|hxx)$
