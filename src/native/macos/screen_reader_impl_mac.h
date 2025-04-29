@@ -4,12 +4,15 @@
 
 #include "include/vwidget/widgets/virtual_root_widget.h"
 
-class ScreenReaderImpl
+namespace screen_reader
 {
-public:
-    ScreenReaderImpl() = default;
-    ~ScreenReaderImpl() = default;
-    static std::shared_ptr<VirtualRootWidget> getVirtualWidgetTreeByPID(const std::string& pid);
-    static std::shared_ptr<VirtualRootWidget> getVirtualWidgetTreeByTitle(const std::string& title);
-    static std::shared_ptr<VirtualRootWidget> getVirtualWidgetTreeByClassName(const std::string& className);
-};
+    class ScreenReaderImpl
+    {
+    public:
+        ScreenReaderImpl() = default;
+        ~ScreenReaderImpl() = default;
+        std::shared_ptr<VirtualRootWidget> getVirtualWidgetTreeByPID(const std::string& pid) const;
+        std::shared_ptr<VirtualRootWidget> getVirtualWidgetTreeByTitle(const std::string& title) const;
+        std::shared_ptr<VirtualRootWidget> getVirtualWidgetTreeByClassName(const std::string& className) const;
+    };
+}

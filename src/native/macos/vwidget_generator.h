@@ -1,8 +1,10 @@
 #pragma once
 
+#include <unordered_map>
 #include <CoreFoundation/CoreFoundation.h>
 #include <ApplicationServices/ApplicationServices.h>
 #include <unordered_set>
+#include <functional>
 #include "include/vwidget/virtual_widget.h"
 #include "include/vwidget/widgets/virtual_button_widget.h"
 #include "include/vwidget/widgets/virtual_menu_item_widget.h"
@@ -15,7 +17,7 @@
 #include "include/vwidget/widgets/virtual_unknown_widget.h"
 
 
-namespace VWidgetGenerator {
+namespace generator {
     /**
      * List of role id constants
      *

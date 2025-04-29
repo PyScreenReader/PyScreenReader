@@ -25,6 +25,6 @@ pytest_test(
 )
 
 pytest_test(
-    name = "test_unknown_widget",
+    name = "test_virtual_unknown_widget",
     srcs = ["test_virtual_unknown_widget.py"]
 )
