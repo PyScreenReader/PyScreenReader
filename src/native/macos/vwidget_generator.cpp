@@ -44,7 +44,7 @@ namespace generator
                     [&](const std::string& value) {
                         result->setTitleText(value);
                     });
-                }
+        }
         return result;
     }
 
@@ -55,7 +55,7 @@ namespace generator
                 || !children
                 || CFArrayGetCount(children) == 0) {
                 return;
-                }
+            }
 
             std::unique_ptr<std::remove_pointer_t<CFTypeRef>, decltype(&CFRelease)> childrenGuard(reinterpret_cast<CFTypeRef>(children), CFRelease);
 
