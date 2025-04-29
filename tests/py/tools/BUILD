@@ -32,3 +32,10 @@ py_library(
         "//:PyScreenReader",
     ]
 )
+
+py_library(
+    name = "e2e_test_case_process",
+    srcs = [
+        "e2e_test_case_process.py"
+    ]
+)
