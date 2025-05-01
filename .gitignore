@@ -30,3 +30,6 @@ MODULE.bazel.lock
 
 # PyEnv
 .python-version
+
+# Compile commands
+compile_commands.json
