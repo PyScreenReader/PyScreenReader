@@ -1,0 +1,50 @@
+name: Path Check on PR
+
+on: [pull_request]
+
+jobs:
+  check-paths:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get list of changed files
+        uses: tj-actions/changed-files@v46
+        id: changed-files
+
+      - name: Check if both paths are modified
+        id: path-check
+        run: |
+          echo "Checking if both vwidgets and native implementations are modified..."
+          modified_vwidgets=false
+          modified_native=false
+
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            if [[ "$file" == src/vwidget/* || "$file" == include/vwidget/* ]]; then
+              modified_vwidgets=true
+            elif [[ "$file" == src/native/* ]]; then
+              modified_native=true
+            fi
+          done
+
+          echo "vwidgets modified: $modified_vwidgets"
+          echo "native modified: $modified_native"
+
+          if [[ "$modified_vwidgets" == true && "$modified_native" == true ]]; then
+            echo "Please avoid mixing virtual widget changes with native system support changes in the same PR."
+            echo ""
+            echo "Virtual widgets are shared across all platforms. Making changes to them can:"
+            echo "1. Block teammates working on native support, since we aim to minimize the development window for vwidgets."
+            echo "2. Introduce breaking changes to native platform support, requiring more extensive review and testing."
+            echo ""
+            echo "both_modified=true" >> $GITHUB_OUTPUT
+          else
+            echo "✅ Only one or neither path was modified."
+            echo "both_modified=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Fail if both paths were modified
+        if: steps.path-check.outputs.both_modified == 'true'
+        run: |
+          echo "❌ Error: Avoid mixing virtual widget changes and native system support changes in a single PR."
+          exit 1
