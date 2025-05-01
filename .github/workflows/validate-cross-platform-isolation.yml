@@ -1,4 +1,4 @@
-name: Path Check on PR
+name: validate-cross-platform-isolation
 
 on: [pull_request]
 
