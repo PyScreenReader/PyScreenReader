@@ -1,9 +1,11 @@
 import os.path
+import sys
 from signal import SIGTERM
 import subprocess
 import time
 from subprocess import Popen
 
+from bazel_tools.tools.python.runfiles import runfiles
 
 class E2ETestCaseProcess:
     """
@@ -20,7 +22,7 @@ class E2ETestCaseProcess:
     """
 
     TERMINATION_TIMEOUT_S = 5  # 5 seconds
-    BOOTSTRAP_DELAY_S = 3      # 3 seconds
+    BOOTSTRAP_DELAY_S = 20      # 3 seconds
 
     def __init__(self, case_name: str):
         """
@@ -33,8 +35,15 @@ class E2ETestCaseProcess:
         self.popen_process: Popen | None = None
 
     def __enter__(self) -> str:
+        # Figure out the path of the binary target inside bazel sandbox
+        r = runfiles.Create()
+        binary_path = r.Rlocation(f"_main/tests/e2e_cases/{self.case_name}")
+        if not os.path.exists(binary_path):
+            # If this is raised, please check if in your pytest BUILD file, do you have the e2e target in `data`
+            raise FileNotFoundError("E2E test target not found, did you forget to add it to your test BUILD target?")
+
         # Start the subprocess running the target script
-        self.popen_process = subprocess.Popen(['python', self.target_path])
+        self.popen_process = subprocess.Popen([binary_path])
         # Wait briefly to allow the process to initialize (e.g., spin up GUI)
         time.sleep(E2ETestCaseProcess.BOOTSTRAP_DELAY_S)
         return str(self.popen_process.pid)

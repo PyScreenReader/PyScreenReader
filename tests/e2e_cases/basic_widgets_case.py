@@ -1,11 +1,11 @@
 import sys
-from PyQt5.QtWidgets import (
+from PySide6.QtWidgets import (
     QApplication, QWidget, QPushButton, QLabel, QLineEdit, QTextEdit,
     QCheckBox, QRadioButton, QComboBox, QSlider, QProgressBar,
     QDateEdit, QTableWidget, QTableWidgetItem, QTreeWidget, QTreeWidgetItem,
     QVBoxLayout, QSpinBox
 )
-from PyQt5.QtCore import Qt, QDate
+from PySide6.QtCore import Qt, QDate
 
 class BasicWidgetsCase(QWidget):
     """
@@ -24,7 +24,7 @@ class BasicWidgetsCase(QWidget):
     """
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("All Basic Controls Demo")
+        self.setWindowTitle("Demo Title")
         self.setMinimumSize(600, 600)
 
         layout = QVBoxLayout()

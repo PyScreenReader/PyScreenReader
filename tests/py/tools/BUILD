@@ -37,5 +37,8 @@ py_library(
     name = "e2e_test_case_process",
     srcs = [
         "e2e_test_case_process.py"
+    ],
+    deps = [
+        "@bazel_tools//tools/python/runfiles"
     ]
 )
