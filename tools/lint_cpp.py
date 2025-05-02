@@ -12,6 +12,7 @@ from clang_tidy import _run
 CPP_EXTENSIONS = frozenset((".h", ".hpp", ".c", ".cpp", ".cc"))
 BAZEL_WORKSPACE_ENV_KEY = "BUILD_WORKSPACE_DIRECTORY"
 CLANG_TIDY_NAME = "clang-tidy"
+SOURCE_FILE_DIRS = frozenset(("src", "include", "tests"))
 
 
 def _find_platform_dependent_args() -> List[str]:
@@ -78,10 +79,11 @@ def _collect_source_files(project_root: Path) -> List[os.PathLike]:
     :return: a list of source files to lint
     """
     source_files = []
-    for root, _, files in os.walk(project_root / "src"):
-        for file in files:
-            if Path(file).suffix in CPP_EXTENSIONS:
-                source_files.append(Path(root) / file)
+    for src_dir in SOURCE_FILE_DIRS:
+        for root, _, files in os.walk(project_root / src_dir):
+            for file in files:
+                if Path(file).suffix in CPP_EXTENSIONS:
+                    source_files.append(Path(root) / file)
     return source_files
 
 
