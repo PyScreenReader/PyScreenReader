@@ -19,7 +19,7 @@ bazel_dep(name = "bazel_skylib", version = "1.7.1")
 
 # hedron_compile_commands is used to build compilation database for linters
 # run `bazel run @hedron_compile_commands//:refresh_all`
-# TODO: move this to a separate documentation (Issue #15)
+# TODO (Issue #15): also write this to a separate documentation
 bazel_dep(name = "hedron_compile_commands", dev_dependency = True, version = "1.0.5")
 
 git_override(
@@ -35,9 +35,19 @@ python = use_extension("@rules_python//python/extensions:python.bzl", "python")
 python.toolchain(python_version = "3.11", is_default = True)
 
 pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
+
+# Python test environment
 pip.parse(
-    hub_name = "pytest_deps",
+    hub_name = "pytest_env",
     python_version = "3.11",
     requirements_lock = "//tests/py:requirements_lock.txt",
 )
-use_repo(pip, "pytest_deps")
+
+# Python Dev tools environment
+pip.parse(
+    hub_name = "dev_tools_env",
+    python_version = "3.11",
+    requirements_lock = "//tools:requirements_lock.txt",
+)
+
+use_repo(pip, "pytest_env", "dev_tools_env")

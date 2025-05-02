@@ -1,5 +1,4 @@
 package(default_visibility = ["//visibility:public"])
-load("@pytest_deps//:requirements.bzl", "requirement")
 load("@rules_python//python:pip.bzl", "compile_pip_requirements")
 load("//tests/py/tools:pytest_defs.bzl", "pytest_test")
 
