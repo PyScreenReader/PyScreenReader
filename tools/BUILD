@@ -25,10 +25,9 @@ py_binary(
     srcs = ["lint_cpp.py"],
     deps = [
         requirement("clang-tidy"),
-        "@rules_python//python/runfiles",
+        "@bazel_tools//tools/python/runfiles",
     ],
     data = [
         ":refresh_compile_commands",
-        "//:compile_commands.json"
     ]
 )

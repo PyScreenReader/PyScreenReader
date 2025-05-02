@@ -12,5 +12,3 @@ pybind_extension(
         "//src/api:screen_reader",
     ],
 )
-
-exports_files(["compile_commands.json"])

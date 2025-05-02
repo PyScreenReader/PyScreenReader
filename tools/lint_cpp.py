@@ -4,6 +4,8 @@ import subprocess
 from pathlib import Path
 from typing import List
 
+from bazel_tools.tools.python.runfiles import runfiles
+
 # We have to do import _run to get this work, although it is a member func
 from clang_tidy import _run
 
@@ -49,17 +51,23 @@ def _find_platform_dependent_args() -> List[str]:
     return []
 
 
-def _find_compile_commands(project_root: Path) -> os.PathLike:
+def _generate_compile_commands(project_root: Path) -> os.PathLike:
     """
-    Find compile database and return the path
+    Generate compile database and return the path
 
     :param project_root: project root path
     :return: compile database path
     """
-    path = project_root / "compile_commands.json"
-    if not path.exists():
-        raise FileNotFoundError(f"compile_commands.json not found in {project_root}")
-    return path
+    r = runfiles.Create()
+    binary_path = r.Rlocation("_main/tools/refresh_compile_commands")
+    if not os.path.exists(binary_path):
+        raise FileNotFoundError("refresh_compile_commands binary is not found, thus cannot generate compile database")
+    result = subprocess.run(binary_path, stdin=subprocess.DEVNULL,
+                   stderr=subprocess.PIPE,
+                   text=True,
+                   check=True)
+    print(result.stderr)
+    return project_root / "compile_commands.json"
 
 
 def _collect_source_files(project_root: Path) -> List[os.PathLike]:
@@ -103,8 +111,8 @@ def main() -> int:
     """
     project_root = Path(os.environ.get(BAZEL_WORKSPACE_ENV_KEY, os.getcwd()))
 
-    # Step 1: Ensure compile_commands.json exists
-    compile_commands = _find_compile_commands(project_root)
+    # Step 1: Build compile_commands.json
+    compile_commands = _generate_compile_commands(project_root)
 
     # Step 2: Collect all C++ source files
     source_files = _collect_source_files(project_root)
