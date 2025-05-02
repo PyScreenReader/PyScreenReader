@@ -19,8 +19,8 @@ def _find_platform_dependent_args() -> List[str]:
     """
     Find platform dependent args when running clang-tidy.
 
-    For example, on macOS, the compile data does not collect system libs properly,
-    We have to use the following py script to correctly locate and link those libs
+    For example, on macOS, the compile database does not collect system libs properly,
+    We have to patch with the following py script to correctly locate and link those libs
 
     :return: a list of platform dependent args to append when running clang-tidy
     """
@@ -54,7 +54,7 @@ def _find_platform_dependent_args() -> List[str]:
 
 def _generate_compile_commands(project_root: Path) -> os.PathLike:
     """
-    Generate compile database and return the path
+    Generate compile database and return the path to it
 
     :param project_root: project root path
     :return: compile database path
@@ -89,7 +89,7 @@ def _collect_source_files(project_root: Path) -> List[os.PathLike]:
 
 def _run_clang_tidy(compile_commands_path: os.PathLike, files: List[os.PathLike]) -> int:
     """
-    Locate clang-tidy executable and run clang-tidy
+    Run clang-tidy
 
     :param compile_commands_path: path to compile database
     :param files: C++ source files
@@ -105,7 +105,7 @@ def _run_clang_tidy(compile_commands_path: os.PathLike, files: List[os.PathLike]
 
 def main() -> int:
     """
-    Entry point
+    Entry point of this script
 
     :return: system return code
         - 0 if no error and linter passed
