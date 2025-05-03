@@ -2,7 +2,8 @@ import os
 import sys
 import subprocess
 from pathlib import Path
-from typing import List
+from typing import List, Optional
+import logging
 
 from bazel_tools.tools.python.runfiles import runfiles
 
@@ -12,7 +13,77 @@ from clang_tidy import _run
 CPP_EXTENSIONS = frozenset((".h", ".hpp", ".c", ".cpp", ".cc"))
 BAZEL_WORKSPACE_ENV_KEY = "BUILD_WORKSPACE_DIRECTORY"
 CLANG_TIDY_NAME = "clang-tidy"
-SOURCE_FILE_DIRS = frozenset(("src", "include", "tests"))
+
+COMMON_SOURCE_FILE_DIRS = frozenset(("tests", "include", "tools"))
+MACOS_SPECIFIC_SOURCE_FILE_DIRS = frozenset(("src/native/macos",))
+WIN_SPECIFIC_SOURCE_FILE_DIRS = frozenset(("src/native/win",))
+
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO)
+
+
+def _find_macos_sdk_path() -> Optional[str]:
+    """
+    Find macOS sdk path.
+
+    If any errors occurred, a fallback of "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks"
+    will be returned
+
+    :return: macOS sdk search path
+    """
+    fallback_path = "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks"
+    try:
+        cmd_output = subprocess.run(
+            ["xcrun", "--show-sdk-path"],
+            stdout=subprocess.PIPE,
+            text=True,
+            check=True,
+        )
+    except subprocess.CalledProcessError as e:
+        logger.warning(f"macOS SDK default fallback path is provided, due to {e.stdout}")
+        return fallback_path
+
+    if not cmd_output.stdout or not cmd_output.stdout.strip():
+        logger.warning("macOS SDK default fallback path is provided")
+        return fallback_path
+    sdk_path = cmd_output.stdout.strip()
+
+    return f"{sdk_path}/System/Library/Frameworks"
+
+
+def _find_macos_cpp_libs() -> List[str]:
+    """
+    Locate all local macOS cpp libs
+
+    :return: paths to local macOS cpp libs
+    """
+    try:
+        result = subprocess.run(
+            ["clang++", "-E", "-x", "c++", "-", "-v"],
+            stdin=subprocess.DEVNULL,
+            stderr=subprocess.PIPE,
+            text=True,
+            check=True,
+        )
+    except subprocess.CalledProcessError:
+        logger.warning("Unable to locate macOS native libs automatically")
+        return []
+
+    lib_paths = []
+    in_include = False
+    for line in result.stderr.splitlines():
+        if "#include <...> search starts here" in line:
+            in_include = True
+            continue
+        if "End of search list" in line:
+            in_include = False
+            continue
+        if in_include:
+            path = line.strip()
+            if Path(path).exists():
+                lib_paths.append(path)
+    return lib_paths
+
 
 
 def _find_platform_dependent_args() -> List[str]:
@@ -25,30 +96,16 @@ def _find_platform_dependent_args() -> List[str]:
     :return: a list of platform dependent args to append when running clang-tidy
     """
     if sys.platform == 'darwin':
-        # If the platform is macOS
-        # NOTE: on ios sys.platform could also be "darwin", but no one is using or should use iphone to develop this project
-        result = subprocess.run(
-            ["clang++", "-E", "-x", "c++", "-", "-v"],
-            stdin=subprocess.DEVNULL,
-            stderr=subprocess.PIPE,
-            text=True,
-            check=True,
-        )
-        includes_args = []
-        in_include = False
-        for line in result.stderr.splitlines():
-            if "#include <...> search starts here" in line:
-                in_include = True
-                continue
-            if "End of search list" in line:
-                in_include = False
-                continue
-            if in_include:
-                path = line.strip()
-                if Path(path).exists():
-                    includes_args.append(f"--extra-arg=-I{path}")
-        return includes_args
+        # We only run the following patch on macOS
+        include_args = [f"--extra-arg=-isystem{lib_path}" for lib_path in _find_macos_cpp_libs()]
+        include_args.append(f"--extra-arg=-F{_find_macos_sdk_path()}")
+
+        # Clang-tidy throws a lot of no-elaborated-enum-base in macOS sdk, disabling it here
+        include_args.append("--extra-arg=-Wno-elaborated-enum-base")
+        logger.info("Extra args to clang-tidy: %s", include_args)
+        return include_args
     # If in the future, patches are needed for other platforms, please add them here.
+
     return []
 
 
@@ -67,19 +124,27 @@ def _generate_compile_commands(project_root: Path) -> os.PathLike:
                    stderr=subprocess.PIPE,
                    text=True,
                    check=True)
-    print(result.stderr)
+    logger.info("Compile command output: %s", result.stderr)
     return project_root / "compile_commands.json"
 
 
 def _collect_source_files(project_root: Path) -> List[os.PathLike]:
     """
-    Collect all source files
+    Collect source files selectively
+    We only want to collect the source files corresponding to the current platform for linting
+    Otherwise, clang-tidy will complain because clang-tidy cannot link to libs from other platform.
 
     :param project_root: project root path
     :return: a list of source files to lint
     """
     source_files = []
-    for src_dir in SOURCE_FILE_DIRS:
+    source_file_dirs = COMMON_SOURCE_FILE_DIRS
+    if sys.platform == "darwin":
+        source_file_dirs = source_file_dirs.union(MACOS_SPECIFIC_SOURCE_FILE_DIRS)
+    elif sys.platform == "win32" or sys.platform == "cygwin":
+        source_file_dirs = source_file_dirs.union(WIN_SPECIFIC_SOURCE_FILE_DIRS)
+
+    for src_dir in source_file_dirs:
         for root, _, files in os.walk(project_root / src_dir):
             for file in files:
                 if Path(file).suffix in CPP_EXTENSIONS:
@@ -119,7 +184,7 @@ def main() -> int:
     # Step 2: Collect all C++ source files
     source_files = _collect_source_files(project_root)
     if not source_files:
-        print("No C++ source files found.")
+        logger.warning("No C++ source files found.")
         return 0
 
     # Step 3: Run clang-tidy
