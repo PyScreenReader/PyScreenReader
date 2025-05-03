@@ -5,6 +5,8 @@ from pathlib import Path
 from typing import List, Optional
 import logging
 
+from tools_helper import is_windows, is_macos, get_executable_suffix
+
 from bazel_tools.tools.python.runfiles import runfiles
 
 # We have to do import _run to get this work, although it is a member func
@@ -95,14 +97,13 @@ def _find_platform_dependent_args() -> List[str]:
 
     :return: a list of platform dependent args to append when running clang-tidy
     """
-    if sys.platform == 'darwin':
+    if is_macos():
         # We only run the following patch on macOS
         include_args = [f"--extra-arg=-isystem{lib_path}" for lib_path in _find_macos_cpp_libs()]
         include_args.append(f"--extra-arg=-F{_find_macos_sdk_path()}")
 
         # Clang-tidy throws a lot of no-elaborated-enum-base in macOS sdk, disabling it here
         include_args.append("--extra-arg=-Wno-elaborated-enum-base")
-        logger.info("Extra args to clang-tidy: %s", include_args)
         return include_args
     # If in the future, patches are needed for other platforms, please add them here.
 
@@ -117,7 +118,7 @@ def _generate_compile_commands(project_root: Path) -> os.PathLike:
     :return: compile database path
     """
     r = runfiles.Create()
-    binary_path = r.Rlocation("_main/tools/refresh_compile_commands")
+    binary_path = r.Rlocation(f"_main/tools/refresh_compile_commands{get_executable_suffix()}")
     if not os.path.exists(binary_path):
         raise FileNotFoundError("refresh_compile_commands binary is not found, thus cannot generate compile database")
     result = subprocess.run(binary_path, stdin=subprocess.DEVNULL,
@@ -139,9 +140,9 @@ def _collect_source_files(project_root: Path) -> List[os.PathLike]:
     """
     source_files = []
     source_file_dirs = COMMON_SOURCE_FILE_DIRS
-    if sys.platform == "darwin":
+    if is_macos():
         source_file_dirs = source_file_dirs.union(MACOS_SPECIFIC_SOURCE_FILE_DIRS)
-    elif sys.platform == "win32" or sys.platform == "cygwin":
+    elif is_windows():
         source_file_dirs = source_file_dirs.union(WIN_SPECIFIC_SOURCE_FILE_DIRS)
 
     for src_dir in source_file_dirs:
@@ -164,6 +165,7 @@ def _run_clang_tidy(compile_commands_path: os.PathLike, files: List[os.PathLike]
     """
     cmd = [f"-p={compile_commands_path}", "--quiet", "-header-filter=.*"]
     cmd.extend(_find_platform_dependent_args())
+    logger.info("Args given to clang-tidy: %s", cmd)
     cmd.extend(files)
     return _run(CLANG_TIDY_NAME, *cmd)
 

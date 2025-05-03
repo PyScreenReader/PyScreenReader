@@ -2,6 +2,7 @@ package(default_visibility = ["//visibility:public"])
 load("@rules_python//python:pip.bzl", "compile_pip_requirements")
 load("@dev_tools_env//:requirements.bzl", "requirement")
 load("@hedron_compile_commands//:refresh_compile_commands.bzl", "refresh_compile_commands")
+load("@rules_python//python:py_library.bzl", "py_library")
 
 compile_pip_requirements(
     name = "requirements",
@@ -26,8 +27,15 @@ py_binary(
     deps = [
         requirement("clang-tidy"),
         "@bazel_tools//tools/python/runfiles",
+        "tools_helper"
     ],
+    imports = ["."],
     data = [
         ":refresh_compile_commands",
     ]
+)
+
+py_library(
+    name = "tools_helper",
+    srcs = ["tools_helper.py"]
 )
