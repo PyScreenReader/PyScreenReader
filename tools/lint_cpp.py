@@ -163,7 +163,7 @@ def _run_clang_tidy(compile_commands_path: os.PathLike, files: List[os.PathLike]
             0 if no error occurred and linter passed
             1 if error occurred or linter did not pass
     """
-    cmd = [f"-p={compile_commands_path}", "--quiet", "-header-filter=.*"]
+    cmd = [f"-p={compile_commands_path}", "--quiet"]
     cmd.extend(_find_platform_dependent_args())
     logger.info("Args given to clang-tidy: %s", cmd)
     cmd.extend(files)

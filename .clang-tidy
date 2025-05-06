@@ -1,6 +1,9 @@
 Checks: >
   -*,
-  readability-identifier-naming
+  readability-identifier-naming,
+  performance-*,
+  modernize-*,
+  google-*,  
 
 WarningsAsErrors: "*"
 
