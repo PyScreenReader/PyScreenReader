@@ -9,6 +9,8 @@
 #include "src/native/macos/screen_reader_impl_mac.h"
 #elif defined(_WIN64) || defined(_WIN32) || defined(__CYGWIN__)
 #include "src/native/win/screen_reader_impl_win.h"
+#elif defined(__linux__)
+#include "src/native/linux/screen_reader_impl_linux.h"
 #endif
 
 class ScreenReaderImpl;
