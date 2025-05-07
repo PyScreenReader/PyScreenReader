@@ -1,9 +1,10 @@
 Checks: >
   -*,
-  readability-identifier-naming,
+  readability-*,
   performance-*,
   modernize-*,
-  google-*,  
+  google-*,
+  -modernize-use-trailing-return-type,
 
 WarningsAsErrors: "*"
 
