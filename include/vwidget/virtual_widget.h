@@ -5,8 +5,8 @@
 
 class VirtualWidget {
 protected:
-    std::string titleText_;
-    std::string helpText_;
+    std::string title_text_;
+    std::string help_text_;
     int x_;
     int y_;
     int width_;
@@ -15,28 +15,28 @@ protected:
     std::weak_ptr<VirtualWidget> parent_;
 
 public:
-    [[nodiscard]] std::string getTitleText() const;
-    [[nodiscard]] std::string getHelpText() const;
-    [[nodiscard]] int getX() const;
-    [[nodiscard]] int getY() const;
-    [[nodiscard]] int getWidth() const;
-    [[nodiscard]] int getHeight() const;
-    [[nodiscard]] bool isVisible() const;
-    [[nodiscard]] std::shared_ptr<VirtualWidget> getParent() const;
+    [[nodiscard]] std::string GetTitleText() const;
+    [[nodiscard]] std::string GetHelpText() const;
+    [[nodiscard]] int GetX() const;
+    [[nodiscard]] int GetY() const;
+    [[nodiscard]] int GetWidth() const;
+    [[nodiscard]] int GetHeight() const;
+    [[nodiscard]] bool IsVisible() const;
+    [[nodiscard]] std::shared_ptr<VirtualWidget> GetParent() const;
 
-    void setTitleText(const std::string& titleText);
-    void setHelpText(const std::string& helpText);
-    void setX(int x);
-    void setY(int y);
-    void setWidth(int width);
-    void setHeight(int height);
-    void setVisible(bool visible);
-    void setParent(const std::shared_ptr<VirtualWidget>& parent);
+    void SetTitleText(const std::string& title_text);
+    void SetHelpText(const std::string& help_text);
+    void SetX(int x);
+    void SetY(int y);
+    void SetWidth(int width);
+    void SetHeight(int height);
+    void SetVisible(bool visible);
+    void SetParent(const std::shared_ptr<VirtualWidget>& parent);
 
-    virtual void addChild(const std::shared_ptr<VirtualWidget>& child) {}
-    [[nodiscard]] virtual std::string getRepr();
-    [[nodiscard]] virtual bool isClickable() = 0;
-    [[nodiscard]] virtual std::string getWidgetName() = 0;
+    virtual void AddChild(const std::shared_ptr<VirtualWidget>& child) {}
+    [[nodiscard]] virtual std::string GetRepr();
+    [[nodiscard]] virtual bool IsClickable() = 0;
+    [[nodiscard]] virtual std::string GetWidgetName() = 0;
 
     virtual ~VirtualWidget() = default;
 };

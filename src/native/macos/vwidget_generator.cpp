@@ -15,7 +15,7 @@ namespace generator
                 kAXValueAttribute,
                 attribute_utils::ConvertCFStringToCPPString,
                 [result](const std::string &text) {
-                    result->setTitleText(text);
+                    result->SetTitleText(text);
                 }
         );
 
@@ -33,7 +33,7 @@ namespace generator
                 kAXTitleAttribute,
                 attribute_utils::ConvertCFStringToCPPString,
                 [result](const std::string &title) {
-                    result->setTitleText(title);
+                    result->SetTitleText(title);
                 })) {
             // if there is no kAXTitleAttribute, let's also try kAXValueAttribute
             attribute_utils::GetAXAttribute<CFStringRef, std::string>(
@@ -41,7 +41,7 @@ namespace generator
                     kAXValueAttribute,
                     attribute_utils::ConvertCFStringToCPPString,
                     [result](const std::string &value) {
-                        result->setTitleText(value);
+                        result->SetTitleText(value);
                     });
         }
         return result;
@@ -81,11 +81,11 @@ namespace generator
             if (curr_vwidget == nullptr) {
                 continue;
             }
-            curr_vwidget->setParent(parentVWidget);
-            parentVWidget->addChild(curr_vwidget);
+            curr_vwidget->SetParent(parentVWidget);
+            parentVWidget->AddChild(curr_vwidget);
 
-            if (!parentVWidget->isVisible()) {
-                curr_vwidget->setVisible(false);
+            if (!parentVWidget->IsVisible()) {
+                curr_vwidget->SetVisible(false);
             }
             process_children(curr, [curr_vwidget, &queue](AXUIElementRef child) {
                 queue.emplace(curr_vwidget, child);
@@ -121,7 +121,7 @@ namespace generator
                     return true;
                 },
                 [result](bool isVisible) {
-                    result->setVisible(isVisible);
+                    result->SetVisible(isVisible);
                 }
         );
 
@@ -130,7 +130,7 @@ namespace generator
                 kAXHelpAttribute,
                 attribute_utils::ConvertCFStringToCPPString,
                 [result](const std::string &helpText) {
-                    result->setHelpText(helpText);
+                    result->SetHelpText(helpText);
                 }
         );
 
@@ -139,7 +139,7 @@ namespace generator
                 kAXTitleAttribute,
                 attribute_utils::ConvertCFStringToCPPString,
                 [result](const std::string &title) {
-                    result->setTitleText(title);
+                    result->SetTitleText(title);
                 }
         );
 

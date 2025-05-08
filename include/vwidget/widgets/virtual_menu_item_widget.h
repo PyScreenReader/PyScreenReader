@@ -5,6 +5,6 @@
 
 class VirtualMenuItemWidget : public VirtualWidget {
 public:
-    std::string getWidgetName() override;
-    bool isClickable() override;
+    std::string GetWidgetName() override;
+    bool IsClickable() override;
 };

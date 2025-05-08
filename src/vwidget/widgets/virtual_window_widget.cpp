@@ -5,19 +5,19 @@
 
 namespace py = pybind11;
 
-std::string VirtualWindowWidget::getWidgetName() {
+std::string VirtualWindowWidget::GetWidgetName() {
     return "VirtualWindowWidget";
 }
 
-bool VirtualWindowWidget::isClickable() {
+bool VirtualWindowWidget::IsClickable() {
     return true;
 }
 
-void bindVirtualWindowWidget(py::module_ &m) {
-    py::class_<VirtualWindowWidget, VirtualContainerWidget, std::shared_ptr<VirtualWindowWidget>>(m, "VirtualWindowWidget")
+void BindVirtualWindowWidget(py::module_ &module) {
+    py::class_<VirtualWindowWidget, VirtualContainerWidget, std::shared_ptr<VirtualWindowWidget>>(module, "VirtualWindowWidget")
             .def(py::init())
-            .def("getWidgetName", &VirtualWindowWidget::getWidgetName)
-            .def("isClickable", &VirtualWindowWidget::isClickable);
+            .def("getWidgetName", &VirtualWindowWidget::GetWidgetName)
+            .def("isClickable", &VirtualWindowWidget::IsClickable);
 }
 
-REGISTER_BINDING("VirtualWindowWidget", bindVirtualWindowWidget, "VirtualContainerWidget")
+REGISTER_BINDING("VirtualWindowWidget", BindVirtualWindowWidget, "VirtualContainerWidget")

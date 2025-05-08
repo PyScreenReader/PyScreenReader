@@ -5,7 +5,7 @@
 
 class VirtualGroupWidget : public VirtualContainerWidget {
 public:
-    std::string getWidgetName() override;
-    bool isClickable() override;
+    std::string GetWidgetName() override;
+    bool IsClickable() override;
     VirtualGroupWidget() = default;
 };

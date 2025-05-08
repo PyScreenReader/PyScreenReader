@@ -4,24 +4,24 @@
 
 namespace py = pybind11;
 
-VirtualTextWidget::VirtualTextWidget(): isClickable_(false) {}
+VirtualTextWidget::VirtualTextWidget(): is_clickable_(false) {}
 
-std::string VirtualTextWidget::getWidgetName() {
+std::string VirtualTextWidget::GetWidgetName() {
     return "VirtualTextWidget";
 }
 
-bool VirtualTextWidget::isClickable() {
-    return this->isClickable_;
+bool VirtualTextWidget::IsClickable() {
+    return this->is_clickable_;
 }
 
-void VirtualTextWidget::setClickable(bool newClickableValue) {
-    this->isClickable_ = newClickableValue;
+void VirtualTextWidget::SetClickable(bool new_clickable_value) {
+    this->is_clickable_ = new_clickable_value;
 }
 
-void bindVirtualTextWidget(py::module_ &m) {
-    py::class_<VirtualTextWidget, VirtualWidget, std::shared_ptr<VirtualTextWidget>>(m, "VirtualTextWidget")
-            .def("getWidgetName", &VirtualTextWidget::getWidgetName)
-            .def("isClickable", &VirtualTextWidget::isClickable);
+void BindVirtualTextWidget(py::module_ &module) {
+    py::class_<VirtualTextWidget, VirtualWidget, std::shared_ptr<VirtualTextWidget>>(module, "VirtualTextWidget")
+            .def("getWidgetName", &VirtualTextWidget::GetWidgetName)
+            .def("isClickable", &VirtualTextWidget::IsClickable);
 }
 
-REGISTER_BINDING("VirtualTextWidget", bindVirtualTextWidget, "VirtualWidget")
+REGISTER_BINDING("VirtualTextWidget", BindVirtualTextWidget, "VirtualWidget")

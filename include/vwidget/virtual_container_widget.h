@@ -10,6 +10,6 @@ private:
 
 public:
     virtual ~VirtualContainerWidget() = default;
-    void addChild(const std::shared_ptr<VirtualWidget>& child) override;
-    std::vector<std::shared_ptr<VirtualWidget>>& getChildren();
+    void AddChild(const std::shared_ptr<VirtualWidget>& child) override;
+    std::vector<std::shared_ptr<VirtualWidget>>& GetChildren();
 };

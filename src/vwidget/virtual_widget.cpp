@@ -5,101 +5,101 @@
 namespace py = pybind11;
 
 
-std::string VirtualWidget::getTitleText() const {
-    return titleText_;
+std::string VirtualWidget::GetTitleText() const {
+    return title_text_;
 }
 
-std::string VirtualWidget::getHelpText() const {
-    return helpText_;
+std::string VirtualWidget::GetHelpText() const {
+    return help_text_;
 }
 
-int VirtualWidget::getX() const {
+int VirtualWidget::GetX() const {
     return x_;
 }
 
-int VirtualWidget::getY() const {
+int VirtualWidget::GetY() const {
     return y_;
 }
 
-int VirtualWidget::getWidth() const {
+int VirtualWidget::GetWidth() const {
     return width_;
 }
 
-int VirtualWidget::getHeight() const {
+int VirtualWidget::GetHeight() const {
     return height_;
 }
 
-bool VirtualWidget::isVisible() const {
+bool VirtualWidget::IsVisible() const {
     return visible_;
 }
 
-std::shared_ptr<VirtualWidget> VirtualWidget::getParent() const {
+std::shared_ptr<VirtualWidget> VirtualWidget::GetParent() const {
     return parent_.lock();
 }
 
-void VirtualWidget::setTitleText(const std::string& titleText) {
-    this->titleText_ = titleText;
+void VirtualWidget::SetTitleText(const std::string& title_text) {
+    this->title_text_ = title_text;
 }
 
-void VirtualWidget::setHelpText(const std::string& helpText) {
-    this->helpText_ = helpText;
+void VirtualWidget::SetHelpText(const std::string& help_text) {
+    this->help_text_ = help_text;
 }
 
-void VirtualWidget::setX(int x) {
-    this->x_ = x;
+void VirtualWidget::SetX(int x_coord) {
+    this->x_ = x_coord;
 }
 
-void VirtualWidget::setY(int y) {
-    this->y_ = y;
+void VirtualWidget::SetY(int y_coord) {
+    this->y_ = y_coord;
 }
 
-void VirtualWidget::setWidth(int width) {
+void VirtualWidget::SetWidth(int width) {
     this->width_ = width;
 }
 
-void VirtualWidget::setHeight(int height) {
+void VirtualWidget::SetHeight(int height) {
     this->height_ = height;
 }
 
-void VirtualWidget::setParent(const std::shared_ptr<VirtualWidget> &parent) {
+void VirtualWidget::SetParent(const std::shared_ptr<VirtualWidget> &parent) {
     this->parent_ = parent;
 }
 
-void VirtualWidget::setVisible(bool visible) {
+void VirtualWidget::SetVisible(bool visible) {
     this->visible_ = visible;
 }
 
-std::string VirtualWidget::getRepr() {
-    return getWidgetName() + "{title=" + getTitleText() +
-           ", helpText=" + getHelpText() +
-           ", isVisible=" + (isVisible() ? "true" : "false") +
-           ", x=" + std::to_string(getX()) +
-           ", y=" + std::to_string(getY()) +
-           ", width=" + std::to_string(getWidth()) +
-           ", height=" + std::to_string(getHeight()) + "}";
+std::string VirtualWidget::GetRepr() {
+    return GetWidgetName() + "{title=" + GetTitleText() +
+           ", helpText=" + GetHelpText() +
+           ", isVisible=" + (IsVisible() ? "true" : "false") +
+           ", x=" + std::to_string(GetX()) +
+           ", y=" + std::to_string(GetY()) +
+           ", width=" + std::to_string(GetWidth()) +
+           ", height=" + std::to_string(GetHeight()) + "}";
 }
 
-void bindVirtualWidget(py::module &m) {
-    py::class_<VirtualWidget, std::shared_ptr<VirtualWidget>>(m, "VirtualWidget")
-            .def("getTitleText", &VirtualWidget::getTitleText)
-            .def("getHelpText", &VirtualWidget::getHelpText)
-            .def("getX", &VirtualWidget::getX)
-            .def("getY", &VirtualWidget::getY)
-            .def("getWidth", &VirtualWidget::getWidth)
-            .def("getHeight", &VirtualWidget::getHeight)
-            .def("isVisible", &VirtualWidget::isVisible)
-            .def("getParent", &VirtualWidget::getParent)
-            .def("setTitleText", &VirtualWidget::setTitleText)
-            .def("setHelpText", &VirtualWidget::setHelpText)
-            .def("setX", &VirtualWidget::setX)
-            .def("setY", &VirtualWidget::setY)
-            .def("setWidth", &VirtualWidget::setWidth)
-            .def("setHeight", &VirtualWidget::setHeight)
-            .def("setParent", &VirtualWidget::setParent)
-            .def("setVisible", &VirtualWidget::setVisible)
-            .def("__repr__", &VirtualWidget::getRepr)
-            .def("getWidgetName", &VirtualWidget::getWidgetName)
-            .def("isClickable", &VirtualWidget::isVisible);
+void BindVirtualWidget(py::module &module) {
+    py::class_<VirtualWidget, std::shared_ptr<VirtualWidget>>(module, "VirtualWidget")
+            .def("getTitleText", &VirtualWidget::GetTitleText)
+            .def("getHelpText", &VirtualWidget::GetHelpText)
+            .def("getX", &VirtualWidget::GetX)
+            .def("getY", &VirtualWidget::GetY)
+            .def("getWidth", &VirtualWidget::GetWidth)
+            .def("getHeight", &VirtualWidget::GetHeight)
+            .def("isVisible", &VirtualWidget::IsVisible)
+            .def("getParent", &VirtualWidget::GetParent)
+            .def("setTitleText", &VirtualWidget::SetTitleText)
+            .def("setHelpText", &VirtualWidget::SetHelpText)
+            .def("setX", &VirtualWidget::SetX)
+            .def("setY", &VirtualWidget::SetY)
+            .def("setWidth", &VirtualWidget::SetWidth)
+            .def("setHeight", &VirtualWidget::SetHeight)
+            .def("setParent", &VirtualWidget::SetParent)
+            .def("setVisible", &VirtualWidget::SetVisible)
+            .def("__repr__", &VirtualWidget::GetRepr)
+            .def("getWidgetName", &VirtualWidget::GetWidgetName)
+            .def("isClickable", &VirtualWidget::IsVisible);
 }
 
-REGISTER_BINDING("VirtualWidget", bindVirtualWidget)
+REGISTER_BINDING("VirtualWidget", BindVirtualWidget)
