@@ -13,7 +13,7 @@ namespace screen_reader
         ~ScreenReaderImpl();
         [[nodiscard]] std::shared_ptr<VirtualRootWidget> getVirtualWidgetTreeByPID(const std::string &pid) const;
         [[nodiscard]] std::shared_ptr<VirtualRootWidget> getVirtualWidgetTreeByTitle(const std::string &title) const;
-        [[nodiscard]] std::shared_ptr<VirtualRootWidget> getVirtualWidgetTreeByClassName(const std::string &className) const;
+        [[nodiscard]] std::shared_ptr<VirtualRootWidget> getVirtualWidgetTreeByClassName(const std::string &class_name) const;
     private:
         IUIAutomation* automation_;
         IUIAutomationElement* root_element_;

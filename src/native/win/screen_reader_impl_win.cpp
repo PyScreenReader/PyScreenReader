@@ -78,7 +78,7 @@ namespace screen_reader
         throw std::logic_error("Not yet implemented");
     }
 
-    std::shared_ptr<VirtualRootWidget> ScreenReaderImpl::getVirtualWidgetTreeByClassName(const std::string& className) const
+    std::shared_ptr<VirtualRootWidget> ScreenReaderImpl::getVirtualWidgetTreeByClassName(const std::string& class_name) const
     {
         throw std::logic_error("Not yet implemented");
     }

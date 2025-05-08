@@ -1,12 +1,12 @@
 #include "src/native/macos/utils/system_utils.h"
 
-AXUIElementRef SystemUtils::getAXUIElementRefByPID(const std::string& pid) {
-    pid_t pidNum;
+AXUIElementRef SystemUtils::GetAXUIElementRefByPID(const std::string& pid) {
+    pid_t pid_num;
     try {
-        pidNum = std::stoi(pid);
+        pid_num = std::stoi(pid);
     } catch (const std::exception& e) {
         throw std::invalid_argument("Invalid PID format: " + pid);
     }
-    AXUIElementRef app = AXUIElementCreateApplication(pidNum);
+    AXUIElementRef app = AXUIElementCreateApplication(pid_num);
     return app;
 }
