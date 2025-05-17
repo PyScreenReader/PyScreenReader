@@ -14,10 +14,10 @@ bool VirtualWindowWidget::IsClickable() {
 }
 
 void BindVirtualWindowWidget(py::module_ &module) {
-    py::class_<VirtualWindowWidget, VirtualContainerWidget, std::shared_ptr<VirtualWindowWidget>>(module, "VirtualWindowWidget")
+    py::class_<VirtualWindowWidget, VirtualWidget, std::shared_ptr<VirtualWindowWidget>>(module, "VirtualWindowWidget")
             .def(py::init())
             .def("getWidgetName", &VirtualWindowWidget::GetWidgetName)
             .def("isClickable", &VirtualWindowWidget::IsClickable);
 }
 
-REGISTER_BINDING("VirtualWindowWidget", BindVirtualWindowWidget, "VirtualContainerWidget")
+REGISTER_BINDING("VirtualWindowWidget", BindVirtualWindowWidget, "VirtualWidget")

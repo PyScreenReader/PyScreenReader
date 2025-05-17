@@ -2,6 +2,7 @@
 
 #include <string>
 #include <memory>
+#include <vector>
 
 class VirtualWidget {
 protected:
@@ -13,10 +14,11 @@ protected:
     int height_;
     bool visible_;
     std::weak_ptr<VirtualWidget> parent_;
+    std::vector<std::shared_ptr<VirtualWidget>> children_;
 
 public:
-    [[nodiscard]] std::string GetTitleText() const;
-    [[nodiscard]] std::string GetHelpText() const;
+    [[nodiscard]] const std::string& GetTitleText() const;
+    [[nodiscard]] const std::string& GetHelpText() const;
     [[nodiscard]] int GetX() const;
     [[nodiscard]] int GetY() const;
     [[nodiscard]] int GetWidth() const;
@@ -32,8 +34,9 @@ public:
     void SetHeight(int height);
     void SetVisible(bool visible);
     void SetParent(const std::shared_ptr<VirtualWidget>& parent);
+    void AddChild(const std::shared_ptr<VirtualWidget>& child);
+    const std::vector<std::shared_ptr<VirtualWidget>> &GetChildren();
 
-    virtual void AddChild(const std::shared_ptr<VirtualWidget>& child) {}
     [[nodiscard]] virtual std::string GetRepr();
     [[nodiscard]] virtual bool IsClickable() = 0;
     [[nodiscard]] virtual std::string GetWidgetName() = 0;

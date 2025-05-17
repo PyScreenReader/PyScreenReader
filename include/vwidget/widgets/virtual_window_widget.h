@@ -1,9 +1,9 @@
 #pragma once
 
 #include <string>
-#include "include/vwidget/virtual_container_widget.h"
+#include "include/vwidget/virtual_widget.h"
 
-class VirtualWindowWidget : public VirtualContainerWidget {
+class VirtualWindowWidget : public VirtualWidget {
 public:
     std::string GetWidgetName() override;
     bool IsClickable() override;

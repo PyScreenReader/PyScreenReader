@@ -1,15 +1,16 @@
 #include "include/vwidget/virtual_widget.h"
 #include "src/bindings_registry.h"
 #include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
 
 namespace py = pybind11;
 
 
-std::string VirtualWidget::GetTitleText() const {
+const std::string& VirtualWidget::GetTitleText() const {
     return title_text_;
 }
 
-std::string VirtualWidget::GetHelpText() const {
+const std::string& VirtualWidget::GetHelpText() const {
     return help_text_;
 }
 
@@ -69,6 +70,14 @@ void VirtualWidget::SetVisible(bool visible) {
     this->visible_ = visible;
 }
 
+void VirtualWidget::AddChild(const std::shared_ptr<VirtualWidget> &child) {
+    this->children_.push_back(child);
+}
+
+const std::vector<std::shared_ptr<VirtualWidget>> &VirtualWidget::GetChildren() {
+    return this->children_;
+}
+
 std::string VirtualWidget::GetRepr() {
     return GetWidgetName() + "{title=" + GetTitleText() +
            ", helpText=" + GetHelpText() +
@@ -99,7 +108,9 @@ void BindVirtualWidget(py::module &module) {
             .def("setVisible", &VirtualWidget::SetVisible)
             .def("__repr__", &VirtualWidget::GetRepr)
             .def("getWidgetName", &VirtualWidget::GetWidgetName)
-            .def("isClickable", &VirtualWidget::IsVisible);
+            .def("isClickable", &VirtualWidget::IsVisible)
+            .def("addChild", &VirtualWidget::AddChild)
+            .def("getChildren", &VirtualWidget::GetChildren);
 }
 
 REGISTER_BINDING("VirtualWidget", BindVirtualWidget)

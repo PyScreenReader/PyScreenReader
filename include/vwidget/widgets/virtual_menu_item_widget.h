@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include "../virtual_widget.h"
+#include "include/vwidget/virtual_widget.h"
 
 class VirtualMenuItemWidget : public VirtualWidget {
 public:

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../virtual_widget.h"
+#include "include/vwidget/virtual_widget.h"
 #include <string>
 
 class VirtualTextFieldWidget : public VirtualWidget {

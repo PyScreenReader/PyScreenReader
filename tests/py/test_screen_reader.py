@@ -3,7 +3,7 @@ from collections import deque
 
 def test_screen_reader():
     screen_reader = psr.ScreenReader()
-    root = screen_reader.getVirtualWidgetTreeByPID("20880")
+    root = screen_reader.getVirtualWidgetTreeByPID("738")
 
     if root is None:
         print("Failed to get widget tree.")

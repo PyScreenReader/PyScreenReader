@@ -13,10 +13,10 @@ bool VirtualMenuGroupWidget::IsClickable() {
 }
 
 void BindMenuGroupWidget(py::module_ &module) {
-    py::class_<VirtualMenuGroupWidget, VirtualContainerWidget, std::shared_ptr<VirtualMenuGroupWidget>>(module, "VirtualMenuGroupWidget")
+    py::class_<VirtualMenuGroupWidget, VirtualWidget, std::shared_ptr<VirtualMenuGroupWidget>>(module, "VirtualMenuGroupWidget")
             .def(py::init())
             .def("getWidgetName", &VirtualMenuGroupWidget::GetWidgetName)
             .def("isClickable", &VirtualMenuGroupWidget::IsClickable);
 }
 
-REGISTER_BINDING("VirtualMenuGroupWidget", BindMenuGroupWidget, "VirtualContainerWidget")
+REGISTER_BINDING("VirtualMenuGroupWidget", BindMenuGroupWidget, "VirtualWidget")

@@ -27,7 +27,7 @@ void VirtualUnknownWidget::SetNativeName(const std::string &name) {
 }
 
 void BindVirtualUnknownWidget(py::module_ &module) {
-    py::class_<VirtualUnknownWidget, VirtualContainerWidget, std::shared_ptr<VirtualUnknownWidget>>(module, "VirtualUnknownWidget")
+    py::class_<VirtualUnknownWidget, VirtualWidget, std::shared_ptr<VirtualUnknownWidget>>(module, "VirtualUnknownWidget")
             .def(py::init())
             .def("getWidgetName", &VirtualUnknownWidget::GetWidgetName)
             .def("isClickable", &VirtualUnknownWidget::IsClickable)
@@ -36,4 +36,4 @@ void BindVirtualUnknownWidget(py::module_ &module) {
             .def("setNativeName", &VirtualUnknownWidget::SetNativeName);
 }
 
-REGISTER_BINDING("VirtualUnknownWidget", BindVirtualUnknownWidget, "VirtualContainerWidget")
+REGISTER_BINDING("VirtualUnknownWidget", BindVirtualUnknownWidget, "VirtualWidget")

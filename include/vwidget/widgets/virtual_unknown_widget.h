@@ -1,9 +1,9 @@
 #pragma once
 
 #include <string>
-#include "include/vwidget/virtual_container_widget.h"
+#include "include/vwidget/virtual_widget.h"
 
-class VirtualUnknownWidget : public VirtualContainerWidget {
+class VirtualUnknownWidget : public VirtualWidget {
 private:
     bool is_clickable_;
     std::string native_name_;
