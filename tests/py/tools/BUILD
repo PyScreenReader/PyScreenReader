@@ -39,6 +39,7 @@ py_library(
         "e2e_test_case_process.py"
     ],
     deps = [
-        "@bazel_tools//tools/python/runfiles"
+        "@bazel_tools//tools/python/runfiles",
+        "//tools:tools_helper"
     ]
 )

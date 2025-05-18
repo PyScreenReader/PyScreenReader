@@ -1,9 +1,10 @@
 import os.path
-import sys
 from signal import SIGTERM
 import subprocess
 import time
 from subprocess import Popen
+
+from tools.tools_helper import get_executable_suffix
 
 from bazel_tools.tools.python.runfiles import runfiles
 
@@ -37,7 +38,7 @@ class E2ETestCaseProcess:
     def __enter__(self) -> str:
         # Figure out the path of the binary target inside bazel sandbox
         r = runfiles.Create()
-        binary_path = r.Rlocation(f"_main/tests/e2e_cases/{self.case_name}")
+        binary_path = r.Rlocation(f"_main/tests/e2e_cases/{self.case_name}{get_executable_suffix()}")
         if not os.path.exists(binary_path):
             # If this is raised, please check if in your pytest BUILD file, do you have the e2e target in `data`
             raise FileNotFoundError("E2E test target not found, did you forget to add it to your test BUILD target?")

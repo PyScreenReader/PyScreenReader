@@ -1,5 +1,5 @@
 package(default_visibility = ["//visibility:public"])
-load("@pytest_deps//:requirements.bzl", "requirement")
+load("@pytest_env//:requirements.bzl", "requirement")
 
 py_binary(
     name = "basic_widgets_case",
