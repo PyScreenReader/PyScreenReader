@@ -22,7 +22,7 @@ class E2ETestCaseProcess:
     """
 
     TERMINATION_TIMEOUT_S = 5  # 5 seconds
-    BOOTSTRAP_DELAY_S = 20      # 3 seconds
+    BOOTSTRAP_DELAY_S = 20      # 20 seconds
 
     def __init__(self, case_name: str):
         """
