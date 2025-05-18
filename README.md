@@ -54,4 +54,4 @@ PyScreenReader uses libraries:
 - [Google Test](https://github.com/google/googletest)  
 - [PyBind11](https://github.com/pybind/pybind11)
 - [PyTest](https://docs.pytest.org/en/stable/)
-- [PySide2](https://pypi.org/project/PySide2/) (Only used for building integration test targets and is not distributed with the releases)
+- [PySide6](https://pypi.org/project/PySide6/) (Only used for building integration test targets and is not distributed with the releases)
