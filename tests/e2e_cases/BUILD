@@ -4,5 +4,13 @@ load("@pytest_env//:requirements.bzl", "requirement")
 py_binary(
     name = "basic_widgets_case",
     srcs = ["basic_widgets_case.py"],
-    deps = [requirement("pyside6")],
+    deps = [
+        requirement("pyside6"),
+        "e2e_case_helpers"
+    ],
+)
+
+py_library(
+    name = "e2e_case_helpers",
+    srcs = ["e2e_case_helpers.py"],
 )

@@ -1,11 +1,16 @@
 import sys
+from pathlib import Path
+
 from PySide6.QtWidgets import (
     QApplication, QWidget, QPushButton, QLabel, QLineEdit, QTextEdit,
     QCheckBox, QRadioButton, QComboBox, QSlider, QProgressBar,
     QDateEdit, QTableWidget, QTableWidgetItem, QTreeWidget, QTreeWidgetItem,
     QVBoxLayout, QSpinBox
 )
-from PySide6.QtCore import Qt, QDate
+from PySide6.QtCore import Qt, QDate, QTimer
+
+from tests.e2e_cases.e2e_case_helpers import create_done_mark
+
 
 class BasicWidgetsCase(QWidget):
     """
@@ -99,6 +104,8 @@ class BasicWidgetsCase(QWidget):
         layout.addWidget(tree)
 
         self.setLayout(layout)
+
+        QTimer.singleShot(0, lambda : create_done_mark(Path("."), "basic_widgets_case"))
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
