@@ -24,7 +24,7 @@ class E2ETestCaseProcess:
 
     TERMINATION_TIMEOUT_S = 5  # 5 seconds
     POLLING_THROTTLE_S = 1     # 1 second
-    POLLING_TIMEOUT_S = 20     # 20 seconds
+    POLLING_TIMEOUT_S = 5      # 5 seconds
     BAZEL_RUNTIME_PREFIX = "_main/tests/e2e_cases/"
 
     def __init__(self, case_name: str):

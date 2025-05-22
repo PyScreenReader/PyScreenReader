@@ -1,18 +1,16 @@
 import sys
-from pathlib import Path
 
 from PySide6.QtWidgets import (
-    QApplication, QWidget, QPushButton, QLabel, QLineEdit, QTextEdit,
+    QApplication, QPushButton, QLabel, QLineEdit, QTextEdit,
     QCheckBox, QRadioButton, QComboBox, QSlider, QProgressBar,
     QDateEdit, QTableWidget, QTableWidgetItem, QTreeWidget, QTreeWidgetItem,
     QVBoxLayout, QSpinBox
 )
-from PySide6.QtCore import Qt, QDate, QTimer
+from PySide6.QtCore import Qt, QDate
 
-from tests.e2e_cases.e2e_case_helpers import create_done_mark
+from tests.e2e_cases.e2e_test_case_wrapper import E2ETestCaseWrapper
 
-
-class BasicWidgetsCase(QWidget):
+class BasicWidgetsCase(E2ETestCaseWrapper):
     """
     This is a test case contains basic UI widgets:
         - Button
@@ -28,7 +26,7 @@ class BasicWidgetsCase(QWidget):
         - Tree View
     """
     def __init__(self):
-        super().__init__()
+        super().__init__("basic_widgets_case")
         self.setWindowTitle("Demo Title")
         self.setMinimumSize(600, 600)
 
@@ -104,11 +102,10 @@ class BasicWidgetsCase(QWidget):
         layout.addWidget(tree)
 
         self.setLayout(layout)
-
-        QTimer.singleShot(0, lambda : create_done_mark(Path("."), "basic_widgets_case"))
+        self.signal_completion()
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     demo = BasicWidgetsCase()
     demo.show()
-    sys.exit(app.exec_())
+    sys.exit(app.exec())
