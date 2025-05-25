@@ -22,5 +22,5 @@ pybind_library(
     deps = [
         "//src/vwidget:virtual_widget",
         "//src/vwidget:numeric_value_widget",
-    ]
+    ],
 )
