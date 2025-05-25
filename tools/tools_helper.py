@@ -1,5 +1,8 @@
+import os
 import sys
+from pathlib import Path
 
+BAZEL_WORKSPACE_ENV_KEY = "BUILD_WORKSPACE_DIRECTORY"
 
 def is_windows() -> bool:
     """
@@ -32,3 +35,11 @@ def get_executable_suffix() -> str:
     :return: suffix for executables on current platform
     """
     return ".exe" if is_windows() else ""
+
+def get_source_code_root() -> Path:
+    """
+    Retrieve the root of the project source code
+
+    :return: root directory of the source code
+    """
+    return os.environ.get(BAZEL_WORKSPACE_ENV_KEY, os.getcwd())

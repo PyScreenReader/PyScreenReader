@@ -40,7 +40,8 @@ py_binary(
     name = "lint_py",
     srcs = ["lint_py.py"],
     deps = [
-        requirement("ruff")
+        requirement("ruff"),
+        "tools_helper"
     ]
 )
 

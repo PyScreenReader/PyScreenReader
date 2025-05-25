@@ -4,7 +4,7 @@ from pathlib import Path
 from typing import List, Optional
 import logging
 
-from tools_helper import is_windows, is_macos, get_executable_suffix
+from tools_helper import is_windows, is_macos, get_executable_suffix, get_source_code_root
 
 from bazel_tools.tools.python.runfiles import runfiles
 
@@ -12,7 +12,6 @@ from bazel_tools.tools.python.runfiles import runfiles
 from clang_tidy import _run
 
 CPP_EXTENSIONS = frozenset((".h", ".hpp", ".c", ".cpp", ".cc"))
-BAZEL_WORKSPACE_ENV_KEY = "BUILD_WORKSPACE_DIRECTORY"
 CLANG_TIDY_NAME = "clang-tidy"
 
 COMMON_SOURCE_FILE_DIRS = frozenset(("tests", "include", "tools"))
@@ -177,7 +176,7 @@ def main() -> int:
         - 0 if no error and linter passed
         - 1 if errors occurs or linter rejected
     """
-    project_root = Path(os.environ.get(BAZEL_WORKSPACE_ENV_KEY, os.getcwd()))
+    project_root = get_source_code_root()
 
     # Step 1: Build compile_commands.json
     compile_commands = _generate_compile_commands(project_root)

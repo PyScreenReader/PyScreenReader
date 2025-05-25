@@ -1,14 +1,10 @@
-import os
 import subprocess
 import sys
 from argparse import ArgumentParser
-from pathlib import Path
-
-
-BAZEL_WORKSPACE_ENV_KEY = "BUILD_WORKSPACE_DIRECTORY"
+from tools.tools_helper import get_source_code_root
 
 def _run_ruff(fix: bool) -> int:
-    project_root = Path(os.environ.get(BAZEL_WORKSPACE_ENV_KEY, os.getcwd()))
+    project_root = get_source_code_root()
 
     command = ["ruff", "check"]
 
@@ -40,7 +36,7 @@ def _run_ruff(fix: bool) -> int:
 if __name__ == '__main__':
     parser = ArgumentParser()
     parser.add_argument("-f", "--fix", action="store_true")
-    parser.set_defaults(fix=True)
+    parser.set_defaults(fix=False)
     args = parser.parse_args()
 
     sys.exit(_run_ruff(fix=args.fix))
