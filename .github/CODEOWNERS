@@ -1,7 +1,8 @@
 
-* @Lmh-java @Andrewyx
+* @Lmh-java @Andrewyx @clay-arras
 
 # Andrew reviews Windows-related changes
 # Minghao reviews MacOS-related changes
 src/native/win @Andrewyx
 src/native/macos @Lmh-java
+src/native/linux @clay-arras
