@@ -1,4 +1,3 @@
-import pytest
 from typing import Type
 import PyScreenReader as psr
 
