@@ -1,11 +1,11 @@
 #pragma once
 
-#include <string>
 #include "../virtual_container_widget.h"
+#include <string>
 
 class VirtualMenuGroupWidget : public VirtualContainerWidget {
 public:
-    std::string getWidgetName() override;
-    bool isClickable() override;
-    VirtualMenuGroupWidget() = default;
+  std::string GetWidgetName() override;
+  bool IsClickable() override;
+  VirtualMenuGroupWidget() = default;
 };

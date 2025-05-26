@@ -4,18 +4,18 @@
 
 namespace py = pybind11;
 
-std::string VirtualTextFieldWidget::getWidgetName() {
-    return "VirtualTextFieldWidget";
+std::string VirtualTextFieldWidget::GetWidgetName() {
+  return "VirtualTextFieldWidget";
 }
 
-bool VirtualTextFieldWidget::isClickable() {
-    return true;
+bool VirtualTextFieldWidget::IsClickable() { return true; }
+
+void BindTextFieldWidget(py::module_ &module) {
+  py::class_<VirtualTextFieldWidget, VirtualWidget,
+             std::shared_ptr<VirtualTextFieldWidget>>(module,
+                                                      "VirtualTextFieldWidget")
+      .def("getWidgetName", &VirtualTextFieldWidget::GetWidgetName)
+      .def("isClickable", &VirtualTextFieldWidget::IsClickable);
 }
 
-void bindTextFieldWidget(py::module_ &m) {
-    py::class_<VirtualTextFieldWidget, VirtualWidget, std::shared_ptr<VirtualTextFieldWidget>>(m, "VirtualTextFieldWidget")
-            .def("getWidgetName", &VirtualTextFieldWidget::getWidgetName)
-            .def("isClickable", &VirtualTextFieldWidget::isClickable);
-}
-
-REGISTER_BINDING("VirtualTextFieldWidget", bindTextFieldWidget, "VirtualWidget")
+REGISTER_BINDING("VirtualTextFieldWidget", BindTextFieldWidget, "VirtualWidget")

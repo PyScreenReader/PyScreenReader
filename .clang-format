@@ -1,0 +1,6 @@
+# ClangFormatConfigureSource: 'Chromium'
+---
+Language: Cpp
+BasedOnStyle: Chromium
+ColumnLimit: 100
+...

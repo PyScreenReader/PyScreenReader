@@ -5,34 +5,36 @@
 #include <string>
 #include <functional>
 
-namespace AttributeUtils {
+namespace attribute_utils {
 /**
  * Get attribute from AXUIElementRef safely
  *
  * @tparam T type of attribute value
  * @param element element to get attribute from
- * @param attrName attribute name
+ * @param attr_name attribute name
  * @param value pointer to write the value to
  * @return if the operation is returning kAXErrorSuccess
  */
     template<typename T>
-    bool safeGetAttribute(AXUIElementRef element, CFStringRef attrName, T *value) {
-        CFTypeRef valueRef;
-        AXError err = AXUIElementCopyAttributeValue(element, attrName, &valueRef);
-        if (err != kAXErrorSuccess) return false;
+    bool SafeGetAttribute(AXUIElementRef element, CFStringRef attr_name, T *value) {
+        CFTypeRef value_ref;
+        AXError err = AXUIElementCopyAttributeValue(element, attr_name, &value_ref);
+        if (err != kAXErrorSuccess) {
+            return false;
+        }
 
-        *value = (T) valueRef;
+        *value = reinterpret_cast<T>(value_ref);
         return true;
     }
 
 /**
  * Get std string from CFStringRef safely
  *
- * @param stringRef a CFStringRef
+ * @param string_ref a CFStringRef
  * @param ptr the string value to write to
  * @return if the operation succeeded
  */
-    bool convertCFStringToCPPString(CFStringRef stringRef, std::string &ptr);
+    bool ConvertCFStringToCPPString(CFStringRef string_ref, std::string &ptr);
 
 /**
  * RAII-styled implementation of a Core Foundation styled pointer auto-manager
@@ -41,7 +43,9 @@ namespace AttributeUtils {
     template<typename T>
     struct CFReleaser {
         void operator()(T obj) const {
-            if (obj) CFRelease(obj);
+            if (obj) {
+                CFRelease(obj);
+            }
         }
     };
 
@@ -61,22 +65,26 @@ namespace AttributeUtils {
  * @return true if all steps succeeded
  */
     template<typename CFType, typename CppType>
-    bool getAXAttribute(
+    bool GetAXAttribute(
             AXUIElementRef element,
             CFStringRef attribute,
             const std::function<bool(CFType, CppType &)> &convert,
             const std::function<void(const CppType &)> &setter
     ) {
-        CFRef<CFType> cfValue;
-        CFType rawValue = nullptr;
-        if (!safeGetAttribute(element, attribute, &rawValue)) return false;
-        cfValue.reset(rawValue);
+        CFRef<CFType> cf_value;
+        CFType raw_value = nullptr;
+        if (!SafeGetAttribute(element, attribute, &raw_value)) {
+            return false;
+        }
+        cf_value.reset(raw_value);
 
-        CppType cppValue;
-        if (!convert(cfValue.get(), cppValue)) return false;
+        CppType cpp_value;
+        if (!convert(cf_value.get(), cpp_value)) {
+            return false;
+        }
 
-        setter(cppValue);
+        setter(cpp_value);
         return true;
     }
-}
+}  // namespace attribute_utils
 

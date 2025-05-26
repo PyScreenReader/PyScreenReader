@@ -3,5 +3,5 @@
 #include <string>
 
 namespace SystemUtils {
-    AXUIElementRef getAXUIElementRefByPID(const std::string &pid);
+    AXUIElementRef GetAXUIElementRefByPID(const std::string &pid);
 }

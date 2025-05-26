@@ -1,15 +1,15 @@
 #pragma once
 
-#include <string>
 #include "../virtual_widget.h"
-
+#include <string>
 
 class VirtualTextWidget : public VirtualWidget {
 private:
-    bool isClickable_;
+  bool is_clickable_;
+
 public:
-    VirtualTextWidget();
-    std::string getWidgetName() override;
-    bool isClickable() override;
-    void setClickable(bool newClickableValue);
+  VirtualTextWidget();
+  std::string GetWidgetName() override;
+  bool IsClickable() override;
+  void SetClickable(bool newClickableValue);
 };

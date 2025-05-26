@@ -1,21 +1,22 @@
 #pragma once
 #include <memory>
 
+#include <uiautomationclient.h>
 #include <string>
 #include "include/vwidget/widgets/virtual_root_widget.h"
-#include <uiautomationclient.h>
 
-namespace screen_reader
-{
-    class ScreenReaderImpl {
-    public:
-        ScreenReaderImpl();
-        ~ScreenReaderImpl();
-        [[nodiscard]] std::shared_ptr<VirtualRootWidget> getVirtualWidgetTreeByPID(const std::string &pid) const;
-        [[nodiscard]] std::shared_ptr<VirtualRootWidget> getVirtualWidgetTreeByTitle(const std::string &title) const;
-        [[nodiscard]] std::shared_ptr<VirtualRootWidget> getVirtualWidgetTreeByClassName(const std::string &className) const;
-    private:
-        IUIAutomation* automation_;
-        IUIAutomationElement* root_element_;
-    };
-}
+namespace screen_reader {
+class ScreenReaderImpl {
+ public:
+  ScreenReaderImpl();
+  ~ScreenReaderImpl();
+  std::shared_ptr<VirtualRootWidget> GetVirtualWidgetTreeByPID(const std::string& pid) const;
+  std::shared_ptr<VirtualRootWidget> GetVirtualWidgetTreeByTitle(const std::string& title) const;
+  std::shared_ptr<VirtualRootWidget> GetVirtualWidgetTreeByClassName(
+      const std::string& class_name) const;
+
+ private:
+  IUIAutomation* automation_;
+  IUIAutomationElement* root_element_;
+};
+}  // namespace screen_reader

@@ -4,36 +4,37 @@
 
 namespace py = pybind11;
 
-std::string VirtualUnknownWidget::getWidgetName() {
-    return "VirtualUnknownWidget";
+std::string VirtualUnknownWidget::GetWidgetName() {
+  return "VirtualUnknownWidget";
 }
 
-bool VirtualUnknownWidget::isClickable() {
-    return this->isClickable_;
+bool VirtualUnknownWidget::IsClickable() { return this->is_clickable_; }
+
+void VirtualUnknownWidget::SetClickable(bool new_clickable_value) {
+  this->is_clickable_ = new_clickable_value;
 }
 
-void VirtualUnknownWidget::setClickable(bool newClickableValue) {
-    this->isClickable_ = newClickableValue;
+VirtualUnknownWidget::VirtualUnknownWidget() : is_clickable_(false) {}
+
+const std::string &VirtualUnknownWidget::GetNativeName() const {
+  return this->native_name_;
 }
 
-VirtualUnknownWidget::VirtualUnknownWidget(): isClickable_(false) {}
-
-const std::string &VirtualUnknownWidget::getNativeName() const {
-    return this->nativeName_;
+void VirtualUnknownWidget::SetNativeName(const std::string &name) {
+  this->native_name_ = name;
 }
 
-void VirtualUnknownWidget::setNativeName(const std::string &name) {
-    this->nativeName_ = name;
+void BindVirtualUnknownWidget(py::module_ &module) {
+  py::class_<VirtualUnknownWidget, VirtualContainerWidget,
+             std::shared_ptr<VirtualUnknownWidget>>(module,
+                                                    "VirtualUnknownWidget")
+      .def(py::init())
+      .def("getWidgetName", &VirtualUnknownWidget::GetWidgetName)
+      .def("isClickable", &VirtualUnknownWidget::IsClickable)
+      .def("setClickable", &VirtualUnknownWidget::SetClickable)
+      .def("getNativeName", &VirtualUnknownWidget::GetNativeName)
+      .def("setNativeName", &VirtualUnknownWidget::SetNativeName);
 }
 
-void bindVirtualUnknownWidget(py::module_ &m) {
-    py::class_<VirtualUnknownWidget, VirtualContainerWidget, std::shared_ptr<VirtualUnknownWidget>>(m, "VirtualUnknownWidget")
-            .def(py::init())
-            .def("getWidgetName", &VirtualUnknownWidget::getWidgetName)
-            .def("isClickable", &VirtualUnknownWidget::isClickable)
-            .def("setClickable", &VirtualUnknownWidget::setClickable)
-            .def("getNativeName", &VirtualUnknownWidget::getNativeName)
-            .def("setNativeName", &VirtualUnknownWidget::setNativeName);
-}
-
-REGISTER_BINDING("VirtualUnknownWidget", bindVirtualUnknownWidget, "VirtualContainerWidget")
+REGISTER_BINDING("VirtualUnknownWidget", BindVirtualUnknownWidget,
+                 "VirtualContainerWidget")

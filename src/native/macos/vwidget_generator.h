@@ -57,45 +57,44 @@ namespace generator {
     inline constexpr std::string_view SCROLL_AREA_ROLE_ID = "AXScrollArea";
 
     // Unknown widgets
-    // TODO: introduce unknown vwidget to handle unrecognized AXWdiget as a fallback
     inline constexpr std::string_view UNKNOWN_ROLE_ID = "AXUnknown";
 
-    std::shared_ptr<VirtualWidget> handleButtonLiked(AXUIElementRef element);
-    std::shared_ptr<VirtualWidget> handleUnknown(AXUIElementRef element);
-    std::shared_ptr<VirtualWidget> handleStaticText(AXUIElementRef element);
+    std::shared_ptr<VirtualWidget> HandleButtonLiked(AXUIElementRef element);
+    std::shared_ptr<VirtualWidget> HandleUnknown(AXUIElementRef element);
+    std::shared_ptr<VirtualWidget> HandleStaticText(AXUIElementRef element);
 
     inline const std::unordered_map<std::string_view, std::function<std::shared_ptr<VirtualWidget>(AXUIElementRef)>> ROLE_TO_VWIDGET_MAP = {
-            {BUTTON_ROLE_ID,        [](AXUIElementRef e) { return handleButtonLiked(e); }},
-            {CHECKBOX_ROLE_ID,      [](AXUIElementRef e) { return std::make_shared<VirtualButtonWidget>(); }},
-            {COMBO_BOX_ROLE_ID,     [](AXUIElementRef e) { return std::make_shared<VirtualButtonWidget>(); }},
-            {RADIO_BUTTON_ROLE_ID,  [](AXUIElementRef e) { return std::make_shared<VirtualButtonWidget>(); }},
-            {POP_UP_BUTTON_ROLE_ID,  [](AXUIElementRef e) { return std::make_shared<VirtualButtonWidget>(); }},
+            {BUTTON_ROLE_ID,        [](AXUIElementRef element) { return HandleButtonLiked(element); }},
+            {CHECKBOX_ROLE_ID,      [](AXUIElementRef element) { return std::make_shared<VirtualButtonWidget>(); }},
+            {COMBO_BOX_ROLE_ID,     [](AXUIElementRef element) { return std::make_shared<VirtualButtonWidget>(); }},
+            {RADIO_BUTTON_ROLE_ID,  [](AXUIElementRef element) { return std::make_shared<VirtualButtonWidget>(); }},
+            {POP_UP_BUTTON_ROLE_ID,  [](AXUIElementRef element) { return std::make_shared<VirtualButtonWidget>(); }},
 
-            {STATIC_TEXT_ROLE_ID,   [](AXUIElementRef e) { return handleStaticText(e); }},
-            {HEADING_ROLE_ID,   [](AXUIElementRef e) { return handleStaticText(e); }},
-            {TEXT_FIELD_ROLE_ID,    [](AXUIElementRef e) { return std::make_shared<VirtualTextFieldWidget>(); }},
-            {TEXT_AREA_ROLE_ID,    [](AXUIElementRef e) { return std::make_shared<VirtualTextFieldWidget>(); }},
+            {STATIC_TEXT_ROLE_ID,   [](AXUIElementRef element) { return HandleStaticText(element); }},
+            {HEADING_ROLE_ID,   [](AXUIElementRef element) { return HandleStaticText(element); }},
+            {TEXT_FIELD_ROLE_ID,    [](AXUIElementRef element) { return std::make_shared<VirtualTextFieldWidget>(); }},
+            {TEXT_AREA_ROLE_ID,    [](AXUIElementRef element) { return std::make_shared<VirtualTextFieldWidget>(); }},
 
-            {MENU_BAR_ROLE_ID,      [](AXUIElementRef e) { return std::make_shared<VirtualMenuGroupWidget>(); }},
-            {MENU_ROLE_ID,          [](AXUIElementRef e) { return std::make_shared<VirtualMenuGroupWidget>(); }},
-            {MENU_BUTTON_ROLE_ID,   [](AXUIElementRef e) { return std::make_shared<VirtualMenuItemWidget>(); }},
-            {MENU_BAR_ITEM_ROLE_ID, [](AXUIElementRef e) { return std::make_shared<VirtualMenuItemWidget>(); }},
+            {MENU_BAR_ROLE_ID,      [](AXUIElementRef element) { return std::make_shared<VirtualMenuGroupWidget>(); }},
+            {MENU_ROLE_ID,          [](AXUIElementRef element) { return std::make_shared<VirtualMenuGroupWidget>(); }},
+            {MENU_BUTTON_ROLE_ID,   [](AXUIElementRef element) { return std::make_shared<VirtualMenuItemWidget>(); }},
+            {MENU_BAR_ITEM_ROLE_ID, [](AXUIElementRef element) { return std::make_shared<VirtualMenuItemWidget>(); }},
 
-            {WINDOW_ROLE_ID,       [](AXUIElementRef e) { return std::make_shared<VirtualWindowWidget>(); }},
-            {APPLICATION_ROLE_ID,   [](AXUIElementRef e) { return std::make_shared<VirtualRootWidget>(); }},
+            {WINDOW_ROLE_ID,       [](AXUIElementRef element) { return std::make_shared<VirtualWindowWidget>(); }},
+            {APPLICATION_ROLE_ID,   [](AXUIElementRef element) { return std::make_shared<VirtualRootWidget>(); }},
 
-            {ROW_ROLE_ID, [](AXUIElementRef e) { return std::make_shared<VirtualGroupWidget>(); }},
-            {COLUMN_ROLE_ID, [](AXUIElementRef e) { return std::make_shared<VirtualGroupWidget>(); }},
-            {LIST_ROLE_ID, [](AXUIElementRef e) { return std::make_shared<VirtualGroupWidget>(); }},
-            {GROUP_ROLE_ID, [](AXUIElementRef e) { return std::make_shared<VirtualGroupWidget>(); }},
-            {OUTLINE_ROLE_ID, [](AXUIElementRef e) { return std::make_shared<VirtualGroupWidget>(); }},
-            {CELL_ROLE_ID, [](AXUIElementRef e) { return std::make_shared<VirtualGroupWidget>(); }},
-            {SCROLL_AREA_ROLE_ID, [](AXUIElementRef e) { return std::make_shared<VirtualGroupWidget>(); }},
+            {ROW_ROLE_ID, [](AXUIElementRef element) { return std::make_shared<VirtualGroupWidget>(); }},
+            {COLUMN_ROLE_ID, [](AXUIElementRef element) { return std::make_shared<VirtualGroupWidget>(); }},
+            {LIST_ROLE_ID, [](AXUIElementRef element) { return std::make_shared<VirtualGroupWidget>(); }},
+            {GROUP_ROLE_ID, [](AXUIElementRef element) { return std::make_shared<VirtualGroupWidget>(); }},
+            {OUTLINE_ROLE_ID, [](AXUIElementRef element) { return std::make_shared<VirtualGroupWidget>(); }},
+            {CELL_ROLE_ID, [](AXUIElementRef element) { return std::make_shared<VirtualGroupWidget>(); }},
+            {SCROLL_AREA_ROLE_ID, [](AXUIElementRef element) { return std::make_shared<VirtualGroupWidget>(); }},
 
-            {UNKNOWN_ROLE_ID, [](AXUIElementRef e) { return handleUnknown(e); }}
+            {UNKNOWN_ROLE_ID, [](AXUIElementRef element) { return HandleUnknown(element); }}
     };
 
-    std::shared_ptr<VirtualRootWidget> generateVWidgetTree(AXUIElementRef rootElement);
+    std::shared_ptr<VirtualRootWidget> GenerateVWidgetTree(AXUIElementRef rootElement);
 
-    std::shared_ptr<VirtualWidget> getVWidget(AXUIElementRef element);
+    std::shared_ptr<VirtualWidget> GetVWidget(AXUIElementRef element);
 }

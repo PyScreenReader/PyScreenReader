@@ -11,8 +11,12 @@ namespace screen_reader
     public:
         ScreenReaderImpl() = default;
         ~ScreenReaderImpl() = default;
-        std::shared_ptr<VirtualRootWidget> getVirtualWidgetTreeByPID(const std::string& pid) const;
-        std::shared_ptr<VirtualRootWidget> getVirtualWidgetTreeByTitle(const std::string& title) const;
-        std::shared_ptr<VirtualRootWidget> getVirtualWidgetTreeByClassName(const std::string& className) const;
+
+        // TODO(#30) the linter suppression could be removed until the issue is implemented
+        // NOLINTBEGIN(readability-convert-member-functions-to-static)
+        std::shared_ptr<VirtualRootWidget> GetVirtualWidgetTreeByPID(const std::string& pid) const;
+        std::shared_ptr<VirtualRootWidget> GetVirtualWidgetTreeByTitle(const std::string& title) const;
+        std::shared_ptr<VirtualRootWidget> GetVirtualWidgetTreeByClassName(const std::string& class_name) const;
+        // NOLINTEND(readability-convert-member-functions-to-static)
     };
 }

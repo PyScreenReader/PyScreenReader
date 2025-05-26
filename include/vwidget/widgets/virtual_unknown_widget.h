@@ -1,17 +1,18 @@
 #pragma once
 
-#include <string>
 #include "include/vwidget/virtual_container_widget.h"
+#include <string>
 
 class VirtualUnknownWidget : public VirtualContainerWidget {
-private:
-    bool isClickable_;
-    std::string nativeName_;
 public:
-    VirtualUnknownWidget();
-    std::string getWidgetName() override;
-    bool isClickable() override;
-    void setClickable(bool newClickableValue);
-    const std::string& getNativeName() const;
-    void setNativeName(const std::string& name);
+  VirtualUnknownWidget();
+  std::string GetWidgetName() override;
+  bool IsClickable() override;
+  void SetClickable(bool new_clickable_value);
+  const std::string &GetNativeName() const;
+  void SetNativeName(const std::string &name);
+
+private:
+  bool is_clickable_;
+  std::string native_name_;
 };

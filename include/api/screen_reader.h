@@ -15,32 +15,40 @@ class ScreenReaderImpl;
 
 class ScreenReader {
 public:
-    ScreenReader() = default;
-    ~ScreenReader() = default;
-    /**
- * Retrieves the virtual widget tree associated with the specified process ID (PID).
- *
- * @param pid The process ID used to identify the target application
- * @return pointer to the VirtualRootWidget corresponding to the given PID
- */
-    std::shared_ptr<VirtualRootWidget> getVirtualWidgetTreeByPID(const std::string &pid) const;
+  ScreenReader() = default;
+  ~ScreenReader() = default;
+  /**
+   * Retrieves the virtual widget tree associated with the specified process ID
+   * (PID).
+   *
+   * @param pid The process ID used to identify the target application
+   * @return pointer to the VirtualRootWidget corresponding to the given PID
+   */
+  [[nodiscard]] std::shared_ptr<VirtualRootWidget>
+  GetVirtualWidgetTreeByPID(const std::string &pid) const;
 
-/**
- * Retrieves the virtual widget tree associated with the specified window title.
- *
- * @param title The window title used to identify the target application
- * @return pointer to the VirtualRootWidget corresponding to the given title
- */
-    std::shared_ptr<VirtualRootWidget> getVirtualWidgetTreeByTitle(const std::string &title) const;
+  /**
+   * Retrieves the virtual widget tree associated with the specified window
+   * title.
+   *
+   * @param title The window title used to identify the target application
+   * @return pointer to the VirtualRootWidget corresponding to the given title
+   */
+  [[nodiscard]] std::shared_ptr<VirtualRootWidget>
+  GetVirtualWidgetTreeByTitle(const std::string &title) const;
 
-/**
- * Retrieves the virtual widget tree associated with the specified window class name.
- *
- * @param className The window class name used to identify the target application
- * @return pointer to the VirtualRootWidget corresponding to the given class name
- */
-    std::shared_ptr<VirtualRootWidget> getVirtualWidgetTreeByClassName(const std::string &className) const;
+  /**
+   * Retrieves the virtual widget tree associated with the specified window
+   * class name.
+   *
+   * @param class_name The window class name used to identify the target
+   * application
+   * @return pointer to the VirtualRootWidget corresponding to the given class
+   * name
+   */
+  [[nodiscard]] std::shared_ptr<VirtualRootWidget>
+  GetVirtualWidgetTreeByClassName(const std::string &class_name) const;
 
 private:
-    screen_reader::ScreenReaderImpl screen_reader_impl_;
+  screen_reader::ScreenReaderImpl screen_reader_impl_;
 };

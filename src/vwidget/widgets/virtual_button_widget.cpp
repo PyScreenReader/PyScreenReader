@@ -1,23 +1,23 @@
 #include "include/vwidget/widgets/virtual_button_widget.h"
-#include <pybind11/pybind11.h>
 #include "src/bindings_registry.h"
-
+#include <pybind11/pybind11.h>
 
 namespace py = pybind11;
 
-std::string VirtualButtonWidget::getWidgetName() {
-    return "VirtualButtonWidget";
+std::string VirtualButtonWidget::GetWidgetName() {
+  return "VirtualButtonWidget";
 }
 
-bool VirtualButtonWidget::isClickable() {
-    return true;
+bool VirtualButtonWidget::IsClickable() { return true; }
+
+void BindVirtualButtonWidget(py::module_ &module) {
+  py::class_<VirtualButtonWidget, VirtualWidget,
+             std::shared_ptr<VirtualButtonWidget>>(module,
+                                                   "VirtualButtonWidget")
+      .def(py::init())
+      .def("getWidgetName", &VirtualButtonWidget::GetWidgetName)
+      .def("isClickable", &VirtualButtonWidget::IsClickable);
 }
 
-void bindVirtualButtonWidget(py::module_ &m) {
-    py::class_<VirtualButtonWidget, VirtualWidget, std::shared_ptr<VirtualButtonWidget>>(m, "VirtualButtonWidget")
-        .def(py::init())
-        .def("getWidgetName", &VirtualButtonWidget::getWidgetName)
-        .def("isClickable", &VirtualButtonWidget::isClickable);
-}
-
-REGISTER_BINDING("VirtualButtonWidget", bindVirtualButtonWidget, "VirtualWidget")
+REGISTER_BINDING("VirtualButtonWidget", BindVirtualButtonWidget,
+                 "VirtualWidget")
