@@ -1,7 +1,28 @@
-line-length = 80
+line-length = 100
 
 # Assume Python 3.11, since we primarily use 3.11 as the dev version
 target-version = "py311"
 
 [lint]
 select = ["ALL"]
+
+# Disabled checks for entire codebase:
+# N813: PyScreenReader is often imported as `psr` in test cases
+# INP001: __init__.py is not used since everything is managed by bazel
+# S101: For pytest, we use `assert` to provide assertions
+# FBT001: Allow taking boolean as a positional argument to the function
+# PERF401: We don't enforce list.extend over list.append + for loop, for loops can perform additional logic
+
+ignore = ["N813", "INP001", "S101", "FBT001", "PERF401"]
+
+[per-file-ignores]
+# Disabled checks for tool scripts:
+# T201: Allow print statements in tool scripts
+# S603: Allow subprocess call in tool scripts
+"tools/*.py" = ["T201", "S603"]
+
+# Disabled checks for entire
+# ANN201: it's okay to not have `-> None` in test cases
+# D100: it's okay to not have docstrings on test modules
+# D103: it's okay to not have a docstring on test assertions (their name should be clear enough)
+"test/py/*/*.py" = ["ANN201", "D100", "D103"]

@@ -1,6 +1,7 @@
 import logging
 import os
 import subprocess
+import sys
 from pathlib import Path
 
 from bazel_tools.tools.python.runfiles import runfiles
@@ -109,7 +110,7 @@ def _find_platform_dependent_args() -> list[str]:
 
 
 def _generate_compile_commands(project_root: Path) -> os.PathLike:
-    """Generate compile database and return the path to it
+    """Generate compile database and return the path to it.
 
     :param project_root: project root path
     :return: compile database path
@@ -127,7 +128,7 @@ def _generate_compile_commands(project_root: Path) -> os.PathLike:
 
 
 def _collect_source_files(project_root: Path) -> list[os.PathLike]:
-    """Collect source files selectively
+    """Collect source files selectively.
     We only want to collect the source files corresponding to the current platform for linting
     Otherwise, clang-tidy will complain because clang-tidy cannot link to libs from other platform.
 
@@ -150,7 +151,7 @@ def _collect_source_files(project_root: Path) -> list[os.PathLike]:
 
 
 def _run_clang_tidy(compile_commands_path: os.PathLike, files: list[os.PathLike]) -> int:
-    """Run clang-tidy
+    """Run clang-tidy.
 
     :param compile_commands_path: path to compile database
     :param files: C++ source files
@@ -166,7 +167,7 @@ def _run_clang_tidy(compile_commands_path: os.PathLike, files: list[os.PathLike]
 
 
 def main() -> int:
-    """Entry point of this script
+    """Entry point of this script.
 
     :return: system return code
         - 0 if no error and linter passed
@@ -188,4 +189,4 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    exit(main())
+    sys.exit(main())
