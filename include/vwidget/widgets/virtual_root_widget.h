@@ -4,6 +4,6 @@
 
 class VirtualRootWidget : public VirtualContainerWidget {
 public:
-    std::string GetWidgetName() override;
-    bool IsClickable() override;
+  std::string GetWidgetName() override;
+  bool IsClickable() override;
 };

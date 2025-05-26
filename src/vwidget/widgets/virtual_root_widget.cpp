@@ -4,18 +4,15 @@
 
 namespace py = pybind11;
 
-std::string VirtualRootWidget::GetWidgetName() {
-    return "VirtualRootWidget";
-}
+std::string VirtualRootWidget::GetWidgetName() { return "VirtualRootWidget"; }
 
-bool VirtualRootWidget::IsClickable() {
-    return false;
-}
+bool VirtualRootWidget::IsClickable() { return false; }
 
 void BindRootWidget(py::module_ &module) {
-    py::class_<VirtualRootWidget, VirtualContainerWidget, std::shared_ptr<VirtualRootWidget>>(module, "VirtualRootWidget")
-        .def("getWidgetName", &VirtualRootWidget::GetWidgetName)
-        .def("isClickable", &VirtualRootWidget::IsClickable);
+  py::class_<VirtualRootWidget, VirtualContainerWidget,
+             std::shared_ptr<VirtualRootWidget>>(module, "VirtualRootWidget")
+      .def("getWidgetName", &VirtualRootWidget::GetWidgetName)
+      .def("isClickable", &VirtualRootWidget::IsClickable);
 }
 
 REGISTER_BINDING("VirtualRootWidget", BindRootWidget, "VirtualContainerWidget")

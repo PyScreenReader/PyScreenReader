@@ -20,19 +20,21 @@ bazel_dep(name = "bazel_skylib", version = "1.7.1")
 # hedron_compile_commands is used to build compilation database for linters
 # run `bazel run @hedron_compile_commands//:refresh_all`
 # TODO (Issue #15): also write this to a separate documentation
-bazel_dep(name = "hedron_compile_commands", dev_dependency = True, version = "1.0.5")
-
+bazel_dep(name = "hedron_compile_commands", version = "1.0.5", dev_dependency = True)
 git_override(
     module_name = "hedron_compile_commands",
-    remote = "https://github.com/hedronvision/bazel-compile-commands-extractor.git",
     commit = "4f28899228fb3ad0126897876f147ca15026151e",
+    remote = "https://github.com/hedronvision/bazel-compile-commands-extractor.git",
 )
 
 pybind11_configure = use_extension("@pybind11_bazel//:internal_configure.bzl", "internal_configure_extension")
 use_repo(pybind11_configure, "pybind11")
 
 python = use_extension("@rules_python//python/extensions:python.bzl", "python")
-python.toolchain(python_version = "3.11", is_default = True)
+python.toolchain(
+    is_default = True,
+    python_version = "3.11",
+)
 
 pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
 
@@ -49,5 +51,4 @@ pip.parse(
     python_version = "3.11",
     requirements_lock = "//tools:requirements_lock.txt",
 )
-
-use_repo(pip, "pytest_env", "dev_tools_env")
+use_repo(pip, "dev_tools_env", "pytest_env")
