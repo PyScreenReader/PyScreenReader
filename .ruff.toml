@@ -1,0 +1,7 @@
+line-length = 80
+
+# Assume Python 3.11, since we primarily use 3.11 as the dev version
+target-version = "py311"
+
+[lint]
+select = ["ALL"]
