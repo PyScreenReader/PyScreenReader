@@ -1,7 +1,7 @@
-import PyScreenReader as psr
 from collections import deque
 
 import PyScreenReader as psr
+
 
 def test_screen_reader():
     screen_reader = psr.ScreenReader()
