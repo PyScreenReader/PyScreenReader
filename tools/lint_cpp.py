@@ -1,3 +1,22 @@
+"""Runs clang-tidy on platform-relevant C++ source files in the project.
+
+Usage: bazel run //tools:lint_cpp
+
+Steps performed:
+  1. Generates or refreshes compile_commands.json using refresh_compile_commands binary.
+  2. Collects C++ source files from relevant directories (based on your OS: macOS, Windows,
+        or Linux).
+  3. Applies platform-specific include path fixes (especially for macOS).
+  4. Invokes clang-tidy with appropriate arguments and prints results.
+
+Behavior:
+  - On macOS: Attempts to patch system include paths and disables certain warnings.
+  - On Windows/Linux: Uses default paths from compile database.
+  - Exits with code 0 on success, 1 if linting fails or an error occurs.
+
+"""
+
+
 import logging
 import os
 import subprocess
@@ -29,7 +48,8 @@ logging.basicConfig(level=logging.INFO)
 def _find_macos_sdk_path() -> str | None:
     """Find macOS sdk path.
 
-    If any errors occurred, a fallback of "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks"
+    If any errors occurred, a fallback of
+    "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks"
     will be returned
 
     :return: macOS sdk search path
@@ -43,7 +63,7 @@ def _find_macos_sdk_path() -> str | None:
             check=True,
         )
     except subprocess.CalledProcessError as e:
-        logger.warning(f"macOS SDK default fallback path is provided, due to {e.stdout}")
+        logger.warning("macOS SDK default fallback path is provided, due to %s", e.stdout)
         return fallback_path
 
     if not cmd_output.stdout or not cmd_output.stdout.strip():
@@ -55,7 +75,7 @@ def _find_macos_sdk_path() -> str | None:
 
 
 def _find_macos_cpp_libs() -> list[str]:
-    """Locate all local macOS cpp libs
+    """Locate all local macOS cpp libs.
 
     :return: paths to local macOS cpp libs
     """
@@ -117,8 +137,9 @@ def _generate_compile_commands(project_root: Path) -> os.PathLike:
     """
     r = runfiles.Create()
     binary_path = r.Rlocation(f"_main/tools/refresh_compile_commands{get_executable_suffix()}")
-    if not os.path.exists(binary_path):
-        raise FileNotFoundError("refresh_compile_commands binary is not found, thus cannot generate compile database")
+    if not Path.exists(binary_path):
+        msg = "refresh_compile_commands binary is not found"
+        raise FileNotFoundError(msg)
     result = subprocess.run(binary_path, stdin=subprocess.DEVNULL,
                    stderr=subprocess.PIPE,
                    text=True,
@@ -129,6 +150,7 @@ def _generate_compile_commands(project_root: Path) -> os.PathLike:
 
 def _collect_source_files(project_root: Path) -> list[os.PathLike]:
     """Collect source files selectively.
+
     We only want to collect the source files corresponding to the current platform for linting
     Otherwise, clang-tidy will complain because clang-tidy cannot link to libs from other platform.
 

@@ -1,3 +1,14 @@
+"""Runs Ruff linter on the source tree.
+
+Usage: bazel run //tools:lint_py -- [-f|--fix]
+
+Options:
+  -f, --fix     Automatically fix lint issues
+                (By default this is disabled).
+
+Make sure `ruff` is installed: https://docs.astral.sh/ruff/installation/
+"""
+
 import subprocess
 import sys
 from argparse import ArgumentParser

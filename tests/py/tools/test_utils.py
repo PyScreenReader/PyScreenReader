@@ -4,7 +4,11 @@ import PyScreenReader as psr
 from tests.py.tools.constants import METHOD_NAMES_IN_VIRTUAL_WIDGET_SUBCLASSES
 
 
-def assert_getters_setters(subclass: type[psr.VirtualWidget], true_widget_name, true_is_clickable):
+def assert_getters_setters(
+        subclass: type[psr.VirtualWidget],
+        true_widget_name: str,
+        true_is_clickable: bool,
+):
     ins = subclass()
 
     ins.setVisible(False)
