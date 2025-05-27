@@ -1,7 +1,9 @@
 import subprocess
 import sys
 from argparse import ArgumentParser
+
 from tools.tools_helper import get_source_code_root
+
 
 def _run_ruff(fix: bool) -> int:
     project_root = get_source_code_root()
@@ -16,7 +18,7 @@ def _run_ruff(fix: bool) -> int:
             command,
             stdout=subprocess.PIPE,
             cwd=project_root,
-            encoding="utf-8",
+            encoding="utf-8", check=False,
         )
         if res.stdout:
             print(res.stdout)
@@ -33,7 +35,7 @@ def _run_ruff(fix: bool) -> int:
 
     return return_code
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("-f", "--fix", action="store_true")
     parser.set_defaults(fix=False)

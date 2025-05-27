@@ -1,15 +1,18 @@
+import logging
 import os
 import subprocess
 from pathlib import Path
-from typing import List, Optional
-import logging
-
-from tools_helper import is_windows, is_macos, get_executable_suffix, get_source_code_root
 
 from bazel_tools.tools.python.runfiles import runfiles
 
 # We have to do import _run to get this work, although it is a member func
 from clang_tidy import _run
+from tools_helper import (
+    get_executable_suffix,
+    get_source_code_root,
+    is_macos,
+    is_windows,
+)
 
 CPP_EXTENSIONS = frozenset((".h", ".hpp", ".c", ".cpp", ".cc"))
 CLANG_TIDY_NAME = "clang-tidy"
@@ -22,9 +25,8 @@ logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
 
-def _find_macos_sdk_path() -> Optional[str]:
-    """
-    Find macOS sdk path.
+def _find_macos_sdk_path() -> str | None:
+    """Find macOS sdk path.
 
     If any errors occurred, a fallback of "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks"
     will be returned
@@ -51,9 +53,8 @@ def _find_macos_sdk_path() -> Optional[str]:
     return f"{sdk_path}/System/Library/Frameworks"
 
 
-def _find_macos_cpp_libs() -> List[str]:
-    """
-    Locate all local macOS cpp libs
+def _find_macos_cpp_libs() -> list[str]:
+    """Locate all local macOS cpp libs
 
     :return: paths to local macOS cpp libs
     """
@@ -86,9 +87,8 @@ def _find_macos_cpp_libs() -> List[str]:
 
 
 
-def _find_platform_dependent_args() -> List[str]:
-    """
-    Find platform dependent args when running clang-tidy.
+def _find_platform_dependent_args() -> list[str]:
+    """Find platform dependent args when running clang-tidy.
 
     For example, on macOS, the compile database does not collect system libs properly,
     We have to patch with the following py script to correctly locate and link those libs
@@ -109,8 +109,7 @@ def _find_platform_dependent_args() -> List[str]:
 
 
 def _generate_compile_commands(project_root: Path) -> os.PathLike:
-    """
-    Generate compile database and return the path to it
+    """Generate compile database and return the path to it
 
     :param project_root: project root path
     :return: compile database path
@@ -127,9 +126,8 @@ def _generate_compile_commands(project_root: Path) -> os.PathLike:
     return project_root / "compile_commands.json"
 
 
-def _collect_source_files(project_root: Path) -> List[os.PathLike]:
-    """
-    Collect source files selectively
+def _collect_source_files(project_root: Path) -> list[os.PathLike]:
+    """Collect source files selectively
     We only want to collect the source files corresponding to the current platform for linting
     Otherwise, clang-tidy will complain because clang-tidy cannot link to libs from other platform.
 
@@ -151,9 +149,8 @@ def _collect_source_files(project_root: Path) -> List[os.PathLike]:
     return source_files
 
 
-def _run_clang_tidy(compile_commands_path: os.PathLike, files: List[os.PathLike]) -> int:
-    """
-    Run clang-tidy
+def _run_clang_tidy(compile_commands_path: os.PathLike, files: list[os.PathLike]) -> int:
+    """Run clang-tidy
 
     :param compile_commands_path: path to compile database
     :param files: C++ source files
@@ -169,8 +166,7 @@ def _run_clang_tidy(compile_commands_path: os.PathLike, files: List[os.PathLike]
 
 
 def main() -> int:
-    """
-    Entry point of this script
+    """Entry point of this script
 
     :return: system return code
         - 0 if no error and linter passed
