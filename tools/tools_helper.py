@@ -39,4 +39,4 @@ def get_source_code_root() -> Path:
 
     :return: root directory of the source code
     """
-    return os.environ.get(BAZEL_WORKSPACE_ENV_KEY, Path.cwd())
+    return Path(os.environ.get(BAZEL_WORKSPACE_ENV_KEY, Path.cwd()))
