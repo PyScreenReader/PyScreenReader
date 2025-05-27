@@ -12,17 +12,23 @@ select = ["ALL"]
 # S101: For pytest, we use `assert` to provide assertions
 # FBT001: Allow taking boolean as a positional argument to the function
 # PERF401: We don't enforce list.extend over list.append + for loop, for loops can perform additional logic
+# D211: This conflicts with D203, so disbaled
+# D213: This conflicts with D212, so disabled
+ignore = ["N813", "INP001", "S101", "FBT001", "PERF401", "D211", "D213"]
 
-ignore = ["N813", "INP001", "S101", "FBT001", "PERF401"]
-
-[per-file-ignores]
+[lint.per-file-ignores]
 # Disabled checks for tool scripts:
 # T201: Allow print statements in tool scripts
 # S603: Allow subprocess call in tool scripts
-"tools/*.py" = ["T201", "S603"]
+# S607: For tool scripts, sometimes a command lookup through system is necessary,
+#       therefore, starting a process with a partial executable path is okay
+"tools/*.py" = ["T201", "S603", "S607"]
 
 # Disabled checks for entire
 # ANN201: it's okay to not have `-> None` in test cases
 # D100: it's okay to not have docstrings on test modules
 # D103: it's okay to not have a docstring on test assertions (their name should be clear enough)
-"test/py/*/*.py" = ["ANN201", "D100", "D103"]
+# PLR2004: occasional usage of magic number is fine in unit tests
+# BLE001: for test purposes, sometimes it is easier to catch all exceptions to assert no exceptions happened
+# T201: `print` statement is temporarily allowed before we finalize our test cases
+"tests/py/*.py" = ["ANN201", "D100", "D103", "PLR2004", "BLE001", "T201"]
