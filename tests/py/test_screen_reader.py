@@ -14,7 +14,7 @@ def test_screen_reader():
 
         while queue:
             indent, curr = queue.pop()
-            print(f'{"-" * indent} ({indent}) {curr}')
+            print(f"{'-' * indent} ({indent}) {curr}")
 
             if hasattr(curr, "getChildren") and callable(curr.getChildren):
                 try:

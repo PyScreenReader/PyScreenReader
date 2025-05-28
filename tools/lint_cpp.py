@@ -16,7 +16,6 @@ Behavior:
 
 """
 
-
 import logging
 import os
 import subprocess
@@ -107,7 +106,6 @@ def _find_macos_cpp_libs() -> list[str]:
     return lib_paths
 
 
-
 def _find_platform_dependent_args() -> list[str]:
     """Find platform dependent args when running clang-tidy.
 
@@ -140,10 +138,13 @@ def _generate_compile_commands(project_root: Path) -> os.PathLike:
     if not Path.exists(binary_path):
         msg = "refresh_compile_commands binary is not found"
         raise FileNotFoundError(msg)
-    result = subprocess.run(binary_path, stdin=subprocess.DEVNULL,
-                   stderr=subprocess.PIPE,
-                   text=True,
-                   check=True)
+    result = subprocess.run(
+        binary_path,
+        stdin=subprocess.DEVNULL,
+        stderr=subprocess.PIPE,
+        text=True,
+        check=True,
+    )
     logger.info("Compile command output: %s", result.stderr)
     return project_root / "compile_commands.json"
 
