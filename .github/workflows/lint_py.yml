@@ -1,4 +1,4 @@
-name: Run Python Linter
+name: Run Python Linter & Formatter
 
 on:
   push:
@@ -26,5 +26,8 @@ jobs:
       - name: Install Ruff
         run: pip install ruff
 
-      - name: Run Ruff
+      - name: Run Ruff Linter
         run: ruff check
+
+      - name: Run Ruff Formatter
+        run: ruff format --check --diff

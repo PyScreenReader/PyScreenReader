@@ -14,7 +14,7 @@ select = ["ALL"]
 # PERF401: We don't enforce list.extend over list.append + for loop, for loops can perform additional logic
 # D211: This conflicts with D203, so disbaled
 # D213: This conflicts with D212, so disabled
-ignore = ["N813", "INP001", "S101", "FBT001", "PERF401", "D211", "D213"]
+ignore = ["N813", "INP001", "S101", "FBT001", "PERF401", "D211", "D213", "D203"]
 
 [lint.per-file-ignores]
 # Disabled checks for tool scripts:
