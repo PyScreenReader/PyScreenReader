@@ -1,4 +1,4 @@
-"""Runs Ruff linter on the source tree.
+"""Runs Ruff linter and formatter on source code.
 
 Usage: bazel run //tools:lint_py -- [-f|--fix] [--no-format]
 
