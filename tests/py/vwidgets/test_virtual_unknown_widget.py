@@ -1,11 +1,11 @@
 import PyScreenReader as psr
 
 BASE_METHOD_NAME_VIRTUAL_UNKNOWN_WIDGET = (
-    'setClickable',
-    'isClickable',
-    'setNativeName',
-    'getNativeName',
-    '__init__'
+    "setClickable",
+    "isClickable",
+    "setNativeName",
+    "getNativeName",
+    "__init__",
 )
 
 
@@ -25,4 +25,4 @@ def test_is_clickable():
 def test_native_name():
     unknown_widget = psr.VirtualUnknownWidget()
     unknown_widget.setNativeName("AXTree")
-    assert "AXTree" == unknown_widget.getNativeName()
+    assert unknown_widget.getNativeName() == "AXTree"

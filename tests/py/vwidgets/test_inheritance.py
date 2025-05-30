@@ -1,5 +1,6 @@
-import PyScreenReader as psr
 import inspect
+
+import PyScreenReader as psr
 
 
 def test_virtual_button_widget_inheritance():

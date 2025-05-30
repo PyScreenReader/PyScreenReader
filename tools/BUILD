@@ -36,6 +36,14 @@ py_binary(
     ],
 )
 
+py_binary(
+    name = "lint_py",
+    srcs = ["lint_py.py"],
+    deps = [
+        "tools_helper"
+    ]
+)
+
 py_library(
     name = "tools_helper",
     srcs = ["tools_helper.py"],

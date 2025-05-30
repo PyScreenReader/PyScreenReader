@@ -2,8 +2,8 @@ import PyScreenReader as psr
 import pytest
 
 BASE_METHOD_NAME_VIRTUAL_CONTAINER_WIDGET = (
-    'addChild',
-    'getChildren',
+    "addChild",
+    "getChildren",
 )
 
 

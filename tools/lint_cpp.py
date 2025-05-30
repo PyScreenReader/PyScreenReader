@@ -1,19 +1,39 @@
-import os
-import sys
-import subprocess
-from pathlib import Path
-from typing import List, Optional
-import logging
+"""Runs clang-tidy on platform-relevant C++ source files in the project.
 
-from tools_helper import is_windows, is_macos, get_executable_suffix
+Usage: bazel run //tools:lint_cpp
+
+Steps performed:
+  1. Generates or refreshes compile_commands.json using refresh_compile_commands binary.
+  2. Collects C++ source files from relevant directories (based on your OS: macOS, Windows,
+        or Linux).
+  3. Applies platform-specific include path fixes (especially for macOS).
+  4. Invokes clang-tidy with appropriate arguments and prints results.
+
+Behavior:
+  - On macOS: Attempts to patch system include paths and disables certain warnings.
+  - On Windows/Linux: Uses default paths from compile database.
+  - Exits with code 0 on success, 1 if linting fails or an error occurs.
+
+"""
+
+import logging
+import os
+import subprocess
+import sys
+from pathlib import Path
 
 from bazel_tools.tools.python.runfiles import runfiles
 
 # We have to do import _run to get this work, although it is a member func
 from clang_tidy import _run
+from tools_helper import (
+    get_executable_suffix,
+    get_source_code_root,
+    is_macos,
+    is_windows,
+)
 
 CPP_EXTENSIONS = frozenset((".h", ".hpp", ".c", ".cpp", ".cc"))
-BAZEL_WORKSPACE_ENV_KEY = "BUILD_WORKSPACE_DIRECTORY"
 CLANG_TIDY_NAME = "clang-tidy"
 
 COMMON_SOURCE_FILE_DIRS = frozenset(("tests", "include", "tools"))
@@ -24,11 +44,11 @@ logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
 
-def _find_macos_sdk_path() -> Optional[str]:
-    """
-    Find macOS sdk path.
+def _find_macos_sdk_path() -> str | None:
+    """Find macOS sdk path.
 
-    If any errors occurred, a fallback of "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks"
+    If any errors occurred, a fallback of
+    "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks"
     will be returned
 
     :return: macOS sdk search path
@@ -42,7 +62,7 @@ def _find_macos_sdk_path() -> Optional[str]:
             check=True,
         )
     except subprocess.CalledProcessError as e:
-        logger.warning(f"macOS SDK default fallback path is provided, due to {e.stdout}")
+        logger.warning("macOS SDK default fallback path is provided, due to %s", e.stdout)
         return fallback_path
 
     if not cmd_output.stdout or not cmd_output.stdout.strip():
@@ -53,9 +73,8 @@ def _find_macos_sdk_path() -> Optional[str]:
     return f"{sdk_path}/System/Library/Frameworks"
 
 
-def _find_macos_cpp_libs() -> List[str]:
-    """
-    Locate all local macOS cpp libs
+def _find_macos_cpp_libs() -> list[str]:
+    """Locate all local macOS cpp libs.
 
     :return: paths to local macOS cpp libs
     """
@@ -87,10 +106,8 @@ def _find_macos_cpp_libs() -> List[str]:
     return lib_paths
 
 
-
-def _find_platform_dependent_args() -> List[str]:
-    """
-    Find platform dependent args when running clang-tidy.
+def _find_platform_dependent_args() -> list[str]:
+    """Find platform dependent args when running clang-tidy.
 
     For example, on macOS, the compile database does not collect system libs properly,
     We have to patch with the following py script to correctly locate and link those libs
@@ -111,27 +128,30 @@ def _find_platform_dependent_args() -> List[str]:
 
 
 def _generate_compile_commands(project_root: Path) -> os.PathLike:
-    """
-    Generate compile database and return the path to it
+    """Generate compile database and return the path to it.
 
     :param project_root: project root path
     :return: compile database path
     """
     r = runfiles.Create()
     binary_path = r.Rlocation(f"_main/tools/refresh_compile_commands{get_executable_suffix()}")
-    if not os.path.exists(binary_path):
-        raise FileNotFoundError("refresh_compile_commands binary is not found, thus cannot generate compile database")
-    result = subprocess.run(binary_path, stdin=subprocess.DEVNULL,
-                   stderr=subprocess.PIPE,
-                   text=True,
-                   check=True)
+    if not Path.exists(binary_path):
+        msg = "refresh_compile_commands binary is not found"
+        raise FileNotFoundError(msg)
+    result = subprocess.run(
+        binary_path,
+        stdin=subprocess.DEVNULL,
+        stderr=subprocess.PIPE,
+        text=True,
+        check=True,
+    )
     logger.info("Compile command output: %s", result.stderr)
     return project_root / "compile_commands.json"
 
 
-def _collect_source_files(project_root: Path) -> List[os.PathLike]:
-    """
-    Collect source files selectively
+def _collect_source_files(project_root: Path) -> list[os.PathLike]:
+    """Collect source files selectively.
+
     We only want to collect the source files corresponding to the current platform for linting
     Otherwise, clang-tidy will complain because clang-tidy cannot link to libs from other platform.
 
@@ -153,9 +173,8 @@ def _collect_source_files(project_root: Path) -> List[os.PathLike]:
     return source_files
 
 
-def _run_clang_tidy(compile_commands_path: os.PathLike, files: List[os.PathLike]) -> int:
-    """
-    Run clang-tidy
+def _run_clang_tidy(compile_commands_path: os.PathLike, files: list[os.PathLike]) -> int:
+    """Run clang-tidy.
 
     :param compile_commands_path: path to compile database
     :param files: C++ source files
@@ -171,14 +190,13 @@ def _run_clang_tidy(compile_commands_path: os.PathLike, files: List[os.PathLike]
 
 
 def main() -> int:
-    """
-    Entry point of this script
+    """Entry point of this script.
 
     :return: system return code
         - 0 if no error and linter passed
         - 1 if errors occurs or linter rejected
     """
-    project_root = Path(os.environ.get(BAZEL_WORKSPACE_ENV_KEY, os.getcwd()))
+    project_root = get_source_code_root()
 
     # Step 1: Build compile_commands.json
     compile_commands = _generate_compile_commands(project_root)
@@ -194,4 +212,4 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    exit(main())
+    sys.exit(main())
