@@ -4,7 +4,6 @@
 #
 # For more details, please check https://github.com/bazelbuild/bazel/issues/18958
 ###############################################################################
-
 module(
     name = "py_screen_reader",
     version = "head",
@@ -55,10 +54,12 @@ use_repo(pkg_config_extension, "atspi")
 pybind11_configure = use_extension("@pybind11_bazel//:internal_configure.bzl", "internal_configure_extension")
 use_repo(pybind11_configure, "pybind11")
 
+python_version_string = "3.11"
+
 python = use_extension("@rules_python//python/extensions:python.bzl", "python")
 python.toolchain(
     is_default = True,
-    python_version = "3.11",
+    python_version = python_version_string,
 )
 
 pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
@@ -66,7 +67,7 @@ pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
 # Python test environment
 pip.parse(
     hub_name = "pytest_env",
-    python_version = "3.11",
+    python_version = python_version_string,
     requirements_lock = "//tests/py:requirements_lock.txt",
     requirements_windows = "//tests/py:requirements_lock_win.txt",
 )
@@ -74,7 +75,7 @@ pip.parse(
 # Python Dev tools environment
 pip.parse(
     hub_name = "dev_tools_env",
-    python_version = "3.11",
+    python_version = python_version_string,
     requirements_lock = "//tools:requirements_lock.txt",
 )
 use_repo(pip, "dev_tools_env", "pytest_env")

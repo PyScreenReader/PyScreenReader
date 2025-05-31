@@ -1,11 +1,14 @@
 load("@pybind11_bazel//:build_defs.bzl", "pybind_extension", "pybind_library")
 load("@rules_python//python:py_library.bzl", "py_library")
 load("@rules_python//python:packaging.bzl", "py_wheel", "py_package", "py_wheel_dist")
+load("//platforms:wheel_tags.bzl", "platform_tag", "abi_tag", "python_tag", "release_version")
 package(default_visibility = ["//visibility:public"])
+
+project_name = "PyScreenReader"
 
 # Compiles C++ native code to .so/.pyd files
 pybind_extension(
-    name = "PyScreenReader",
+    name = project_name,
     srcs = [
         "//src:bindings.cpp",
         "//src/api:screen_reader.cpp",
@@ -22,18 +25,13 @@ pybind_extension(
 # See sysconfig.platform(): https://docs.python.org/3/library/sysconfig.html#sysconfig.get_platform
 py_wheel(
     name = "wheel",
-    abi = "abi3",
+    abi = abi_tag,
     author = "The PyScreenReader Team",
     license = "MIT",
-
-    distribution = "PyScreenReader",
-# TODO: revisit platform constraints
-    platform = select({
-        "@platforms//os:macos": "macosx_11_0_universal2",
-        "@platforms//os:windows": "win-amd64",
-    }),
-    python_tag = "cp313",
-    version = "0.0.1",
+    distribution = project_name,
+    platform = platform_tag,
+    python_tag = python_tag,
+    version = release_version,
     deps = [":PyScreenReader"],
 )
 
