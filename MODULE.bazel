@@ -4,6 +4,8 @@
 #
 # For more details, please check https://github.com/bazelbuild/bazel/issues/18958
 ###############################################################################
+python_version_string = "3.13"
+
 module(
     name = "py_screen_reader",
     version = "head",
@@ -55,8 +57,6 @@ use_repo(pkg_config_extension, "atspi")
 # Pybind 11 Configurations
 pybind11_configure = use_extension("@pybind11_bazel//:internal_configure.bzl", "internal_configure_extension")
 use_repo(pybind11_configure, "pybind11")
-
-python_version_string = "3.11"
 
 python = use_extension("@rules_python//python/extensions:python.bzl", "python")
 python.toolchain(
