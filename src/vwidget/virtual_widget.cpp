@@ -11,6 +11,16 @@ std::string VirtualWidget::GetRepr() {
          ", height=" + std::to_string(GetHeight()) + "}";
 }
 
+void VirtualWidget::AddChild(const std::shared_ptr<VirtualWidget>& child) {
+  children_.emplace_back(child);
+}
+
+std::shared_ptr<VirtualWidget> VirtualWidget::GetChild(int index) {
+  return children_.get(index);
+}
+
+VirtualWidget::VirtualWidget(const std::string& widget_name) : widget_name_(widget_name) {}
+
 void BindVirtualWidget(const py::module& module) {
   py::class_<VirtualWidget, std::shared_ptr<VirtualWidget>>(module, "VirtualWidget")
       .def("getTitleText", &VirtualWidget::GetTitleText)
@@ -21,14 +31,6 @@ void BindVirtualWidget(const py::module& module) {
       .def("getHeight", &VirtualWidget::GetHeight)
       .def("isVisible", &VirtualWidget::IsVisible)
       .def("getParent", &VirtualWidget::GetParent)
-      .def("setTitleText", &VirtualWidget::SetTitleText)
-      .def("setHelpText", &VirtualWidget::SetHelpText)
-      .def("setX", &VirtualWidget::SetX)
-      .def("setY", &VirtualWidget::SetY)
-      .def("setWidth", &VirtualWidget::SetWidth)
-      .def("setHeight", &VirtualWidget::SetHeight)
-      .def("setParent", &VirtualWidget::SetParent)
-      .def("setVisible", &VirtualWidget::SetVisible)
       .def("__repr__", &VirtualWidget::GetRepr)
       .def("getWidgetName", &VirtualWidget::GetWidgetName)
       .def("isClickable", &VirtualWidget::IsVisible);

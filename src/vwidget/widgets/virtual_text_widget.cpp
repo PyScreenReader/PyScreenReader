@@ -2,23 +2,11 @@
 #include "src/bindings_registry.h"
 #include <pybind11/pybind11.h>
 
-namespace py = pybind11;
+VirtualTextWidget::VirtualTextWidget() : VirtualWidget("VirtualTextWidget") {}
 
-VirtualTextWidget::VirtualTextWidget() : is_clickable_(false) {}
-
-std::string VirtualTextWidget::GetWidgetName() { return "VirtualTextWidget"; }
-
-bool VirtualTextWidget::IsClickable() { return this->is_clickable_; }
-
-void VirtualTextWidget::SetClickable(bool new_clickable_value) {
-  this->is_clickable_ = new_clickable_value;
-}
-
-void BindVirtualTextWidget(py::module_ &module) {
-  py::class_<VirtualTextWidget, VirtualWidget,
-             std::shared_ptr<VirtualTextWidget>>(module, "VirtualTextWidget")
-      .def("getWidgetName", &VirtualTextWidget::GetWidgetName)
-      .def("isClickable", &VirtualTextWidget::IsClickable);
+void BindVirtualTextWidget(pybind11::module_ &module) {
+  pybind11::class_<VirtualTextWidget, VirtualWidget,
+             std::shared_ptr<VirtualTextWidget>>(module, "VirtualTextWidget");
 }
 
 REGISTER_BINDING("VirtualTextWidget", BindVirtualTextWidget, "VirtualWidget")

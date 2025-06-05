@@ -1,23 +1,13 @@
 #include "include/vwidget/widgets/virtual_window_widget.h"
-#include "src/bindings_registry.h"
 #include <pybind11/pybind11.h>
+#include "src/bindings_registry.h"
 
-namespace py = pybind11;
+VirtualWindowWidget::VirtualWindowWidget() : VirtualWidget("VirtualWindowWidget") {}
 
-std::string VirtualWindowWidget::GetWidgetName() {
-  return "VirtualWindowWidget";
+void BindVirtualWindowWidget(pybind11::module_& module) {
+  pybind11::class_<VirtualWindowWidget, VirtualWidget,
+                   std::shared_ptr<VirtualWindowWidget>>(module, "VirtualWindowWidget")
+      .def(pybind11::init());
 }
 
-bool VirtualWindowWidget::IsClickable() { return true; }
-
-void BindVirtualWindowWidget(py::module_ &module) {
-  py::class_<VirtualWindowWidget, VirtualContainerWidget,
-             std::shared_ptr<VirtualWindowWidget>>(module,
-                                                   "VirtualWindowWidget")
-      .def(py::init())
-      .def("getWidgetName", &VirtualWindowWidget::GetWidgetName)
-      .def("isClickable", &VirtualWindowWidget::IsClickable);
-}
-
-REGISTER_BINDING("VirtualWindowWidget", BindVirtualWindowWidget,
-                 "VirtualContainerWidget")
+REGISTER_BINDING("VirtualWindowWidget", BindVirtualWindowWidget, "VirtualWidget")

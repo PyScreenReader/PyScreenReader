@@ -1,21 +1,12 @@
 #include "include/vwidget/widgets/virtual_menu_item_widget.h"
-#include "src/bindings_registry.h"
 #include <pybind11/pybind11.h>
+#include "src/bindings_registry.h"
 
-namespace py = pybind11;
+VirtualMenuItemWidget::VirtualMenuItemWidget() : VirtualWidget("VirtualMenuItemWidget") {}
 
-std::string VirtualMenuItemWidget::GetWidgetName() {
-  return "VirtualMenuItemWidget";
-}
-
-bool VirtualMenuItemWidget::IsClickable() { return true; }
-
-void BindMenuItemWidget(py::module_ &module) {
-  py::class_<VirtualMenuItemWidget, VirtualWidget,
-             std::shared_ptr<VirtualMenuItemWidget>>(module,
-                                                     "VirtualMenuItemWidget")
-      .def("getWidgetName", &VirtualMenuItemWidget::GetWidgetName)
-      .def("isClickable", &VirtualMenuItemWidget::IsClickable);
+void BindMenuItemWidget(pybind11::module_& module) {
+  pybind11::class_<VirtualMenuItemWidget, VirtualWidget, std::shared_ptr<VirtualMenuItemWidget>>(
+      module, "VirtualMenuItemWidget");
 }
 
 REGISTER_BINDING("VirtualMenuItemWidget", BindMenuItemWidget, "VirtualWidget")

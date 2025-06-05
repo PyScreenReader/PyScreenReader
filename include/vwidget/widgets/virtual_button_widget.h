@@ -1,11 +1,10 @@
 #pragma once
 
-#include "../virtual_widget.h"
 #include <string>
+#include "include/vwidget/virtual_widget.h"
 
 class VirtualButtonWidget : public VirtualWidget {
-public:
-  std::string GetWidgetName() override;
-  bool IsClickable() override;
-  VirtualButtonWidget() = default;
+ public:
+  VirtualButtonWidget();
+  ~VirtualButtonWidget() override = default;
 };

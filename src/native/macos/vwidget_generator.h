@@ -1,21 +1,19 @@
 #pragma once
 
-#include <unordered_map>
-#include <CoreFoundation/CoreFoundation.h>
 #include <ApplicationServices/ApplicationServices.h>
-#include <unordered_set>
+#include <CoreFoundation/CoreFoundation.h>
 #include <functional>
+#include <unordered_map>
+#include <unordered_set>
 #include "include/vwidget/virtual_widget.h"
 #include "include/vwidget/widgets/virtual_button_widget.h"
 #include "include/vwidget/widgets/virtual_menu_item_widget.h"
-#include "include/vwidget/widgets/virtual_text_widget.h"
-#include "include/vwidget/widgets/virtual_text_field_widget.h"
-#include "include/vwidget/widgets/virtual_menu_group_widget.h"
+#include "include/vwidget/widgets/virtual_menu_widget.h"
 #include "include/vwidget/widgets/virtual_root_widget.h"
-#include "include/vwidget/widgets/virtual_window_widget.h"
-#include "include/vwidget/widgets/virtual_group_widget.h"
+#include "include/vwidget/widgets/virtual_text_input_widget.h"
+#include "include/vwidget/widgets/virtual_text_widget.h"
 #include "include/vwidget/widgets/virtual_unknown_widget.h"
-
+#include "include/vwidget/widgets/virtual_window_widget.h"
 
 namespace generator {
     /**
