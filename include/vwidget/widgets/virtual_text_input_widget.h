@@ -6,7 +6,7 @@
 class VirtualTextInputWidget : public VirtualWidget {
  public:
   VirtualTextInputWidget();
-  ~VirtualTextInputWidget() = default;
+  ~VirtualTextInputWidget() override = default;
 
   /**
    * Get cursor selected text in text input
@@ -29,7 +29,7 @@ class VirtualTextInputWidget : public VirtualWidget {
    *
    * @return current cursor index in the text input
    */
-  int GetInsertionPoint() { return insertion_point_; }
+  int GetInsertionPoint() const { return insertion_point_; }
   /**
    * Set current cursor location index in the text input.
    *
@@ -43,7 +43,7 @@ class VirtualTextInputWidget : public VirtualWidget {
    *
    * @return True if the text input is a text field, otherwise False.
    */
-  bool GetIsTextField() { return is_text_field_; }
+  bool IsTextField() const { return is_text_field_; }
   /**
    * Set if the current text input is the text field invariant.
    *

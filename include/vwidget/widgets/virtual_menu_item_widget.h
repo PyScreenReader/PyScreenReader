@@ -6,5 +6,5 @@
 class VirtualMenuItemWidget : public VirtualWidget {
  public:
   VirtualMenuItemWidget();
-  ~VirtualMenuItemWidget() = default;
+  ~VirtualMenuItemWidget() override = default;
 };

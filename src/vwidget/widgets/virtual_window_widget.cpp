@@ -7,7 +7,8 @@ VirtualWindowWidget::VirtualWindowWidget() : VirtualWidget("VirtualWindowWidget"
 void BindVirtualWindowWidget(pybind11::module_& module) {
   pybind11::class_<VirtualWindowWidget, VirtualWidget,
                    std::shared_ptr<VirtualWindowWidget>>(module, "VirtualWindowWidget")
-      .def(pybind11::init());
+      .def(pybind11::init())
+      .def("is_modal", &VirtualWindowWidget::IsModal);
 }
 
 REGISTER_BINDING("VirtualWindowWidget", BindVirtualWindowWidget, "VirtualWidget")

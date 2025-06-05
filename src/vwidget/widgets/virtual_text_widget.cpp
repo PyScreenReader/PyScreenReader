@@ -6,7 +6,9 @@ VirtualTextWidget::VirtualTextWidget() : VirtualWidget("VirtualTextWidget") {}
 
 void BindVirtualTextWidget(pybind11::module_ &module) {
   pybind11::class_<VirtualTextWidget, VirtualWidget,
-             std::shared_ptr<VirtualTextWidget>>(module, "VirtualTextWidget");
+             std::shared_ptr<VirtualTextWidget>>(module, "VirtualTextWidget")
+    .def(pybind11::init())
+    .def("get_selected_text", &VirtualTextWidget::GetSelectedText);
 }
 
 REGISTER_BINDING("VirtualTextWidget", BindVirtualTextWidget, "VirtualWidget")

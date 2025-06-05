@@ -14,5 +14,5 @@ class VirtualUnknownWidget : public VirtualWidget {
    * there is no corresponding model in virtual widget system to shadow the native widget.
    */
   VirtualUnknownWidget();
-  ~VirtualUnknownWidget() = default;
+  ~VirtualUnknownWidget() override = default;
 };

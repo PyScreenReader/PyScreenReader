@@ -6,7 +6,7 @@
 class VirtualWindowWidget : public VirtualWidget {
  public:
   VirtualWindowWidget();
-  ~VirtualWindowWidget() = default;
+  ~VirtualWindowWidget() override = default;
 
   /**
    * Get if the current window is a modal.
@@ -17,15 +17,15 @@ class VirtualWindowWidget : public VirtualWidget {
    *
    * @return True if current window is a modal, otherwise False.
    */
-  bool GetIsModal() { return _is_modal_; }
+  bool IsModal() const { return is_modal_; }
 
   /**
    * Set if current window is a modal.
    *
    * @param is_modal true if current window is a modal, otherwise false.
    */
-  void SetIsModal(bool is_modal) { _is_modal_ = is_modal; }
+  void SetIsModal(bool is_modal) { is_modal_ = is_modal; }
 
  private:
-  bool _is_modal_;
+  bool is_modal_;
 };

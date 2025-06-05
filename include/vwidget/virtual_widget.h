@@ -53,6 +53,6 @@ class VirtualWidget {
   std::vector<std::shared_ptr<VirtualWidget>> children_;
 
  protected:
-  explicit VirtualWidget(const std::string& widget_name);
+  explicit VirtualWidget(std::string  widget_name);
   virtual ~VirtualWidget() = default;
 };
