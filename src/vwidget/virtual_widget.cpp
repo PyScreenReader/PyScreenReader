@@ -10,7 +10,7 @@ void VirtualWidget::AddChild(const std::shared_ptr<VirtualWidget>& child) {
 }
 
 std::shared_ptr<VirtualWidget> VirtualWidget::GetChild(int index) {
-  return children_.get(index);
+  return children_.at(index);
 }
 
 VirtualWidget::VirtualWidget(std::string  widget_name) : widget_name_(std::move(widget_name)) {}
@@ -26,7 +26,6 @@ void BindVirtualWidget(const py::module& module) {
       .def("get_height", &VirtualWidget::GetHeight)
       .def("is_visible", &VirtualWidget::IsVisible)
       .def("is_focused", &VirtualWidget::IsFocused)
-      .def("is_clickable", &VirtualWidget::IsClickable)
       .def("get_parent", &VirtualWidget::GetParent)
       .def("get_child", &VirtualWidget::GetChild)
       .def("__repr__", &VirtualWidget::GetRepr)
