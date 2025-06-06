@@ -11,9 +11,19 @@ pybind_library(
 )
 
 pybind_library(
+    name = "numeric_value_widget",
+    hdrs = ["//include/vwidget:numeric_value_widget.h"],
+    srcs = [":numeric_value_widget.cpp"],
+    deps = [
+        "//src:bindings_registry",
+    ]
+)
+
+pybind_library(
     name = "vwidget_bind",
     deps = [
         "//src/vwidget:virtual_widget",
-        "//src/vwidget/widgets:virtual_components"
+        "//src/vwidget:numeric_value_widget",
+        "//src/vwidget/widgets:virtual_components",
     ],
 )
