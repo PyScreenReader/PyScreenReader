@@ -1,15 +1,14 @@
 #pragma once
 
 #include <memory>
-
-#include "include/vwidget/widgets/virtual_root_widget.h"
 #include <string>
 
-#if defined(__APPLE__)
-#include "src/native/macos/screen_reader_impl_mac.h"
-#elif defined(_WIN64) || defined(_WIN32) || defined(__CYGWIN__)
-#include "src/native/win/screen_reader_impl_win.h"
-#endif
+// FIXME (#27): uncomment the following until the refactoring is done
+//#if defined(__APPLE__)
+//#include "src/native/macos/screen_reader_impl_mac.h"
+//#elif defined(_WIN64) || defined(_WIN32) || defined(__CYGWIN__)
+//#include "src/native/win/screen_reader_impl_win.h"
+//#endif
 
 class ScreenReaderImpl;
 

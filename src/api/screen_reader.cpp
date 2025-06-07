@@ -9,7 +9,7 @@ namespace py = pybind11;
 
 std::shared_ptr<VirtualRootWidget>
 ScreenReader::GetVirtualWidgetTreeByPID(const std::string &pid) const {
-  return screen_reader_impl_.GetVirtualWidgetTreeByPID(pid);
+  throw std::logic_error("Disabled until the refactor is done");
 }
 
 // TODO(#30) the linter suppression could be removed until the issue is
