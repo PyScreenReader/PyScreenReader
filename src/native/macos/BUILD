@@ -10,7 +10,7 @@ pybind_library(
         ":screen_reader_impl_mac.cpp",
     ],
     deps = [
-#        FIXME (#27): uncomment the following until the refactoring is done
+#        FIXME (#27): uncomment the following when the refactoring is done
 #        "//src/native/macos/utils:utils",
         "//src/vwidget/widgets:virtual_components",
 #        "//src/native/macos:vwidget_generator",

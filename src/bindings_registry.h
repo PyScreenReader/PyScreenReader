@@ -68,6 +68,11 @@ class BindingsRegistry {
    * defined or lacks a binding function.
    */
   static void ValidateDependencies();
+
+  /**
+   * @brief Print binding dependency tree for debug
+   */
+  static void PrintDepRegistry();
 };
 
 #define REGISTER_BINDING(name, func, ...)                      \
