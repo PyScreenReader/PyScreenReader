@@ -6,7 +6,7 @@
 VirtualUnknownWidget::VirtualUnknownWidget() : VirtualWidget("VirtualUnknownWidget") {}
 
 void BindVirtualUnknownWidget(pybind11::module_& module) {
-  py::class_<VirtualUnknownWidget, VirtualContainerWidget, std::shared_ptr<VirtualUnknownWidget>>(
+  py::class_<VirtualUnknownWidget, std::shared_ptr<VirtualUnknownWidget>>(
       module, "VirtualUnknownWidget")
       .def(pybind11::init());
 }

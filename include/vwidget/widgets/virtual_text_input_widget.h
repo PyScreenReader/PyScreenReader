@@ -13,7 +13,7 @@ class VirtualTextInputWidget : public VirtualWidget {
    *
    * @return selected text
    */
-  std::string& GetSelectedText() const { return selected_text_; }
+  const std::string& GetSelectedText() const { return selected_text_; }
   /**
    * Set cursor selected text
    *

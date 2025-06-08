@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <string>
+#include <vector>
 
 class VirtualWidget {
  public:
@@ -198,6 +199,8 @@ class VirtualWidget {
    */
   virtual const std::string& GetRepr();
 
+  virtual ~VirtualWidget() = default;
+
  private:
   std::string title_text_;
   std::string help_text_;
@@ -209,11 +212,9 @@ class VirtualWidget {
   int height_ = 0;
   bool is_visible_ = false;
   bool is_focused_ = false;
-  bool is_clickable_ = false;
   std::weak_ptr<VirtualWidget> parent_;
   std::vector<std::shared_ptr<VirtualWidget>> children_;
 
  protected:
   explicit VirtualWidget(std::string widget_name);
-  virtual ~VirtualWidget() = default;
 };

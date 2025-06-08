@@ -4,11 +4,10 @@ from typing import List
 import pytest
 from PyScreenReader import psr
 
-
 """
 All the base methods that the children of VirtualWidget should have.
 """
-BASE_METHOD_NAMES_IN_VIRTUAL_WIDGET = (
+BASE_METHOD_NAMES_IN_VIRTUAL_WIDGET = frozenset([
     "get_title_text",
     "get_help_text",
     "get_native_name",
@@ -22,7 +21,7 @@ BASE_METHOD_NAMES_IN_VIRTUAL_WIDGET = (
     "get_child",
     "__repr__",
     "get_widget_name",
-)
+])
 
 
 def assert_all_base_functions_exist(cls: type[psr.VirtualWidget]) -> None:
@@ -48,6 +47,7 @@ def assert_correct_inheritance(cls: type[psr.VirtualWidget], chain: List[type[ps
             (f"Class '{cls}' has the wrong class in the inheritance chain at index {idx}. "
              f"Actual : {inspect.getmro(cls)[idx]} "
              f"Expecting : {parent_class}")
+
 
 def assert_abstract_class(cls: type[psr.VirtualWidget]) -> None:
     """

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include "include/vwidget/virtual_widget.h"
 
 class NumericValueWidget : public VirtualWidget {
  public:
@@ -46,6 +47,8 @@ class NumericValueWidget : public VirtualWidget {
    */
   void SetMaxValue(int max_value) { max_value_ = max_value; }
 
+  ~NumericValueWidget() override = default;
+
  private:
   int value_;
   int min_value_;
@@ -53,5 +56,4 @@ class NumericValueWidget : public VirtualWidget {
 
  protected:
   explicit NumericValueWidget(const std::string& widget_name);
-  ~NumericValueWidget() override = default;
 };

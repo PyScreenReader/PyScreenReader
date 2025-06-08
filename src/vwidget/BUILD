@@ -16,6 +16,7 @@ pybind_library(
     srcs = [":numeric_value_widget.cpp"],
     deps = [
         "//src:bindings_registry",
+        "//src/vwidget:virtual_widget",
     ]
 )
 

@@ -2,7 +2,7 @@
 #include "include/vwidget/widgets/virtual_scroll_bar_widget.h"
 #include "src/bindings_registry.h"
 
-VirtualScrollbarWidget::VirtualScrollbarWidget() : VirtualWidget("VirtualScrollbarWidget") {}
+VirtualScrollbarWidget::VirtualScrollbarWidget() : NumericValueWidget("VirtualScrollbarWidget") {}
 
 void BindScrollbarWidget(pybind11::module_& module) {
   pybind11::class_<VirtualScrollbarWidget, NumericValueWidget,

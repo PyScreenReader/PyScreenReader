@@ -4,7 +4,6 @@
 #include <utility>
 #include "src/bindings_registry.h"
 
-
 void VirtualWidget::AddChild(const std::shared_ptr<VirtualWidget>& child) {
   children_.emplace_back(child);
 }
@@ -13,10 +12,10 @@ std::shared_ptr<VirtualWidget> VirtualWidget::GetChild(int index) {
   return children_.at(index);
 }
 
-VirtualWidget::VirtualWidget(std::string  widget_name) : widget_name_(std::move(widget_name)) {}
+VirtualWidget::VirtualWidget(std::string widget_name) : widget_name_(std::move(widget_name)) {}
 
 void BindVirtualWidget(const py::module& module) {
-  py::class_<VirtualWidget, std::shared_ptr<VirtualWidget>>(module, "VirtualWidget")
+  py::class_<VirtualWidget>(module, "VirtualWidget")
       .def("get_title_text", &VirtualWidget::GetTitleText)
       .def("get_help_text", &VirtualWidget::GetHelpText)
       .def("get_native_name", &VirtualWidget::GetNativeName)
