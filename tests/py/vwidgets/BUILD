@@ -1,29 +1,7 @@
 package(default_visibility = ["//visibility:public"])
-load("@rules_python//python:pip.bzl", "compile_pip_requirements")
-load("//tests/py/tools:pytest_defs.bzl", "pytest_test")
+load("//tests/py/tools:pytest_defs.bzl", "pytest_suite")
 
-pytest_test(
-    name = "test_inheritance",
-    srcs = ["test_inheritance.py"]
+pytest_suite(
+    test_files = glob(["**/test_*.py"]),
 )
 
-pytest_test(
-    name = "test_virtual_button_widget",
-    srcs = ["test_virtual_button_widget.py"],
-    deps = ["//tests/py/tools:test_utils"],
-)
-
-pytest_test(
-    name = "test_virtual_container",
-    srcs = ["test_virtual_container.py"],
-)
-
-pytest_test(
-    name = "test_virtual_widget",
-    srcs = ["test_virtual_widget.py"]
-)
-
-pytest_test(
-    name = "test_virtual_unknown_widget",
-    srcs = ["test_virtual_unknown_widget.py"]
-)
