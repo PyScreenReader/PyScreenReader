@@ -27,7 +27,6 @@ void BindVirtualWidget(const py::module& module) {
       .def("is_focused", &VirtualWidget::IsFocused)
       .def("get_parent", &VirtualWidget::GetParent)
       .def("get_child", &VirtualWidget::GetChild)
-      .def("__repr__", &VirtualWidget::GetRepr)
       .def("get_widget_name", &VirtualWidget::GetWidgetName);
 }
 

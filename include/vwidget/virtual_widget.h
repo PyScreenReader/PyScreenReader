@@ -192,13 +192,6 @@ class VirtualWidget {
    */
   std::shared_ptr<VirtualWidget> GetChild(int index);
 
-  /**
-   * Get printable representation of this widget as a string.
-   *
-   * @return printable string represents this widget
-   */
-  virtual const std::string& GetRepr();
-
   virtual ~VirtualWidget() = default;
 
  private:
