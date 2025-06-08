@@ -7,7 +7,7 @@ def pytest_test(name, srcs, deps=[], args=[], data=[], **kwargs):
     This function wrapper the original py_test target
 
     :param name: test target name
-    :param deps: additional dependencies to include (pytest is already implicitly injected)
+    :param deps: additional dependencies to include (pytest and test_utils are already implicitly injected)
     :params args: args to pass to pytest
     :param data: additional data to to include (PyScreenReader is already implicitly injected)
     :param **kwargs: additional args to pass to original py_test target
@@ -17,7 +17,7 @@ def pytest_test(name, srcs, deps=[], args=[], data=[], **kwargs):
         srcs = ["//tests/py/tools:pytest_wrapper.py"] + srcs,
         main = "//tests/py/tools:pytest_wrapper.py",
         args = ["--capture=no"] + args + ["$(location :%s)" % x for x in srcs],
-        deps = deps + [requirement("pytest")],
+        deps = deps + [requirement("pytest"), "//tests/py/tools:test_utils"],
         data = data + ["//:PyScreenReader"],
         imports = ["."],
         **kwargs
