@@ -3,12 +3,13 @@
 #include <memory>
 #include <string>
 
-// FIXME (#27): uncomment the following until the refactoring is done
-//#if defined(__APPLE__)
-//#include "src/native/macos/screen_reader_impl_mac.h"
-//#elif defined(_WIN64) || defined(_WIN32) || defined(__CYGWIN__)
-//#include "src/native/win/screen_reader_impl_win.h"
-//#endif
+#include "include/vwidget/virtual_widget.h"
+
+#if defined(__APPLE__)
+#include "src/native/macos/screen_reader_impl_mac.h"
+#elif defined(_WIN64) || defined(_WIN32) || defined(__CYGWIN__)
+#include "src/native/win/screen_reader_impl_win.h"
+#endif
 
 class ScreenReaderImpl;
 
@@ -21,9 +22,9 @@ public:
    * (PID).
    *
    * @param pid The process ID used to identify the target application
-   * @return pointer to the VirtualRootWidget corresponding to the given PID
+   * @return pointer to the VirtualWidget corresponding to the given PID
    */
-  [[nodiscard]] std::shared_ptr<VirtualRootWidget>
+  [[nodiscard]] std::shared_ptr<VirtualWidget>
   GetVirtualWidgetTreeByPID(const std::string &pid) const;
 
   /**
@@ -31,9 +32,9 @@ public:
    * title.
    *
    * @param title The window title used to identify the target application
-   * @return pointer to the VirtualRootWidget corresponding to the given title
+   * @return pointer to the VirtualWidget corresponding to the given title
    */
-  [[nodiscard]] std::shared_ptr<VirtualRootWidget>
+  [[nodiscard]] std::shared_ptr<VirtualWidget>
   GetVirtualWidgetTreeByTitle(const std::string &title) const;
 
   /**
@@ -42,10 +43,10 @@ public:
    *
    * @param class_name The window class name used to identify the target
    * application
-   * @return pointer to the VirtualRootWidget corresponding to the given class
+   * @return pointer to the VirtualWidget corresponding to the given class
    * name
    */
-  [[nodiscard]] std::shared_ptr<VirtualRootWidget>
+  [[nodiscard]] std::shared_ptr<VirtualWidget>
   GetVirtualWidgetTreeByClassName(const std::string &class_name) const;
 
 private:

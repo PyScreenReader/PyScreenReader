@@ -11,12 +11,11 @@ pybind_library(
     deps = [
         "//src:bindings_registry",
         "//src/vwidget:vwidget_bind",
-    ],
-# FIXME (#27): uncomment the following until the refactoring is done
-#    select({
-#       "@platforms//os:macos": ["//src/native/macos:screen_reader_impl_mac"],
-#       "@platforms//os:windows": ["//src/native/win:screen_reader_impl_win"],
-#       "//conditions:default": [],
-#   }),
+    ] +
+    select({
+       "@platforms//os:macos": ["//src/native/macos:screen_reader_impl_mac"],
+       "@platforms//os:windows": ["//src/native/win:screen_reader_impl_win"],
+       "//conditions:default": [],
+   }),
 )
 

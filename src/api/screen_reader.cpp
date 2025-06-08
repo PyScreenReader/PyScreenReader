@@ -7,24 +7,21 @@
 
 namespace py = pybind11;
 
-std::shared_ptr<VirtualRootWidget>
+std::shared_ptr<VirtualWidget>
 ScreenReader::GetVirtualWidgetTreeByPID(const std::string &pid) const {
-  throw std::logic_error("Disabled until the refactor is done");
+  return screen_reader_impl_.GetVirtualWidgetTreeByPID(pid);
 }
 
-// TODO(#30) the linter suppression could be removed until the issue is
-// implemented NOLINTBEGIN(readability-convert-member-functions-to-static)
-std::shared_ptr<VirtualRootWidget>
+std::shared_ptr<VirtualWidget>
 ScreenReader::GetVirtualWidgetTreeByTitle(const std::string &title) const {
   throw std::logic_error("Not yet implemented");
 }
 
-std::shared_ptr<VirtualRootWidget>
+std::shared_ptr<VirtualWidget>
 ScreenReader::GetVirtualWidgetTreeByClassName(
     const std::string &class_name) const {
   throw std::logic_error("Not yet implemented");
 }
-// NOLINTEND(readability-convert-member-functions-to-static)
 
 void BindScreenReader(py::module &module) {
   py::class_<ScreenReader>(module, "ScreenReader")
