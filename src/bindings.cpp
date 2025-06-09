@@ -7,7 +7,7 @@
 #include "include/vwidget/widgets/virtual_menu_item_widget.h"
 #include "include/vwidget/widgets/virtual_menu_widget.h"
 #include "include/vwidget/widgets/virtual_progress_bar_widget.h"
-#include "include/vwidget/widgets/virtual_scroll_bar_widget.h"
+#include "include/vwidget/widgets/virtual_scrollbar_widget.h"
 #include "include/vwidget/widgets/virtual_slider_widget.h"
 #include "include/vwidget/widgets/virtual_spinner_widget.h"
 #include "include/vwidget/widgets/virtual_text_input_widget.h"
@@ -26,6 +26,12 @@ namespace py = pybind11;
  * @param module python module object
  */
 void BindVirtualWidgets(py::module_& module) {
+  // Orientation
+  py::enum_<Orientation>(module, "Orientation")
+      .value("HORIZONTAL", Orientation::HORIZONTAL)
+      .value("VERTICAL", Orientation::VERTICAL)
+      .export_values();
+
   // VirtualWidget
   py::class_<VirtualWidget, std::shared_ptr<VirtualWidget>>(module, "VirtualWidget")
       .def("get_title_text", &VirtualWidget::GetTitleText)
@@ -69,7 +75,8 @@ void BindVirtualWidgets(py::module_& module) {
 
   // VirtualMenuItemWidget
   py::class_<VirtualMenuItemWidget, VirtualWidget, std::shared_ptr<VirtualMenuItemWidget>>(
-      module, "VirtualMenuItemWidget");
+      module, "VirtualMenuItemWidget")
+      .def(py::init());
 
   // VirtualMenuWidget
   py::class_<VirtualMenuWidget, VirtualWidget, std::shared_ptr<VirtualMenuWidget>>(
@@ -121,7 +128,7 @@ void BindVirtualWidgets(py::module_& module) {
       .def("set_selected_text", &VirtualTextWidget::SetSelectedText);
 
   // VirtualUnknownWidget
-  py::class_<VirtualUnknownWidget,
+  py::class_<VirtualUnknownWidget, VirtualWidget,
              std::shared_ptr<VirtualUnknownWidget>>(module, "VirtualUnknownWidget")
       .def(py::init());
 

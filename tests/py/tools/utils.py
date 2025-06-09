@@ -1,5 +1,5 @@
 import inspect
-from typing import List
+from typing import List, Iterable
 
 import pytest
 from PyScreenReader import VirtualWidget
@@ -9,16 +9,27 @@ All the base methods that the children of VirtualWidget should have.
 """
 BASE_METHOD_NAMES_IN_VIRTUAL_WIDGET = frozenset([
     "get_title_text",
+    "set_title_text",
     "get_help_text",
+    "set_help_text",
     "get_native_name",
+    "set_native_name",
     "get_x",
+    "set_x",
     "get_y",
+    "set_y",
     "get_width",
+    "set_width",
     "get_height",
+    "set_height",
     "is_visible",
+    "set_visible",
     "is_focused",
+    "set_focused",
     "get_parent",
+    "set_parent",
     "get_child",
+    "add_child",
     "get_widget_name",
 ])
 
@@ -29,9 +40,18 @@ def assert_all_base_functions_exist(cls: type[VirtualWidget]) -> None:
 
     :param cls: class to test
     """
-    definitions = vars(cls)
-    for method in BASE_METHOD_NAMES_IN_VIRTUAL_WIDGET:
-        assert method in definitions, f"{method} should exist in {cls}."
+    assert_functions_exist(cls, BASE_METHOD_NAMES_IN_VIRTUAL_WIDGET)
+
+
+def assert_functions_exist(cls: type[VirtualWidget], method_names: Iterable[str]) -> None:
+    """
+    Check if all methods in the given list are present in the given class.
+
+    :param cls: class to test
+    :param method_names: list of method names
+    """
+    for method in method_names:
+        assert hasattr(cls, method), f"{method} should exist in {cls.__name__}."
 
 
 def assert_correct_inheritance(cls: type[VirtualWidget], chain: List[type[VirtualWidget]]) -> None:

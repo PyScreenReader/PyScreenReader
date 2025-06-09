@@ -12,7 +12,7 @@ pybind_library(
         "//include/vwidget/widgets:virtual_text_widget.h",
         "//include/vwidget/widgets:virtual_unknown_widget.h",
         "//include/vwidget/widgets:virtual_window_widget.h",
-        "//include/vwidget/widgets:virtual_scroll_bar_widget.h",
+        "//include/vwidget/widgets:virtual_scrollbar_widget.h",
         "//include/vwidget/widgets:virtual_slider_widget.h",
         "//include/vwidget/widgets:virtual_progress_bar_widget.h",
         "//include/vwidget/widgets:virtual_spinner_widget.h",
