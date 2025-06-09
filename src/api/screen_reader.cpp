@@ -1,11 +1,8 @@
-#include "include/api/screen_reader.h"
-
 #include <stdexcept>
-
-#include "src/bindings_registry.h"
 #include <pybind11/pybind11.h>
 
-namespace py = pybind11;
+#include "include/api/screen_reader.h"
+#include "src/bindings_registry.h"
 
 std::shared_ptr<VirtualWidget>
 ScreenReader::GetVirtualWidgetTreeByPID(const std::string &pid) const {
@@ -23,18 +20,18 @@ ScreenReader::GetVirtualWidgetTreeByClassName(
   throw std::logic_error("Not yet implemented");
 }
 
-void BindScreenReader(py::module &module) {
-  py::class_<ScreenReader>(module, "ScreenReader")
-      .def(py::init())
+void BindScreenReader(pybind11::module &module) {
+  pybind11::class_<ScreenReader>(module, "ScreenReader")
+      .def(pybind11::init())
       .def("getVirtualWidgetTreeByPID",
            &ScreenReader::GetVirtualWidgetTreeByPID,
-           py::return_value_policy::take_ownership)
+           pybind11::return_value_policy::take_ownership)
       .def("getVirtualWidgetTreeByTitle",
            &ScreenReader::GetVirtualWidgetTreeByTitle,
-           py::return_value_policy::take_ownership)
+           pybind11::return_value_policy::take_ownership)
       .def("getVirtualWidgetTreeByClassName",
            &ScreenReader::GetVirtualWidgetTreeByClassName,
-           py::return_value_policy::take_ownership);
+           pybind11::return_value_policy::take_ownership);
 }
 
 REGISTER_BINDING("ScreenReader", BindScreenReader, "VirtualWidget")

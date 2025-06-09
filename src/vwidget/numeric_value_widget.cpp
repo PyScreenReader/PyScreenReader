@@ -1,7 +1,8 @@
 #include "include/vwidget/numeric_value_widget.h"
-#include <pybind11/pybind11.h>
 #include "include/vwidget/virtual_widget.h"
 #include "src/bindings_registry.h"
+
+#include <pybind11/pybind11.h>
 
 NumericValueWidget::NumericValueWidget(const std::string& widget_name) : VirtualWidget(widget_name) {}
 

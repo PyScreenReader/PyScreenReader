@@ -2,7 +2,7 @@ import inspect
 from typing import List
 
 import pytest
-from PyScreenReader import psr
+from PyScreenReader import VirtualWidget
 
 """
 All the base methods that the children of VirtualWidget should have.
@@ -24,7 +24,7 @@ BASE_METHOD_NAMES_IN_VIRTUAL_WIDGET = frozenset([
 ])
 
 
-def assert_all_base_functions_exist(cls: type[psr.VirtualWidget]) -> None:
+def assert_all_base_functions_exist(cls: type[VirtualWidget]) -> None:
     """
     Check if all subclasses (including VirtualWidget) are inheriting the correct methods from VirtualWidget.
 
@@ -35,7 +35,7 @@ def assert_all_base_functions_exist(cls: type[psr.VirtualWidget]) -> None:
         assert method in definitions, f"{method} should not exist in {cls}."
 
 
-def assert_correct_inheritance(cls: type[psr.VirtualWidget], chain: List[type[psr.VirtualWidget]]) -> None:
+def assert_correct_inheritance(cls: type[VirtualWidget], chain: List[type[VirtualWidget]]) -> None:
     """
     Check if current class has the given inheritance chain.
 
@@ -49,7 +49,7 @@ def assert_correct_inheritance(cls: type[psr.VirtualWidget], chain: List[type[ps
              f"Expecting : {parent_class}")
 
 
-def assert_abstract_class(cls: type[psr.VirtualWidget]) -> None:
+def assert_abstract_class(cls: type[VirtualWidget]) -> None:
     """
     Assert the given class is an abstract class
 
