@@ -1,4 +1,4 @@
-#include "bindings_registry.h"
+#include <pybind11/pybind11.h>
 
 #include "include/vwidget/virtual_widget.h"
 #include "include/vwidget/numeric_value_widget.h"
@@ -20,6 +20,11 @@
 namespace bindings {
 namespace py = pybind11;
 
+/**
+ * Bind all virtual widgets
+ *
+ * @param module python module object
+ */
 void BindVirtualWidgets(py::module_& module) {
   py::class_<VirtualWidget, std::shared_ptr<VirtualWidget>>(module, "VirtualWidget")
       .def("get_title_text", &VirtualWidget::GetTitleText)
@@ -93,7 +98,11 @@ void BindVirtualWidgets(py::module_& module) {
       .def("is_modal", &VirtualWindowWidget::IsModal);
 }
 
-
+/**
+ * Bind all screen reader APIS
+ *
+ * @param module python module object
+ */
 void BindScreenReader(py::module_& module) {
   py::class_<ScreenReader>(module, "ScreenReader")
       .def(py::init())
@@ -107,8 +116,12 @@ void BindScreenReader(py::module_& module) {
            &ScreenReader::GetVirtualWidgetTreeByClassName,
            py::return_value_policy::take_ownership);
 }
-
 }  // namespace bindings
+
+
+// ================================================
+// Main Entry Point of Bindings
+// ================================================
 
 #define STRINGIFY(x) #x
 #define MACRO_STRINGIFY(x) STRINGIFY(x)

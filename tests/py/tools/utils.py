@@ -19,7 +19,6 @@ BASE_METHOD_NAMES_IN_VIRTUAL_WIDGET = frozenset([
     "is_focused",
     "get_parent",
     "get_child",
-    "__repr__",
     "get_widget_name",
 ])
 
@@ -32,7 +31,7 @@ def assert_all_base_functions_exist(cls: type[VirtualWidget]) -> None:
     """
     definitions = vars(cls)
     for method in BASE_METHOD_NAMES_IN_VIRTUAL_WIDGET:
-        assert method in definitions, f"{method} should not exist in {cls}."
+        assert method in definitions, f"{method} should exist in {cls}."
 
 
 def assert_correct_inheritance(cls: type[VirtualWidget], chain: List[type[VirtualWidget]]) -> None:
@@ -55,5 +54,5 @@ def assert_abstract_class(cls: type[VirtualWidget]) -> None:
 
     :param cls: class
     """
-    with pytest.raises(TypeError):
+    with pytest.raises(TypeError, match=r"No constructor defined!"):
         cls()

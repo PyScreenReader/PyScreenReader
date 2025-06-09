@@ -5,9 +5,7 @@ pybind_library(
     name = "virtual_widget",
     hdrs = ["//include/vwidget:virtual_widget.h"],
     srcs = [":virtual_widget.cpp"],
-    deps = [
-        "//src:bindings_registry",
-    ]
+    deps = []
 )
 
 pybind_library(
@@ -15,13 +13,12 @@ pybind_library(
     hdrs = ["//include/vwidget:numeric_value_widget.h"],
     srcs = [":numeric_value_widget.cpp"],
     deps = [
-        "//src:bindings_registry",
         "//src/vwidget:virtual_widget",
     ]
 )
 
 pybind_library(
-    name = "vwidget_bind",
+    name = "all_virtual_widgets",
     deps = [
         "//src/vwidget:virtual_widget",
         "//src/vwidget:numeric_value_widget",
