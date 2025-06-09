@@ -1,5 +1,10 @@
-from tests.py.tools.utils import assert_abstract_class, assert_all_base_functions_exist, assert_correct_inheritance
 from PyScreenReader import NumericValueWidget, VirtualWidget
+
+from tests.py.tools.utils import (
+    assert_abstract_class,
+    assert_all_base_functions_exist,
+    assert_correct_inheritance,
+)
 
 
 def test_abstract_class():

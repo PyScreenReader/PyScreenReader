@@ -1,6 +1,11 @@
-from tests.py.tools.utils import assert_all_base_functions_exist, assert_correct_inheritance, assert_functions_exist
-from PyScreenReader import VirtualProgressBarWidget, NumericValueWidget, VirtualWidget, Orientation
 import pytest
+from PyScreenReader import NumericValueWidget, Orientation, VirtualProgressBarWidget, VirtualWidget
+
+from tests.py.tools.utils import (
+    assert_all_base_functions_exist,
+    assert_correct_inheritance,
+    assert_functions_exist,
+)
 
 
 def test_base_methods():
@@ -16,16 +21,19 @@ def test_inheritance():
 
 
 @pytest.fixture
-def widget():
+def widget() -> VirtualProgressBarWidget:
     return VirtualProgressBarWidget()
 
 
-def test_orientation_setter_getter(widget):
+def test_orientation_setter_getter(widget: VirtualProgressBarWidget):
     # Default value is Orientation.VERTICAL
-    assert widget.get_orientation() == Orientation.VERTICAL, "default orientation should be vertical"
+    assert widget.get_orientation() == Orientation.VERTICAL, (
+        "default orientation should be vertical"
+    )
 
     widget.set_orientation(Orientation.HORIZONTAL)
     assert widget.get_orientation() == Orientation.HORIZONTAL
 
-def test_widget_name(widget):
+
+def test_widget_name(widget: VirtualProgressBarWidget):
     assert widget.get_widget_name() == "VirtualProgressBarWidget"

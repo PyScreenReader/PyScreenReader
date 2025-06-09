@@ -1,7 +1,7 @@
 import pytest
+from PyScreenReader import VirtualUnknownWidget, VirtualWidget
 
 from tests.py.tools.utils import assert_all_base_functions_exist, assert_correct_inheritance
-from PyScreenReader import VirtualUnknownWidget, VirtualWidget
 
 
 def test_base_methods():
@@ -13,9 +13,9 @@ def test_inheritance():
 
 
 @pytest.fixture
-def widget():
+def widget() -> VirtualUnknownWidget:
     return VirtualUnknownWidget()
 
 
-def test_widget_name(widget):
+def test_widget_name(widget: VirtualUnknownWidget):
     assert widget.get_widget_name() == "VirtualUnknownWidget"

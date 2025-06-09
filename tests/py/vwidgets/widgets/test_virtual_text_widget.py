@@ -1,7 +1,11 @@
 import pytest
-
-from tests.py.tools.utils import assert_all_base_functions_exist, assert_correct_inheritance, assert_functions_exist
 from PyScreenReader import VirtualTextWidget, VirtualWidget
+
+from tests.py.tools.utils import (
+    assert_all_base_functions_exist,
+    assert_correct_inheritance,
+    assert_functions_exist,
+)
 
 
 def test_base_methods():
@@ -17,15 +21,15 @@ def test_inheritance():
 
 
 @pytest.fixture
-def widget():
+def widget() -> VirtualTextWidget:
     return VirtualTextWidget()
 
 
-def test_selected_text_setter_getter(widget):
+def test_selected_text_setter_getter(widget: VirtualTextWidget):
     assert widget.get_selected_text() == "", "selected text should default to empty string"
     widget.set_selected_text("Selected Text")
     assert widget.get_selected_text() == "Selected Text"
 
 
-def test_widget_name(widget):
+def test_widget_name(widget: VirtualTextWidget):
     assert widget.get_widget_name() == "VirtualTextWidget"

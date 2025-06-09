@@ -1,7 +1,7 @@
-from tests.py.tools.utils import assert_all_base_functions_exist, assert_correct_inheritance
-from PyScreenReader import VirtualSpinnerWidget, NumericValueWidget, VirtualWidget
-
 import pytest
+from PyScreenReader import NumericValueWidget, VirtualSpinnerWidget, VirtualWidget
+
+from tests.py.tools.utils import assert_all_base_functions_exist, assert_correct_inheritance
 
 
 def test_base_methods():
@@ -13,9 +13,9 @@ def test_inheritance():
 
 
 @pytest.fixture
-def widget():
+def widget() -> VirtualSpinnerWidget:
     return VirtualSpinnerWidget()
 
 
-def test_widget_name(widget):
+def test_widget_name(widget: VirtualSpinnerWidget):
     assert widget.get_widget_name() == "VirtualSpinnerWidget"
