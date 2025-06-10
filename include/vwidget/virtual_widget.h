@@ -192,6 +192,12 @@ class VirtualWidget {
    */
   std::shared_ptr<VirtualWidget> GetChild(int index);
 
+  /**
+   * Gets all the children of this widget in the tree
+   * @return all the children of this widget
+   */
+  std::vector<std::shared_ptr<VirtualWidget>> &GetChildren();
+
   virtual ~VirtualWidget() = default;
 
  private:

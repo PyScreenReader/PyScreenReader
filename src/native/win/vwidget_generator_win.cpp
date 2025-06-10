@@ -6,10 +6,10 @@
 #include <utility>
 
 namespace generator {
-std::shared_ptr<VirtualRootWidget> generator::GenerateVWidgetTree(
+std::shared_ptr<VirtualWidget> generator::GenerateVWidgetTree(
     IUIAutomationElement* root_element,
     IUIAutomationTreeWalker* tree_walker) {
-  auto root = std::make_shared<VirtualRootWidget>();
+  auto root = std::make_shared<VirtualWindowWidget>();
   std::queue<std::pair<std::shared_ptr<VirtualWidget>, IUIAutomationElement*>> queue;
   queue.emplace(root, root_element);
   HRESULT hresult = S_OK;

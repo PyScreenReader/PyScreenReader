@@ -10,4 +10,8 @@ std::shared_ptr<VirtualWidget> VirtualWidget::GetChild(int index) {
   return children_.at(index);
 }
 
+std::vector<std::shared_ptr<VirtualWidget>> &VirtualWidget::GetChildren() {
+  return children_;
+}
+
 VirtualWidget::VirtualWidget(std::string widget_name) : widget_name_(std::move(widget_name)) {}

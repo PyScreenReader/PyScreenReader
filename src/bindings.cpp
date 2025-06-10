@@ -14,7 +14,7 @@
 #include "include/vwidget/widgets/virtual_text_widget.h"
 #include "include/vwidget/widgets/virtual_unknown_widget.h"
 #include "include/vwidget/widgets/virtual_window_widget.h"
-
+#include <pybind11/stl.h>
 #include "include/api/screen_reader.h"
 
 namespace bindings {
@@ -56,7 +56,8 @@ void BindVirtualWidgets(py::module_& module) {
       .def("set_parent", &VirtualWidget::SetParent)
       .def("get_child", &VirtualWidget::GetChild)
       .def("add_child", &VirtualWidget::AddChild)
-      .def("get_widget_name", &VirtualWidget::GetWidgetName);
+      .def("get_widget_name", &VirtualWidget::GetWidgetName)
+      .def("get_children", &VirtualWidget::GetChildren);
 
   // NumericValueWidget
   py::class_<NumericValueWidget, VirtualWidget,

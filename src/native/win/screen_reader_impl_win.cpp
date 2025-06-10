@@ -39,7 +39,7 @@ ScreenReaderImpl::~ScreenReaderImpl() {
   }
 }
 
-std::shared_ptr<VirtualRootWidget> ScreenReaderImpl::GetVirtualWidgetTreeByPID(
+std::shared_ptr<VirtualWidget> ScreenReaderImpl::GetVirtualWidgetTreeByPID(
     const std::string& pid) const {
   if (pid.empty())
     throw std::invalid_argument("PID cannot be empty");
@@ -64,7 +64,7 @@ std::shared_ptr<VirtualRootWidget> ScreenReaderImpl::GetVirtualWidgetTreeByPID(
   if (FAILED(hresult))
     throw std::runtime_error("Failed could not get tree walker");
 
-  std::shared_ptr<VirtualRootWidget> root =
+  std::shared_ptr<VirtualWidget> root =
       generator::GenerateVWidgetTree(matched_element, tree_walker);
 
   matched_element->Release();
@@ -74,12 +74,12 @@ std::shared_ptr<VirtualRootWidget> ScreenReaderImpl::GetVirtualWidgetTreeByPID(
 }
 
 // NOLINTBEGIN(readability-convert-member-functions-to-static)
-std::shared_ptr<VirtualRootWidget> ScreenReaderImpl::GetVirtualWidgetTreeByTitle(
+std::shared_ptr<VirtualWidget> ScreenReaderImpl::GetVirtualWidgetTreeByTitle(
     const std::string& title) const {
   throw std::logic_error("Not yet implemented");
 }
 
-std::shared_ptr<VirtualRootWidget> ScreenReaderImpl::GetVirtualWidgetTreeByClassName(
+std::shared_ptr<VirtualWidget> ScreenReaderImpl::GetVirtualWidgetTreeByClassName(
     const std::string& class_name) const {
   throw std::logic_error("Not yet implemented");
 }
