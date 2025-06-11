@@ -4,7 +4,7 @@
  * Run ScreenReader C++ implementation directly
  *
  * """
- * bazel run //tools:cpp_inspect
+ * bazel run //tools:cpp_inspect -- --pid=[pid#]
  * """
  */
 

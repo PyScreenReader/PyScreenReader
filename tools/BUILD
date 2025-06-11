@@ -57,3 +57,11 @@ cc_binary(
         "//src/api:screen_reader",
     ],
 )
+
+py_binary(
+    name = "py_inspect",
+    srcs = ["py_inspect.py"],
+    deps = [
+        "//:PyScreenReader",
+    ]
+)
