@@ -151,14 +151,8 @@ void BindVirtualWidgets(py::module_& module) {
 void BindScreenReader(py::module_& module) {
   py::class_<ScreenReader>(module, "ScreenReader")
       .def(py::init())
-      .def("getVirtualWidgetTreeByPID",
+      .def("get_virtual_widget_tree_by_pid",
            &ScreenReader::GetVirtualWidgetTreeByPID,
-           py::return_value_policy::take_ownership)
-      .def("getVirtualWidgetTreeByTitle",
-           &ScreenReader::GetVirtualWidgetTreeByTitle,
-           py::return_value_policy::take_ownership)
-      .def("getVirtualWidgetTreeByClassName",
-           &ScreenReader::GetVirtualWidgetTreeByClassName,
            py::return_value_policy::take_ownership);
 }
 }  // namespace bindings
