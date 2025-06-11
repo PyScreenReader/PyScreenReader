@@ -1,5 +1,4 @@
-"""
-PyScreenReader - Inspect Python
+"""PyScreenReader - Inspect Python.
 
 Run ScreenReader from Python bindings:
 
@@ -7,9 +6,15 @@ Run ScreenReader from Python bindings:
 """
 
 import argparse
-from PyScreenReader import ScreenReader
 
-def print_tree(root):
+from PyScreenReader import ScreenReader, VirtualWidget
+
+
+def print_tree(root: VirtualWidget) -> None:
+    """Print a virtual widget tree using DFS.
+
+    :param root: root of the virtual widget tree
+    """
     node_stack = [(root, 0)]
 
     while node_stack:
@@ -24,9 +29,10 @@ def print_tree(root):
             node_stack.append((child, indent + 1))
 
 
-def main():
+def main() -> None:
+    """Entry point of the script."""
     parser = argparse.ArgumentParser(description="Run ScreenReader from Python bindings")
-    parser.add_argument('--pid', '-p', type=int, required=True, help='PID of the program')
+    parser.add_argument("--pid", "-p", type=int, required=True, help="PID of the program")
 
     args = parser.parse_args()
     pid = args.pid
