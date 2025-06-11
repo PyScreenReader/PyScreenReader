@@ -1,4 +1,5 @@
 #include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
 
 #include "include/vwidget/virtual_widget.h"
 #include "include/vwidget/numeric_value_widget.h"
@@ -14,7 +15,6 @@
 #include "include/vwidget/widgets/virtual_text_widget.h"
 #include "include/vwidget/widgets/virtual_unknown_widget.h"
 #include "include/vwidget/widgets/virtual_window_widget.h"
-#include <pybind11/stl.h>
 #include "include/api/screen_reader.h"
 
 namespace bindings {
