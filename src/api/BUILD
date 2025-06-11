@@ -9,8 +9,7 @@ pybind_library(
     hdrs = ["//include/api:screen_reader.h"],
     srcs = [":screen_reader.cpp"],
     deps = [
-        "//src:bindings_registry",
-        "//src/vwidget:vwidget_bind",
+        "//src/vwidget:all_virtual_widgets",
     ] +
     select({
        "@platforms//os:macos": ["//src/native/macos:screen_reader_impl_mac"],

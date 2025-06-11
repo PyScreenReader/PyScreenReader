@@ -6,3 +6,4 @@ common --enable_platform_specific_config
 build:windows --copt="/std:c++17"
 common --skip_incompatible_explicit_targets
 build:macos --cxxopt="--std=c++17"
+test --test_output=all

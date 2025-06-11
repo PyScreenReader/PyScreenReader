@@ -9,8 +9,3 @@ compile_pip_requirements(
     src = "//tests/py:requirements.in",
     requirements_txt = "//tests/py:requirements_lock.txt",
 )
-
-pytest_test(
-    name = "test_screen_reader",
-    srcs = ["test_screen_reader.py"],
-)

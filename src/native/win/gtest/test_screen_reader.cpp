@@ -7,10 +7,10 @@ class ScreenReaderTest : public ::testing::Test {
 
   void SetUp() override {}
   ScreenReader screen_reader_;
-  std::shared_ptr<VirtualRootWidget> root_ = nullptr;
+  std::shared_ptr<VirtualWidget> root_ = nullptr;
 };
 
 TEST_F(ScreenReaderTest, DefaultConstruction) {
   root_ = screen_reader_.GetVirtualWidgetTreeByPID(TEST_PID);
-  EXPECT_EQ(root_->GetWidgetName(), "VirtualRootWidget");
+  EXPECT_EQ(root_->GetWidgetName(), "VirtualWindowWidget");
 }

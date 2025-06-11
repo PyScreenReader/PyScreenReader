@@ -1,15 +1,27 @@
 #pragma once
 
-#include "../virtual_widget.h"
 #include <string>
+#include "include/vwidget/virtual_widget.h"
 
 class VirtualTextWidget : public VirtualWidget {
-private:
-  bool is_clickable_;
-
-public:
+ public:
   VirtualTextWidget();
-  std::string GetWidgetName() override;
-  bool IsClickable() override;
-  void SetClickable(bool newClickableValue);
+  ~VirtualTextWidget() override = default;
+
+  /**
+   * Get cursor selected text in static text widget
+   *
+   * @return selected text
+   */
+  const std::string& GetSelectedText() const { return selected_text_; }
+
+  /**
+   * Set cursor selected text
+   *
+   * @param selected_text selected text string
+   */
+  void SetSelectedText(const std::string& selected_text) { selected_text_ = selected_text; }
+
+ private:
+  std::string selected_text_;
 };

@@ -1,35 +1,11 @@
-import PyScreenReader as psr
-import pytest
+from PyScreenReader import VirtualWidget
 
-BASE_METHOD_NAME_VIRTUAL_WIDGET = (
-    "getX",
-    "getY",
-    "getTitleText",
-    "getHelpText",
-    "getWidth",
-    "getHeight",
-    "isVisible",
-    "getParent",
-    "setTitleText",
-    "setHelpText",
-    "setX",
-    "setY",
-    "setWidth",
-    "setHeight",
-    "setParent",
-    "setVisible",
-    "__repr__",
-    "isClickable",
-    "getWidgetName",
-)
+from tests.py.tools.utils import assert_abstract_class, assert_all_base_functions_exist
 
 
 def test_abstract_class():
-    with pytest.raises(TypeError):
-        psr.VirtualWidget()
+    assert_abstract_class(VirtualWidget)
 
 
-def test_methods():
-    definitions = vars(psr.VirtualWidget)
-    for method in BASE_METHOD_NAME_VIRTUAL_WIDGET:
-        assert method in definitions
+def test_base_methods():
+    assert_all_base_functions_exist(VirtualWidget)

@@ -7,12 +7,15 @@
 #include <unordered_set>
 #include "include/vwidget/virtual_widget.h"
 #include "include/vwidget/widgets/virtual_button_widget.h"
-#include "include/vwidget/widgets/virtual_group_widget.h"
-#include "include/vwidget/widgets/virtual_menu_group_widget.h"
 #include "include/vwidget/widgets/virtual_menu_item_widget.h"
-#include "include/vwidget/widgets/virtual_root_widget.h"
-#include "include/vwidget/widgets/virtual_text_field_widget.h"
+#include "include/vwidget/widgets/virtual_menu_widget.h"
+#include "include/vwidget/widgets/virtual_progress_bar_widget.h"
+#include "include/vwidget/widgets/virtual_scrollbar_widget.h"
+#include "include/vwidget/widgets/virtual_slider_widget.h"
+#include "include/vwidget/widgets/virtual_spinner_widget.h"
+#include "include/vwidget/widgets/virtual_text_input_widget.h"
 #include "include/vwidget/widgets/virtual_text_widget.h"
+#include "include/vwidget/widgets/virtual_unknown_widget.h"
 #include "include/vwidget/widgets/virtual_window_widget.h"
 
 namespace generator {
@@ -43,51 +46,51 @@ const std::unordered_set<std::string> SUPPORTED_ROLES = {
 // clang-format off
 inline const std::unordered_map<CONTROLTYPEID, std::function<std::shared_ptr<VirtualWidget>(IUIAutomationElement*)>> VIRTUAL_WIDGET_FACTORY = {
     {UIA_ButtonControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualButtonWidget>(); }},
-    {UIA_CalendarControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualGroupWidget>(); }},
+    {UIA_CalendarControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualUnknownWidget>(); }},
     {UIA_CheckBoxControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualButtonWidget>(); }},
     {UIA_ComboBoxControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualButtonWidget>(); }},
     {UIA_EditControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualButtonWidget>(); }},
-    {UIA_HyperlinkControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualGroupWidget>(); }},
-    {UIA_ImageControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualGroupWidget>(); }},
-    {UIA_ListItemControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualGroupWidget>(); }},
-    {UIA_ListControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualGroupWidget>(); }},
-    {UIA_MenuControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualMenuGroupWidget>(); }},
-    {UIA_MenuBarControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualMenuGroupWidget>(); }},
+    {UIA_HyperlinkControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualTextWidget>(); }},
+    {UIA_ImageControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualUnknownWidget>(); }},
+    {UIA_ListItemControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualUnknownWidget>(); }},
+    {UIA_ListControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualUnknownWidget>(); }},
+    {UIA_MenuControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualMenuWidget>(); }},
+    {UIA_MenuBarControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualMenuWidget>(); }},
     {UIA_MenuItemControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualMenuItemWidget>(); }},
-    {UIA_ProgressBarControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualGroupWidget>(); }},
+    {UIA_ProgressBarControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualProgressBarWidget>(); }},
     {UIA_RadioButtonControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualButtonWidget>(); }},
-    {UIA_ScrollBarControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualGroupWidget>(); }},
-    {UIA_SliderControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualGroupWidget>(); }},
-    {UIA_SpinnerControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualGroupWidget>(); }},
-    {UIA_StatusBarControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualGroupWidget>(); }},
-    {UIA_TabControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualGroupWidget>(); }},
-    {UIA_TabItemControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualGroupWidget>(); }},
+    {UIA_ScrollBarControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualScrollbarWidget>(); }},
+    {UIA_SliderControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualSliderWidget>(); }},
+    {UIA_SpinnerControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualSpinnerWidget>(); }},
+    {UIA_StatusBarControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualProgressBarWidget>(); }},
+    {UIA_TabControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualUnknownWidget>(); }},
+    {UIA_TabItemControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualUnknownWidget>(); }},
     {UIA_TextControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualTextWidget>(); }},
-    {UIA_ToolBarControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualGroupWidget>(); }},
-    {UIA_ToolTipControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualGroupWidget>(); }},
-    {UIA_TreeControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualGroupWidget>(); }},
-    {UIA_TreeItemControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualGroupWidget>(); }},
-    {UIA_CustomControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualGroupWidget>(); }},
-    {UIA_GroupControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualGroupWidget>(); }},
-    {UIA_ThumbControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualGroupWidget>(); }},
-    {UIA_DataGridControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualGroupWidget>(); }},
-    {UIA_DataItemControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualGroupWidget>(); }},
-    {UIA_DocumentControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualGroupWidget>(); }},
-    {UIA_SplitButtonControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualGroupWidget>(); }},
+    {UIA_ToolBarControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualUnknownWidget>(); }},
+    {UIA_ToolTipControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualUnknownWidget>(); }},
+    {UIA_TreeControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualUnknownWidget>(); }},
+    {UIA_TreeItemControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualUnknownWidget>(); }},
+    {UIA_CustomControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualUnknownWidget>(); }},
+    {UIA_GroupControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualUnknownWidget>(); }},
+    {UIA_ThumbControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualUnknownWidget>(); }},
+    {UIA_DataGridControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualUnknownWidget>(); }},
+    {UIA_DataItemControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualUnknownWidget>(); }},
+    {UIA_DocumentControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualUnknownWidget>(); }},
+    {UIA_SplitButtonControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualUnknownWidget>(); }},
     {UIA_WindowControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualWindowWidget>(); }},
-    {UIA_PaneControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualGroupWidget>(); }},
-    {UIA_HeaderControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualGroupWidget>(); }},
-    {UIA_HeaderItemControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualGroupWidget>(); }},
-    {UIA_TableControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualGroupWidget>(); }},
-    {UIA_TitleBarControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualGroupWidget>(); }},
-    {UIA_SeparatorControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualGroupWidget>(); }},
-    {UIA_SemanticZoomControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualGroupWidget>(); }},
-    {UIA_AppBarControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualGroupWidget>(); }}
+    {UIA_PaneControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualUnknownWidget>(); }},
+    {UIA_HeaderControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualUnknownWidget>(); }},
+    {UIA_HeaderItemControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualUnknownWidget>(); }},
+    {UIA_TableControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualUnknownWidget>(); }},
+    {UIA_TitleBarControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualTextWidget>(); }},
+    {UIA_SeparatorControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualUnknownWidget>(); }},
+    {UIA_SemanticZoomControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualUnknownWidget>(); }},
+    {UIA_AppBarControlTypeId, [](IUIAutomationElement* e){return std::make_shared<VirtualUnknownWidget>(); }}
 };
 // clang-format on
 // NOLINTEND(readability-identifier-length)
 
-std::shared_ptr<VirtualRootWidget> GenerateVWidgetTree(IUIAutomationElement* root_element,
+std::shared_ptr<VirtualWidget> GenerateVWidgetTree(IUIAutomationElement* root_element,
                                                        IUIAutomationTreeWalker* tree_walker);
 
 std::shared_ptr<VirtualWidget> CreateVirtualWidget(IUIAutomationElement* element);

@@ -1,9 +1,9 @@
 #pragma once
 
 #include <memory>
-
-#include "include/vwidget/widgets/virtual_root_widget.h"
 #include <string>
+
+#include "include/vwidget/virtual_widget.h"
 
 #if defined(__APPLE__)
 #include "src/native/macos/screen_reader_impl_mac.h"
@@ -22,9 +22,9 @@ public:
    * (PID).
    *
    * @param pid The process ID used to identify the target application
-   * @return pointer to the VirtualRootWidget corresponding to the given PID
+   * @return pointer to the VirtualWidget corresponding to the given PID
    */
-  [[nodiscard]] std::shared_ptr<VirtualRootWidget>
+  [[nodiscard]] std::shared_ptr<VirtualWidget>
   GetVirtualWidgetTreeByPID(const std::string &pid) const;
 
   /**
@@ -32,9 +32,9 @@ public:
    * title.
    *
    * @param title The window title used to identify the target application
-   * @return pointer to the VirtualRootWidget corresponding to the given title
+   * @return pointer to the VirtualWidget corresponding to the given title
    */
-  [[nodiscard]] std::shared_ptr<VirtualRootWidget>
+  [[nodiscard]] std::shared_ptr<VirtualWidget>
   GetVirtualWidgetTreeByTitle(const std::string &title) const;
 
   /**
@@ -43,10 +43,10 @@ public:
    *
    * @param class_name The window class name used to identify the target
    * application
-   * @return pointer to the VirtualRootWidget corresponding to the given class
+   * @return pointer to the VirtualWidget corresponding to the given class
    * name
    */
-  [[nodiscard]] std::shared_ptr<VirtualRootWidget>
+  [[nodiscard]] std::shared_ptr<VirtualWidget>
   GetVirtualWidgetTreeByClassName(const std::string &class_name) const;
 
 private:

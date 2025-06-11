@@ -11,8 +11,7 @@ pybind_extension(
         "//src/api:screen_reader.cpp",
     ],
     deps = [
-        "//src:bindings_registry",
         "//src/api:screen_reader",
-        "//src/vwidget:vwidget_bind",
+        "//src/vwidget:all_virtual_widgets",
     ],
 )
