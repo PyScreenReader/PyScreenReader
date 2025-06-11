@@ -190,13 +190,21 @@ class VirtualWidget {
    *
    * @return child widget on the index
    */
-  std::shared_ptr<VirtualWidget> GetChild(int index);
+  std::shared_ptr<VirtualWidget> GetChild(int index) const;
 
   /**
    * Gets all the children of this widget in the tree
+   *
    * @return all the children of this widget
    */
-  std::vector<std::shared_ptr<VirtualWidget>> &GetChildren();
+  const std::vector<std::shared_ptr<VirtualWidget>> &GetChildren() const { return children_; }
+
+  /**
+   * Convert this object to a formatted printable string.
+   *
+   * @return formatted printable string
+   */
+  std::string ToString() const;
 
   virtual ~VirtualWidget() = default;
 

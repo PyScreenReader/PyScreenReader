@@ -57,7 +57,9 @@ void BindVirtualWidgets(py::module_& module) {
       .def("get_child", &VirtualWidget::GetChild)
       .def("add_child", &VirtualWidget::AddChild)
       .def("get_widget_name", &VirtualWidget::GetWidgetName)
-      .def("get_children", &VirtualWidget::GetChildren);
+      .def("get_children", &VirtualWidget::GetChildren)
+      .def("__repr__", &VirtualWidget::ToString)
+      .def("__str__", &VirtualWidget::ToString);
 
   // NumericValueWidget
   py::class_<NumericValueWidget, VirtualWidget,
