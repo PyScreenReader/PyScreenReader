@@ -5,7 +5,7 @@ pybind_library(
     name = "virtual_widget",
     hdrs = ["//include/vwidget:virtual_widget.h"],
     srcs = [":virtual_widget.cpp"],
-    deps = []
+    deps = ["//src/base:build_flags"]
 )
 
 pybind_library(

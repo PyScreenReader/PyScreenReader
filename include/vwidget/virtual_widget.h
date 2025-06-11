@@ -3,6 +3,11 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include "src/base/build_flags.h"
+
+#if defined(WIN_OS)
+#include <uiautomationclient.h>
+#endif
 
 class VirtualWidget {
  public:
@@ -196,7 +201,7 @@ class VirtualWidget {
    * Gets all the children of this widget in the tree
    * @return all the children of this widget
    */
-  std::vector<std::shared_ptr<VirtualWidget>> &GetChildren();
+  std::vector<std::shared_ptr<VirtualWidget>>& GetChildren();
 
   virtual ~VirtualWidget() = default;
 
@@ -216,4 +221,8 @@ class VirtualWidget {
 
  protected:
   explicit VirtualWidget(std::string widget_name);
+
+#if defined(WIN_OS)
+  explicit VirtualWidget(IUIAutomationElement* element);
+#endif
 };
