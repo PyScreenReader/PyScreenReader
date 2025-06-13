@@ -7,6 +7,10 @@ class VirtualSliderWidget : public NumericValueWidget {
  public:
   VirtualSliderWidget();
   ~VirtualSliderWidget() override = default;
+#if defined(WIN_OS)
+  explicit VirtualSliderWidget(IUIAutomationElement* element);
+#endif
+
   /**
    * Get current orientation of the widget.
    *

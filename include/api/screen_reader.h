@@ -28,28 +28,6 @@ public:
   [[nodiscard]] std::shared_ptr<VirtualWidget>
   GetVirtualWidgetTreeByPID(const std::string &pid) const;
 
-  /**
-   * Retrieves the virtual widget tree associated with the specified window
-   * title.
-   *
-   * @param title The window title used to identify the target application
-   * @return pointer to the VirtualWidget corresponding to the given title
-   */
-  [[nodiscard]] std::shared_ptr<VirtualWidget>
-  GetVirtualWidgetTreeByTitle(const std::string &title) const;
-
-  /**
-   * Retrieves the virtual widget tree associated with the specified window
-   * class name.
-   *
-   * @param class_name The window class name used to identify the target
-   * application
-   * @return pointer to the VirtualWidget corresponding to the given class
-   * name
-   */
-  [[nodiscard]] std::shared_ptr<VirtualWidget>
-  GetVirtualWidgetTreeByClassName(const std::string &class_name) const;
-
 private:
   screen_reader::ScreenReaderImpl screen_reader_impl_;
 };

@@ -72,16 +72,4 @@ std::shared_ptr<VirtualWidget> ScreenReaderImpl::GetVirtualWidgetTreeByPID(
   tree_walker->Release();
   return root;
 }
-
-// NOLINTBEGIN(readability-convert-member-functions-to-static)
-std::shared_ptr<VirtualWidget> ScreenReaderImpl::GetVirtualWidgetTreeByTitle(
-    const std::string& title) const {
-  throw std::logic_error("Not yet implemented");
-}
-
-std::shared_ptr<VirtualWidget> ScreenReaderImpl::GetVirtualWidgetTreeByClassName(
-    const std::string& class_name) const {
-  throw std::logic_error("Not yet implemented");
-}
-// NOLINTEND(readability-convert-member-functions-to-static)
 }  // namespace screen_reader

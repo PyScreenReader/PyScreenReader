@@ -7,4 +7,7 @@ class VirtualMenuItemWidget : public VirtualWidget {
  public:
   VirtualMenuItemWidget();
   ~VirtualMenuItemWidget() override = default;
+#if defined(WIN_OS)
+  explicit VirtualMenuItemWidget(IUIAutomationElement* element);
+#endif
 };
