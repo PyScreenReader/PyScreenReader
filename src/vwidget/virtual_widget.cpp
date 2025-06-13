@@ -1,14 +1,18 @@
 #include "include/vwidget/virtual_widget.h"
 
+#include <iostream>
+
+#include <ostream>
 #include <utility>
 
 #if defined(WIN_OS)
 #include <uiautomationclient.h>
 
 VirtualWidget::VirtualWidget(IUIAutomationElement* element) {
-  RECT* rect;
-  HRESULT hresult = element->get_CurrentBoundingRectangle(rect);
+  RECT rect;
+  HRESULT hresult = element->get_CurrentBoundingRectangle(&rect);
   if (SUCCEEDED(hresult)) {
+    std::cout << rect.left << " " << rect.top << '\n';
   }
 }
 #endif
