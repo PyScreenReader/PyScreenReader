@@ -4,7 +4,7 @@ load("@pytest_env//:requirements.bzl", "requirement")
 def pytest_test(name, srcs, deps=[], args=[], data=[], **kwargs):
     """
     Build a pytest target
-    This function wrapper the original py_test target
+    This function wraps the original py_test target
 
     :param name: test target name
     :param deps: additional dependencies to include (pytest and test_utils are already implicitly injected)
@@ -27,7 +27,7 @@ def pytest_suite(test_files, deps = []):
     """
     Build a suite of test cases for each python test file
 
-    :param test_files: a collection of the
+    :param test_files: a collection of python test cases
     :param deps: additional dependencies to include (pytest and PyScreenReader are already implicitly injected)
     """
     for test_file in test_files:
