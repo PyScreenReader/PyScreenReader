@@ -11,13 +11,8 @@ namespace generator
         auto result = std::make_shared<VirtualTextWidget>();
 
         attribute_utils::GetAXAttribute<CFStringRef, std::string>(
-                element,
-                kAXValueAttribute,
-                attribute_utils::ConvertCFStringToCPPString,
-                [result](const std::string &text) {
-                    result->SetTitleText(text);
-                }
-        );
+            element, kAXValueAttribute, attribute_utils::ConvertCFStringToStdString,
+            [result](const std::string& text) { result->SetTitleText(text); });
 
         return result;
     }
@@ -29,20 +24,12 @@ namespace generator
     std::shared_ptr<VirtualWidget> generator::HandleButtonLiked(AXUIElementRef element) {
         auto result = std::make_shared<VirtualButtonWidget>();
         if (!attribute_utils::GetAXAttribute<CFStringRef, std::string>(
-                element,
-                kAXTitleAttribute,
-                attribute_utils::ConvertCFStringToCPPString,
-                [result](const std::string &title) {
-                    result->SetTitleText(title);
-                })) {
+                element, kAXTitleAttribute, attribute_utils::ConvertCFStringToStdString,
+                [result](const std::string& title) { result->SetTitleText(title); })) {
             // if there is no kAXTitleAttribute, let's also try kAXValueAttribute
             attribute_utils::GetAXAttribute<CFStringRef, std::string>(
-                    element,
-                    kAXValueAttribute,
-                    attribute_utils::ConvertCFStringToCPPString,
-                    [result](const std::string &value) {
-                        result->SetTitleText(value);
-                    });
+                element, kAXValueAttribute, attribute_utils::ConvertCFStringToStdString,
+                [result](const std::string& value) { result->SetTitleText(value); });
         }
         return result;
     }
@@ -102,7 +89,7 @@ namespace generator
         role_name.reset(raw_role);
 
         std::string plain_role_name;
-        if (!attribute_utils::ConvertCFStringToCPPString(role_name.get(), plain_role_name)) {
+        if (!attribute_utils::ConvertCFStringToStdString(role_name.get(), plain_role_name)) {
             return nullptr;
         }
 
@@ -126,22 +113,12 @@ namespace generator
         );
 
         attribute_utils::GetAXAttribute<CFStringRef, std::string>(
-                element,
-                kAXHelpAttribute,
-                attribute_utils::ConvertCFStringToCPPString,
-                [result](const std::string &helpText) {
-                    result->SetHelpText(helpText);
-                }
-        );
+            element, kAXHelpAttribute, attribute_utils::ConvertCFStringToStdString,
+            [result](const std::string& helpText) { result->SetHelpText(helpText); });
 
         attribute_utils::GetAXAttribute<CFStringRef, std::string>(
-                element,
-                kAXTitleAttribute,
-                attribute_utils::ConvertCFStringToCPPString,
-                [result](const std::string &title) {
-                    result->SetTitleText(title);
-                }
-        );
+            element, kAXTitleAttribute, attribute_utils::ConvertCFStringToStdString,
+            [result](const std::string& title) { result->SetTitleText(title); });
 
         return result;
     }
