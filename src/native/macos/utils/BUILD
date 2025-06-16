@@ -2,13 +2,11 @@ package(default_visibility = ["//visibility:public"])
 load("@pybind11_bazel//:build_defs.bzl", "pybind_library")
 
 pybind_library(
-    name = "utils",
+    name = "cf_utils",
     hdrs = [
-        ":attribute_utils.h",
-        ":system_utils.h",
+        ":cf_utils.h",
     ],
     srcs = [
-        ":attribute_utils.cpp",
-        ":system_utils.cpp",
+        ":cf_utils.cpp",
     ],
 )

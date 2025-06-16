@@ -14,4 +14,4 @@ namespace screen_reader
 
         std::shared_ptr<VirtualWidget> GetVirtualWidgetTreeByPID(const std::string& pid) const;
     };
-}
+} // namespace screen_reader

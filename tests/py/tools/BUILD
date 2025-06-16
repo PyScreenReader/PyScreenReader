@@ -1,6 +1,7 @@
-package(default_visibility = ["//visibility:public"])
 load("@rules_python//python:py_library.bzl", "py_library")
 load("@pytest_env//:requirements.bzl", "requirement")
+
+package(default_visibility = ["//visibility:public"])
 
 py_library(
     name = "pytest_wrapper",

@@ -27,7 +27,6 @@ pybind_library(
         ":vwidget_generator.cpp",
     ],
     deps = [
-        "//src/native/macos/utils:utils",
         "//src/vwidget/widgets:virtual_components"
     ],
     linkopts = ["-framework ApplicationServices"],
