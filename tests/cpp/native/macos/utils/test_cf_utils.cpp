@@ -2,7 +2,6 @@
 #include <ApplicationServices/ApplicationServices.h>
 #include <CoreFoundation/CoreFoundation.h>
 #include <string>
-#include <iostream>
 
 #include "src/native/macos/utils/cf_utils.h"
 

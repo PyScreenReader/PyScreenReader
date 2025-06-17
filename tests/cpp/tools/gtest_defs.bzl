@@ -1,6 +1,6 @@
 load("@pybind11_bazel//:build_defs.bzl", "pybind_library_test")
 
-def gtest_test(name, srcs, deps, platform, size="small", **kwargs):
+def gtest_test(name, srcs, deps, platform, size="small", no_ci=False, **kwargs):
     """
     Build a PyScreenReader gtest target
     This function wraps the pybind_library_test
@@ -11,6 +11,7 @@ def gtest_test(name, srcs, deps, platform, size="small", **kwargs):
     :param platform: env this test can be built for - either "macos", "win" or "linux".
     :param size: heaviness of the test (unit test = small, integration = medium, e2e = large)
                  This size will be used to determine the timeout.
+    :param no_ci: True if the test cannot run in headless CI env (GitHub action)
     :param **kwargs: additional args to pass to original pybind_library_test target
     """
 
@@ -32,5 +33,7 @@ def gtest_test(name, srcs, deps, platform, size="small", **kwargs):
         srcs = srcs,
         size = size,
         target_compatible_with = compatible_platform,
-        deps = deps + ["@googletest//:gtest", "@googletest//:gtest_main"]
+        tags = ['no_ci'] if no_ci else [],
+        deps = deps + ["@googletest//:gtest", "@googletest//:gtest_main"],
+        **kwargs
     )

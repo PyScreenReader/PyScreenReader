@@ -27,3 +27,64 @@ std::optional<std::string> cf_utils::ToString(CFStringRef string_ref) {
 
   return res;
 }
+
+template <>
+std::optional<std::string> cf_utils::GetAttribute(AXUIElementRef element, CFStringRef attr_name) {
+  CFTypeRef value_ref;
+  AXError err = AXUIElementCopyAttributeValue(element, attr_name, &value_ref);
+  if (err != kAXErrorSuccess)
+    return std::nullopt;
+
+  if (!value_ref || CFGetTypeID(value_ref) != CFStringGetTypeID()) {
+    if (value_ref)
+      CFRelease(value_ref);
+    return std::nullopt;
+  }
+
+  const auto *string_ref = static_cast<CFStringRef>(value_ref);
+  auto result_str = cf_utils::ToString(string_ref);
+
+  CFRelease(value_ref);
+  string_ref = nullptr;
+
+  return result_str;
+}
+
+template <>
+std::optional<bool> cf_utils::GetAttribute(AXUIElementRef element, CFStringRef attr_name) {
+  CFTypeRef value_ref;
+  AXError err = AXUIElementCopyAttributeValue(element, attr_name, &value_ref);
+  if (err != kAXErrorSuccess)
+    return std::nullopt;
+  if (!value_ref || CFGetTypeID(value_ref) != CFBooleanGetTypeID()) {
+    if (value_ref)
+      CFRelease(value_ref);
+    return std::nullopt;
+  }
+
+  const auto *bool_ref = static_cast<CFBooleanRef>(value_ref);
+
+  bool result_bool = (bool_ref == kCFBooleanTrue);
+  CFRelease(value_ref);
+  bool_ref = nullptr;
+
+  return result_bool;
+}
+
+template <>
+std::optional<CFArrayRef> cf_utils::GetAttribute(AXUIElementRef element, CFStringRef attr_name) {
+  CFTypeRef value_ref;
+  AXError err = AXUIElementCopyAttributeValue(element, attr_name, &value_ref);
+
+  if (err != kAXErrorSuccess)
+    return std::nullopt;
+
+  if (!value_ref || CFGetTypeID(value_ref) != CFArrayGetTypeID()) {
+    if (value_ref)
+      CFRelease(value_ref);
+    return std::nullopt;
+  }
+
+  const auto *array_ref = static_cast<CFArrayRef>(value_ref);
+  return array_ref;
+}

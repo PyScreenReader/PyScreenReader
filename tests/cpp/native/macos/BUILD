@@ -6,3 +6,13 @@ gtest_test(
     deps = ["//src/native/macos/utils:cf_utils"],
     platform = "macos"
 )
+
+gtest_test(
+    name = "test_cf_utils_no_ci",
+    srcs = [":utils/test_cf_utils_no_ci.cpp"],
+    deps = ["//src/native/macos/utils:cf_utils"],
+    platform = "macos",
+    size = "medium",
+    no_ci = True,
+    linkopts = ["-framework ApplicationServices"],
+)
