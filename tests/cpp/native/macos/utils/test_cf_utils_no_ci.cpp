@@ -132,3 +132,33 @@ TEST_F(CFUtilsTest, GetAttributeCFArrayTargetDoesNotExist) {
   auto actual = cf_utils::GetAttribute<CFArrayRef>(window_ref_, dummy_attr_name_);
   ASSERT_FALSE(actual.has_value());
 }
+
+TEST_F(CFUtilsTest, GetAttributeCGPoint) {
+  auto actual = cf_utils::GetAttribute<CGPoint>(window_ref_, kAXPositionAttribute);
+  ASSERT_TRUE(actual.has_value());
+}
+
+TEST_F(CFUtilsTest, GetAttributeCGPointTargetIsNotPoint) {
+  auto actual = cf_utils::GetAttribute<CGPoint>(window_ref_, kAXRoleAttribute);
+  ASSERT_FALSE(actual.has_value());
+}
+
+TEST_F(CFUtilsTest, GetAttributeCGPointTargetDoesNotExist) {
+  auto actual = cf_utils::GetAttribute<CGPoint>(window_ref_, dummy_attr_name_);
+  ASSERT_FALSE(actual.has_value());
+}
+
+TEST_F(CFUtilsTest, GetAttributeCGSize) {
+  auto actual = cf_utils::GetAttribute<CGSize>(window_ref_, kAXSizeAttribute);
+  ASSERT_TRUE(actual.has_value());
+}
+
+TEST_F(CFUtilsTest, GetAttributeCGSizeTargetIsNotPoint) {
+  auto actual = cf_utils::GetAttribute<CGSize>(window_ref_, kAXRoleAttribute);
+  ASSERT_FALSE(actual.has_value());
+}
+
+TEST_F(CFUtilsTest, GetAttributeCGSizeTargetDoesNotExist) {
+  auto actual = cf_utils::GetAttribute<CGSize>(window_ref_, dummy_attr_name_);
+  ASSERT_FALSE(actual.has_value());
+}

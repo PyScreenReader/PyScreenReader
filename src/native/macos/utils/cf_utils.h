@@ -53,11 +53,32 @@ std::optional<bool> GetAttribute(AXUIElementRef element, CFStringRef attr_name);
  *
  * @param element element to get attribute from
  * @param attr_name attribute name
- * @return a CFArrayRef of the attribute value or std::nullopt in error cases.
+ * @return a CFArrayRef value or std::nullopt in error cases.
  *
  * @note In std::nullopt cases, the resources will be managed by this function. However, in
  *       successful cases, caller should take the ownership of the return value.
  */
 template <>
 std::optional<CFArrayRef> GetAttribute(AXUIElementRef element, CFStringRef attr_name);
+
+/**
+ * A specialization of GetAttribute<T> for getting CGPoint attribute from an AXUIElementRef.
+ *
+ * @param element element to get attribute from
+ * @param attr_name attribute name
+ * @return a CGPoint value or std::nullopt in error cases.
+ */
+template <>
+std::optional<CGPoint> GetAttribute(AXUIElementRef element, CFStringRef attr_name);
+
+/**
+ * A specialization of GetAttribute<T> for getting CGSize attribute from an AXUIElementRef.
+ *
+ * @param element element to get attribute from
+ * @param attr_name attribute name
+ * @return a CGSize value or std::nullopt in error cases.
+ */
+template <>
+std::optional<CGSize> GetAttribute(AXUIElementRef element, CFStringRef attr_name);
+
 }  // namespace cf_utils
