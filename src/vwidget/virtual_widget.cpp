@@ -2,6 +2,18 @@
 
 #include <utility>
 
+#if defined(WIN_OS)
+#include <uiautomationclient.h>
+
+VirtualWidget::VirtualWidget(IUIAutomationElement* element) {
+  RECT* rect;
+  HRESULT hresult = element->get_CurrentBoundingRectangle(rect);
+  if (SUCCEEDED(hresult)) {
+  }
+}
+#endif
+
+
 void VirtualWidget::AddChild(const std::shared_ptr<VirtualWidget>& child) {
   children_.emplace_back(child);
 }

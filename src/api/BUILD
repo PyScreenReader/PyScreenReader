@@ -10,6 +10,7 @@ pybind_library(
     srcs = [":screen_reader.cpp"],
     deps = [
         "//src/vwidget:all_virtual_widgets",
+        "//src/base:build_flags"
     ] +
     select({
        "@platforms//os:macos": ["//src/native/macos:screen_reader_impl_mac"],
