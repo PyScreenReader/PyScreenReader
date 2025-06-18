@@ -162,3 +162,9 @@ TEST_F(CFUtilsTest, GetAttributeCGSizeTargetDoesNotExist) {
   auto actual = cf_utils::GetAttribute<CGSize>(window_ref_, dummy_attr_name_);
   ASSERT_FALSE(actual.has_value());
 }
+
+TEST_F(CFUtilsTest, GetAttributeNotSupportedType) {
+  ASSERT_THROW({
+    cf_utils::GetAttribute<long>(window_ref_, kAXRoleAttribute);
+  }, std::logic_error);
+}

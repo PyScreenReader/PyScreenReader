@@ -3,7 +3,9 @@
 #include <ApplicationServices/ApplicationServices.h>
 #include <CoreFoundation/CoreFoundation.h>
 #include <optional>
+#include <stdexcept>
 #include <string>
+#include <typeinfo>
 
 namespace cf_utils {
 
@@ -21,11 +23,13 @@ std::optional<std::string> ToString(CFStringRef string_ref);
  * @tparam T type of attribute value
  * @param element element to get attribute from
  * @param attr_name attribute name
- * @return optional type of type T
+ * @return optional type of T
+ * @note This generalized function is not implemented, please use the specializations defined below.
  */
 template <typename T>
 std::optional<T> GetAttribute(AXUIElementRef element, CFStringRef attr_name) {
-  return std::nullopt;
+  throw std::logic_error("Type `" + std::string(typeid(T).name()) +
+                         "` is not supported by GetAttribute<T>.");
 }
 
 /**
