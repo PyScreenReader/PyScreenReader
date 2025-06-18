@@ -10,3 +10,13 @@ pybind_library(
         ":cf_utils.cpp",
     ],
 )
+
+pybind_library(
+    name = "system_utils",
+    hdrs = [
+        ":system_utils.h",
+    ],
+    srcs = [
+        ":system_utils.cpp",
+    ],
+)

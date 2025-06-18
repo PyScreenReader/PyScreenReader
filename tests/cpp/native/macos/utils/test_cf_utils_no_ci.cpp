@@ -120,6 +120,7 @@ TEST_F(CFUtilsTest, GetAttributeStringTargetDoesNotExist) {
 TEST_F(CFUtilsTest, GetAttributeCFArray) {
   auto actual = cf_utils::GetAttribute<CFArrayRef>(window_ref_, kAXChildrenAttribute);
   ASSERT_TRUE(actual.has_value());
+  CFRelease(actual.value());
 }
 
 TEST_F(CFUtilsTest, GetAttributeCFArrayTargetIsNotArray) {

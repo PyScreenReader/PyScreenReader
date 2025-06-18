@@ -2,7 +2,6 @@
 
 #include <ApplicationServices/ApplicationServices.h>
 #include <CoreFoundation/CoreFoundation.h>
-#include <functional>
 #include <optional>
 #include <string>
 

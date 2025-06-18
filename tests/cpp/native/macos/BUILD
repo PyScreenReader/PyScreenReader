@@ -4,7 +4,8 @@ gtest_test(
     name = "test_cf_utils",
     srcs = [":utils/test_cf_utils.cpp"],
     deps = ["//src/native/macos/utils:cf_utils"],
-    platform = "macos"
+    platform = "macos",
+    linkopts = ["-framework ApplicationServices"],
 )
 
 gtest_test(
@@ -13,6 +14,16 @@ gtest_test(
     deps = ["//src/native/macos/utils:cf_utils"],
     platform = "macos",
     size = "medium",
+    no_ci = True,
+    linkopts = ["-framework ApplicationServices"],
+)
+
+gtest_test(
+    name = "test_system_utils",
+    srcs = [":utils/test_system_utils.cpp"],
+    deps = ["//src/native/macos/utils:system_utils"],
+    platform = "macos",
+    size = "small",
     no_ci = True,
     linkopts = ["-framework ApplicationServices"],
 )
