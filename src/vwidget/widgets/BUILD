@@ -16,6 +16,7 @@ pybind_library(
         "//include/vwidget/widgets:virtual_slider_widget.h",
         "//include/vwidget/widgets:virtual_progress_bar_widget.h",
         "//include/vwidget/widgets:virtual_spinner_widget.h",
+        "//include/vwidget/widgets:virtual_group_widget.h",
     ],
     srcs = glob(["*.cpp"]),
     deps = [
