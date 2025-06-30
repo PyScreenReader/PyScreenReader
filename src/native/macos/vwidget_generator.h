@@ -5,94 +5,118 @@
 #include <functional>
 #include <unordered_map>
 #include <unordered_set>
+
 #include "include/vwidget/virtual_widget.h"
 #include "include/vwidget/widgets/virtual_button_widget.h"
 #include "include/vwidget/widgets/virtual_menu_item_widget.h"
 #include "include/vwidget/widgets/virtual_menu_widget.h"
-#include "include/vwidget/widgets/virtual_root_widget.h"
 #include "include/vwidget/widgets/virtual_text_input_widget.h"
 #include "include/vwidget/widgets/virtual_text_widget.h"
 #include "include/vwidget/widgets/virtual_unknown_widget.h"
 #include "include/vwidget/widgets/virtual_window_widget.h"
+#include "include/vwidget/widgets/virtual_group_widget.h"
 
-namespace generator {
-    /**
-     * List of role id constants
-     *
-     * These constant strings are copied from `AXRoleConstants.h`,
-     * for simplicity and optimization purposes, we copied these values instead of referencing them.
-     */
-    // Button-like widgets
-    inline constexpr std::string_view BUTTON_ROLE_ID = "AXButton";
-    inline constexpr std::string_view CHECKBOX_ROLE_ID = "AXCheckBox";
-    inline constexpr std::string_view COMBO_BOX_ROLE_ID = "AXComboBox";
-    inline constexpr std::string_view RADIO_BUTTON_ROLE_ID = "AXRadioButton";
-    inline constexpr std::string_view POP_UP_BUTTON_ROLE_ID = "AXPopUpButton";
+#include "src/native/macos/vwidget_factory.h"
 
-    // Text-like widgets
-    inline constexpr std::string_view TEXT_FIELD_ROLE_ID = "AXTextField";
-    inline constexpr std::string_view TEXT_AREA_ROLE_ID = "AXTextArea";
-    inline constexpr std::string_view STATIC_TEXT_ROLE_ID = "AXStaticText";
-    inline constexpr std::string_view HEADING_ROLE_ID = "AXHeading";
+#define REGISTER_HANDLER(role_id, widget_type) \
+  {role_id,                                    \
+   [](AXUIElementRef element) { return vwidget_factory::CreateWidget<widget_type>(element); }}
 
-    // Menu-related widgets
-    inline constexpr std::string_view MENU_BUTTON_ROLE_ID = "AXMenuButton";
-    inline constexpr std::string_view MENU_BAR_ITEM_ROLE_ID = "AXMenuBarItem";
-    inline constexpr std::string_view MENU_ROLE_ID = "AXMenu";
-    inline constexpr std::string_view MENU_BAR_ROLE_ID = "AXMenuBar";
+namespace vwidget_generator {
+/**
+ * List of role id constants
+ *
+ * These constant strings are copied from `AXRoleConstants.h`,
+ * for simplicity and optimization purposes, we copied these values instead of directly using
+ * CFStringRef.
+ */
+// Button-like widgets
+const std::string kButtonRoleId = "AXButton";
+const std::string kCheckBoxRoleId = "AXCheckBox";
+const std::string kComboBoxRoleId = "AXComboBox";
+const std::string kRadioButtonRoleId = "AXRadioButton";
+const std::string kPopUpButtonRoleId = "AXPopUpButton";
 
-    // Window-related widgets
-    inline constexpr std::string_view WINDOW_ROLE_ID = "AXWindow";
-    inline constexpr std::string_view APPLICATION_ROLE_ID = "AXApplication";
+// Text-like widgets
+const std::string kTextFieldRoleId = "AXTextField";
+const std::string kTextAreaRoleId = "AXTextArea";
+const std::string kStaticTextRoleId = "AXStaticText";
+const std::string kHeadingRoleId = "AXHeading";
 
-    // Grouping-related widgets
-    inline constexpr std::string_view ROW_ROLE_ID = "AXRow";
-    inline constexpr std::string_view COLUMN_ROLE_ID = "AXColumn";
-    inline constexpr std::string_view LIST_ROLE_ID = "AXList";
-    inline constexpr std::string_view GROUP_ROLE_ID = "AXGroup";
-    inline constexpr std::string_view OUTLINE_ROLE_ID = "AXOutline";
-    inline constexpr std::string_view CELL_ROLE_ID = "AXCell";
-    inline constexpr std::string_view SCROLL_AREA_ROLE_ID = "AXScrollArea";
+// Menu-related widgets
+const std::string kMenuButtonRoleId = "AXMenuButton";
+const std::string kMenuBarItemRoleId = "AXMenuBarItem";
+const std::string kMenuRoleId = "AXMenu";
+const std::string kMenuBarRoleId = "AXMenuBar";
 
-    // Unknown widgets
-    inline constexpr std::string_view UNKNOWN_ROLE_ID = "AXUnknown";
+// Window-related widgets
+const std::string kWindowRoleId = "AXWindow";
+const std::string kApplicationRoleId = "AXApplication";
 
-    std::shared_ptr<VirtualWidget> HandleButtonLiked(AXUIElementRef element);
-    std::shared_ptr<VirtualWidget> HandleUnknown(AXUIElementRef element);
-    std::shared_ptr<VirtualWidget> HandleStaticText(AXUIElementRef element);
+// Grouping-related widgets
+const std::string kRowRoleId = "AXRow";
+const std::string kColumnRoleId = "AXColumn";
+const std::string kListRoleId = "AXList";
+const std::string kGroupRoleId = "AXGroup";
+const std::string kOutlineRoleId = "AXOutline";
+const std::string kCellRoleId = "AXCell";
+const std::string kScrollAreaRoleId = "AXScrollArea";
+const std::string kTableRoleId = "AXTable";
 
-    inline const std::unordered_map<std::string_view, std::function<std::shared_ptr<VirtualWidget>(AXUIElementRef)>> ROLE_TO_VWIDGET_MAP = {
-            {BUTTON_ROLE_ID,        [](AXUIElementRef element) { return HandleButtonLiked(element); }},
-            {CHECKBOX_ROLE_ID,      [](AXUIElementRef element) { return std::make_shared<VirtualButtonWidget>(); }},
-            {COMBO_BOX_ROLE_ID,     [](AXUIElementRef element) { return std::make_shared<VirtualButtonWidget>(); }},
-            {RADIO_BUTTON_ROLE_ID,  [](AXUIElementRef element) { return std::make_shared<VirtualButtonWidget>(); }},
-            {POP_UP_BUTTON_ROLE_ID,  [](AXUIElementRef element) { return std::make_shared<VirtualButtonWidget>(); }},
+// Unknown widgets
+const std::string kUnknownRoleId = "AXUnknown";
 
-            {STATIC_TEXT_ROLE_ID,   [](AXUIElementRef element) { return HandleStaticText(element); }},
-            {HEADING_ROLE_ID,   [](AXUIElementRef element) { return HandleStaticText(element); }},
-            {TEXT_FIELD_ROLE_ID,    [](AXUIElementRef element) { return std::make_shared<VirtualTextFieldWidget>(); }},
-            {TEXT_AREA_ROLE_ID,    [](AXUIElementRef element) { return std::make_shared<VirtualTextFieldWidget>(); }},
+/**
+ * Type of a native widget handler.
+ */
+using NativeWidgetHandler = std::function<std::shared_ptr<VirtualWidget>(AXUIElementRef)>;
 
-            {MENU_BAR_ROLE_ID,      [](AXUIElementRef element) { return std::make_shared<VirtualMenuGroupWidget>(); }},
-            {MENU_ROLE_ID,          [](AXUIElementRef element) { return std::make_shared<VirtualMenuGroupWidget>(); }},
-            {MENU_BUTTON_ROLE_ID,   [](AXUIElementRef element) { return std::make_shared<VirtualMenuItemWidget>(); }},
-            {MENU_BAR_ITEM_ROLE_ID, [](AXUIElementRef element) { return std::make_shared<VirtualMenuItemWidget>(); }},
+/**
+ * Type of a handler map, which registers all the native maps to its corresponding WidgetHandler.
+ */
+using RoleHandlerMap = std::unordered_map<std::string, NativeWidgetHandler>;
 
-            {WINDOW_ROLE_ID,       [](AXUIElementRef element) { return std::make_shared<VirtualWindowWidget>(); }},
-            {APPLICATION_ROLE_ID,   [](AXUIElementRef element) { return std::make_shared<VirtualRootWidget>(); }},
+/**
+ * Mapping between native widgets to virtual widgets
+ */
+inline RoleHandlerMap kRoleWidgetMap = {REGISTER_HANDLER(kButtonRoleId, VirtualButtonWidget),
+                                        REGISTER_HANDLER(kCheckBoxRoleId, VirtualButtonWidget),
+                                        REGISTER_HANDLER(kComboBoxRoleId, VirtualButtonWidget),
+                                        REGISTER_HANDLER(kRadioButtonRoleId, VirtualButtonWidget),
+                                        REGISTER_HANDLER(kPopUpButtonRoleId, VirtualButtonWidget),
 
-            {ROW_ROLE_ID, [](AXUIElementRef element) { return std::make_shared<VirtualGroupWidget>(); }},
-            {COLUMN_ROLE_ID, [](AXUIElementRef element) { return std::make_shared<VirtualGroupWidget>(); }},
-            {LIST_ROLE_ID, [](AXUIElementRef element) { return std::make_shared<VirtualGroupWidget>(); }},
-            {GROUP_ROLE_ID, [](AXUIElementRef element) { return std::make_shared<VirtualGroupWidget>(); }},
-            {OUTLINE_ROLE_ID, [](AXUIElementRef element) { return std::make_shared<VirtualGroupWidget>(); }},
-            {CELL_ROLE_ID, [](AXUIElementRef element) { return std::make_shared<VirtualGroupWidget>(); }},
-            {SCROLL_AREA_ROLE_ID, [](AXUIElementRef element) { return std::make_shared<VirtualGroupWidget>(); }},
+                                        REGISTER_HANDLER(kStaticTextRoleId, VirtualTextWidget),
 
-            {UNKNOWN_ROLE_ID, [](AXUIElementRef element) { return HandleUnknown(element); }}
-    };
+                                        REGISTER_HANDLER(kHeadingRoleId, VirtualTextInputWidget),
+                                        REGISTER_HANDLER(kTextFieldRoleId, VirtualTextInputWidget),
+                                        REGISTER_HANDLER(kTextAreaRoleId, VirtualTextInputWidget),
 
-    std::shared_ptr<VirtualRootWidget> GenerateVWidgetTree(AXUIElementRef rootElement);
+                                        REGISTER_HANDLER(kMenuBarRoleId, VirtualMenuWidget),
+                                        REGISTER_HANDLER(kMenuRoleId, VirtualMenuWidget),
+                                        REGISTER_HANDLER(kMenuButtonRoleId, VirtualMenuItemWidget),
+                                        REGISTER_HANDLER(kMenuBarItemRoleId, VirtualMenuItemWidget),
 
-    std::shared_ptr<VirtualWidget> GetVWidget(AXUIElementRef element);
-}
+                                        REGISTER_HANDLER(kWindowRoleId, VirtualWindowWidget),
+                                        REGISTER_HANDLER(kApplicationRoleId, VirtualWindowWidget),
+
+                                        REGISTER_HANDLER(kRowRoleId, VirtualGroupWidget),
+                                        REGISTER_HANDLER(kColumnRoleId, VirtualGroupWidget),
+                                        REGISTER_HANDLER(kListRoleId, VirtualGroupWidget),
+                                        REGISTER_HANDLER(kGroupRoleId, VirtualGroupWidget),
+                                        REGISTER_HANDLER(kOutlineRoleId, VirtualGroupWidget),
+                                        REGISTER_HANDLER(kCellRoleId, VirtualGroupWidget),
+                                        REGISTER_HANDLER(kScrollAreaRoleId, VirtualGroupWidget),
+                                        REGISTER_HANDLER(kTableRoleId, VirtualGroupWidget),
+
+                                        REGISTER_HANDLER(kUnknownRoleId, VirtualUnknownWidget)};
+
+/**
+ * Translates a native macOS widget tree into a virtual widget tree.
+ *
+ * @param rootElement The root AXUIElementRef of the native widget tree.
+ * @return A shared pointer to the root of the generated virtual widget tree.
+ */
+std::shared_ptr<VirtualWidget> GenerateVWidgetTree(AXUIElementRef root_element);
+
+std::shared_ptr<VirtualWidget> MapToVWidget(AXUIElementRef element);
+}  // namespace vwidget_generator
