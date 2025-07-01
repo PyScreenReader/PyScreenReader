@@ -8,13 +8,13 @@
 
 #include "include/vwidget/virtual_widget.h"
 #include "include/vwidget/widgets/virtual_button_widget.h"
+#include "include/vwidget/widgets/virtual_group_widget.h"
 #include "include/vwidget/widgets/virtual_menu_item_widget.h"
 #include "include/vwidget/widgets/virtual_menu_widget.h"
 #include "include/vwidget/widgets/virtual_text_input_widget.h"
 #include "include/vwidget/widgets/virtual_text_widget.h"
 #include "include/vwidget/widgets/virtual_unknown_widget.h"
 #include "include/vwidget/widgets/virtual_window_widget.h"
-#include "include/vwidget/widgets/virtual_group_widget.h"
 
 #include "src/native/macos/vwidget_factory.h"
 
@@ -42,10 +42,12 @@ const std::string kTextFieldRoleId = "AXTextField";
 const std::string kTextAreaRoleId = "AXTextArea";
 const std::string kStaticTextRoleId = "AXStaticText";
 const std::string kHeadingRoleId = "AXHeading";
+const std::string kLinkRoleId = "AXLink";
 
 // Menu-related widgets
 const std::string kMenuButtonRoleId = "AXMenuButton";
 const std::string kMenuBarItemRoleId = "AXMenuBarItem";
+const std::string kMenuItemRoleId = "AXMenuItem";
 const std::string kMenuRoleId = "AXMenu";
 const std::string kMenuBarRoleId = "AXMenuBar";
 
@@ -62,6 +64,20 @@ const std::string kOutlineRoleId = "AXOutline";
 const std::string kCellRoleId = "AXCell";
 const std::string kScrollAreaRoleId = "AXScrollArea";
 const std::string kTableRoleId = "AXTable";
+const std::string kToolbarRoleId = "AXToolbar";
+const std::string kTabGroupRoleId = "AXTabGroup";
+const std::string kWebAreaRoleId = "AXWebArea";
+const std::string kSplitterRoleId = "AXSplitter";
+const std::string kSplitGroupRoleId = "AXSplitGroup";
+
+// Scrollbar
+const std::string kScrollBarRoleId = "AXScrollBar";
+
+// Progressbar
+const std::string kProgressBarRoleId = "AXProgressIndicator";
+
+// Image
+const std::string kImageRoleId = "AXImage";
 
 // Unknown widgets
 const std::string kUnknownRoleId = "AXUnknown";
@@ -79,36 +95,50 @@ using RoleHandlerMap = std::unordered_map<std::string, NativeWidgetHandler>;
 /**
  * Mapping between native widgets to virtual widgets
  */
-const RoleHandlerMap kRoleWidgetMap = {REGISTER_HANDLER(kButtonRoleId, VirtualButtonWidget),
-                                        REGISTER_HANDLER(kCheckBoxRoleId, VirtualButtonWidget),
-                                        REGISTER_HANDLER(kComboBoxRoleId, VirtualButtonWidget),
-                                        REGISTER_HANDLER(kRadioButtonRoleId, VirtualButtonWidget),
-                                        REGISTER_HANDLER(kPopUpButtonRoleId, VirtualButtonWidget),
+const RoleHandlerMap kRoleWidgetMap = {
+    REGISTER_HANDLER(kButtonRoleId, VirtualButtonWidget),
+    REGISTER_HANDLER(kCheckBoxRoleId, VirtualButtonWidget),
+    REGISTER_HANDLER(kComboBoxRoleId, VirtualButtonWidget),
+    REGISTER_HANDLER(kRadioButtonRoleId, VirtualButtonWidget),
+    REGISTER_HANDLER(kPopUpButtonRoleId, VirtualButtonWidget),
 
-                                        REGISTER_HANDLER(kStaticTextRoleId, VirtualTextWidget),
+    REGISTER_HANDLER(kStaticTextRoleId, VirtualTextWidget),
+    REGISTER_HANDLER(kLinkRoleId, VirtualTextWidget),
+    REGISTER_HANDLER(kHeadingRoleId, VirtualTextWidget),
 
-                                        REGISTER_HANDLER(kHeadingRoleId, VirtualTextInputWidget),
-                                        REGISTER_HANDLER(kTextFieldRoleId, VirtualTextInputWidget),
-                                        REGISTER_HANDLER(kTextAreaRoleId, VirtualTextInputWidget),
+    REGISTER_HANDLER(kTextFieldRoleId, VirtualTextInputWidget),
+    REGISTER_HANDLER(kTextAreaRoleId, VirtualTextInputWidget),
 
-                                        REGISTER_HANDLER(kMenuBarRoleId, VirtualMenuWidget),
-                                        REGISTER_HANDLER(kMenuRoleId, VirtualMenuWidget),
-                                        REGISTER_HANDLER(kMenuButtonRoleId, VirtualMenuItemWidget),
-                                        REGISTER_HANDLER(kMenuBarItemRoleId, VirtualMenuItemWidget),
+    REGISTER_HANDLER(kMenuBarRoleId, VirtualMenuWidget),
+    REGISTER_HANDLER(kMenuRoleId, VirtualMenuWidget),
+    REGISTER_HANDLER(kMenuButtonRoleId, VirtualMenuItemWidget),
+    REGISTER_HANDLER(kMenuBarItemRoleId, VirtualMenuItemWidget),
+    REGISTER_HANDLER(kMenuItemRoleId, VirtualMenuItemWidget),
 
-                                        REGISTER_HANDLER(kWindowRoleId, VirtualWindowWidget),
-                                        REGISTER_HANDLER(kApplicationRoleId, VirtualWindowWidget),
+    REGISTER_HANDLER(kWindowRoleId, VirtualWindowWidget),
+    REGISTER_HANDLER(kApplicationRoleId, VirtualWindowWidget),
 
-                                        REGISTER_HANDLER(kRowRoleId, VirtualGroupWidget),
-                                        REGISTER_HANDLER(kColumnRoleId, VirtualGroupWidget),
-                                        REGISTER_HANDLER(kListRoleId, VirtualGroupWidget),
-                                        REGISTER_HANDLER(kGroupRoleId, VirtualGroupWidget),
-                                        REGISTER_HANDLER(kOutlineRoleId, VirtualGroupWidget),
-                                        REGISTER_HANDLER(kCellRoleId, VirtualGroupWidget),
-                                        REGISTER_HANDLER(kScrollAreaRoleId, VirtualGroupWidget),
-                                        REGISTER_HANDLER(kTableRoleId, VirtualGroupWidget),
+    REGISTER_HANDLER(kRowRoleId, VirtualGroupWidget),
+    REGISTER_HANDLER(kColumnRoleId, VirtualGroupWidget),
+    REGISTER_HANDLER(kListRoleId, VirtualGroupWidget),
+    REGISTER_HANDLER(kGroupRoleId, VirtualGroupWidget),
+    REGISTER_HANDLER(kOutlineRoleId, VirtualGroupWidget),
+    REGISTER_HANDLER(kCellRoleId, VirtualGroupWidget),
+    REGISTER_HANDLER(kScrollAreaRoleId, VirtualGroupWidget),
+    REGISTER_HANDLER(kTableRoleId, VirtualGroupWidget),
+    REGISTER_HANDLER(kToolbarRoleId, VirtualGroupWidget),
+    REGISTER_HANDLER(kTabGroupRoleId, VirtualGroupWidget),
+    REGISTER_HANDLER(kWebAreaRoleId, VirtualGroupWidget),
+    REGISTER_HANDLER(kSplitterRoleId, VirtualGroupWidget),
+    REGISTER_HANDLER(kSplitGroupRoleId, VirtualGroupWidget),
 
-                                        REGISTER_HANDLER(kUnknownRoleId, VirtualUnknownWidget)};
+    REGISTER_HANDLER(kScrollBarRoleId, VirtualScrollbarWidget),
+
+    REGISTER_HANDLER(kProgressBarRoleId, VirtualProgressBarWidget),
+    // TODO(#44) Map AXImage to something else when we have an image virtual widget
+    REGISTER_HANDLER(kImageRoleId, VirtualUnknownWidget),
+
+    REGISTER_HANDLER(kUnknownRoleId, VirtualUnknownWidget)};
 
 /**
  * Translates a native macOS widget tree into a virtual widget tree.

@@ -1,5 +1,6 @@
 #include "src/native/macos/vwidget_factory.h"
 #include "src/native/macos/utils/cf_utils.h"
+#include "include/vwidget/orientation.h"
 
 template <>
 std::shared_ptr<VirtualButtonWidget> vwidget_factory::CreateWidget(AXUIElementRef element) {
@@ -17,7 +18,18 @@ std::shared_ptr<VirtualTextWidget> vwidget_factory::CreateWidget(AXUIElementRef 
 
 template <>
 std::shared_ptr<VirtualTextInputWidget> vwidget_factory::CreateWidget(AXUIElementRef element) {
-  return vwidget_factory::CreateWidgetWithAttributes<VirtualTextInputWidget>(element);
+  auto widget = vwidget_factory::CreateWidgetWithAttributes<VirtualTextInputWidget>(element);
+  if (auto selected_text_opt = vwidget_factory::GetNonEmptyStringAttribute(element, kAXSelectedTextAttribute)) {
+    widget->SetSelectedText(selected_text_opt.value());
+  }
+  widget->SetIsTextArea(widget->GetNativeName() == "AXTextArea");
+
+  // Overwrite the title attribute of a text input to be the user input content
+  if (auto value_opt = vwidget_factory::GetNonEmptyStringAttribute(element, kAXValueAttribute)) {
+    widget->SetTitleText(value_opt.value());
+  }
+
+  return widget;
 }
 
 template <>
@@ -32,7 +44,11 @@ std::shared_ptr<VirtualMenuItemWidget> vwidget_factory::CreateWidget(AXUIElement
 
 template <>
 std::shared_ptr<VirtualWindowWidget> vwidget_factory::CreateWidget(AXUIElementRef element) {
-  return vwidget_factory::CreateWidgetWithAttributes<VirtualWindowWidget>(element);
+  auto widget = vwidget_factory::CreateWidgetWithAttributes<VirtualWindowWidget>(element);
+  if (auto is_modal_opt = cf_utils::GetAttribute<bool>(element, kAXModalAttribute)) {
+    widget->SetIsModal(is_modal_opt.value());
+  }
+  return widget;
 }
 
 template <>
@@ -57,7 +73,17 @@ std::shared_ptr<VirtualSliderWidget> vwidget_factory::CreateWidget(AXUIElementRe
 
 template <>
 std::shared_ptr<VirtualProgressBarWidget> vwidget_factory::CreateWidget(AXUIElementRef element) {
-  return vwidget_factory::CreateWidgetWithAttributes<VirtualProgressBarWidget>(element);
+  auto widget = vwidget_factory::CreateWidgetWithAttributes<VirtualProgressBarWidget>(element);
+  if (auto orientation_opt = vwidget_factory::GetNonEmptyStringAttribute(element, kAXOrientationAttribute)) {
+    if (orientation_opt.value() == "AXVerticalOrientation") {
+      widget->SetOrientation(Orientation::VERTICAL);
+    } else {
+      // it is possible that native orientation to be kAXUnknownOrientationValue, but we don't handle that
+      // just defaulting to horizontal.
+      widget->SetOrientation(Orientation::HORIZONTAL);
+    }
+  }
+  return widget;
 }
 
 template <>
@@ -79,22 +105,22 @@ void vwidget_factory::PopulateSharedAttributes(std::shared_ptr<VirtualWidget> wi
 
   // Title
   if (auto title_opt = vwidget_factory::GetNonEmptyStringAttribute(element, kAXTitleAttribute)) {
-    widget->SetTitleText(*title_opt);
+    widget->SetTitleText(title_opt.value());
   } else if (auto desc_opt = vwidget_factory::GetNonEmptyStringAttribute(element, kAXDescriptionAttribute)) {
-    widget->SetTitleText(*desc_opt);
+    widget->SetTitleText(desc_opt.value());
   }
 
   // Help text
   // This falls back to kAXRoleDescriptionAttribute when there is no kAXHelpAttribute
   if (auto help_opt = vwidget_factory::GetNonEmptyStringAttribute(element, kAXHelpAttribute)) {
-    widget->SetHelpText(*help_opt);
+    widget->SetHelpText(help_opt.value());
   } else if (auto role_desc_opt = vwidget_factory::GetNonEmptyStringAttribute(element, kAXRoleDescriptionAttribute)) {
-    widget->SetHelpText(*role_desc_opt);
+    widget->SetHelpText(role_desc_opt.value());
   }
 
   // Native name (AXRole)
   if (auto native_name_opt = vwidget_factory::GetNonEmptyStringAttribute(element, kAXRoleAttribute)) {
-    widget->SetNativeName(*native_name_opt);
+    widget->SetNativeName(native_name_opt.value());
   }
 
   // Position
@@ -110,7 +136,13 @@ void vwidget_factory::PopulateSharedAttributes(std::shared_ptr<VirtualWidget> wi
     widget->SetWidth(width);
     widget->SetHeight(height);
 
-    widget->SetVisible(width != 0 && height != 0);
+    bool parent_visibility = true;
+    auto parent_widget = widget->GetParent();
+    if (parent_widget) {
+      parent_visibility = parent_widget->IsVisible();
+    }
+
+    widget->SetVisible(width != 0 && height != 0 && parent_visibility);
   }
 
   // Focused

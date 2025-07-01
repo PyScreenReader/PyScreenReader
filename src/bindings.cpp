@@ -120,8 +120,8 @@ void BindVirtualWidgets(py::module_& module) {
       .def("set_selected_text", &VirtualTextInputWidget::SetSelectedText)
       .def("get_insertion_point", &VirtualTextInputWidget::GetInsertionPoint)
       .def("set_insertion_point", &VirtualTextInputWidget::SetInsertionPoint)
-      .def("is_text_field", &VirtualTextInputWidget::IsTextField)
-      .def("set_is_text_field", &VirtualTextInputWidget::SetIsTextField);
+      .def("is_text_area", &VirtualTextInputWidget::IsTextArea)
+      .def("set_is_text_area", &VirtualTextInputWidget::SetIsTextArea);
 
   // VirtualTextWidget
   py::class_<VirtualTextWidget, VirtualWidget, std::shared_ptr<VirtualTextWidget>>(
