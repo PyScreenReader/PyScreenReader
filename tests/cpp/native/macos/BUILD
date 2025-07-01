@@ -27,3 +27,13 @@ gtest_test(
     no_ci = True,
     linkopts = ["-framework ApplicationServices"],
 )
+
+gtest_test(
+    name = "test_screen_reader_impl_mac",
+    srcs = [":test_screen_reader_impl_mac.cpp"],
+    deps = ["//src/native/macos:screen_reader_impl_mac"],
+    platform = "macos",
+    size = "medium",
+    no_ci = True,
+    linkopts = ["-framework ApplicationServices"],
+)

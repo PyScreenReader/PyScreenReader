@@ -79,7 +79,7 @@ using RoleHandlerMap = std::unordered_map<std::string, NativeWidgetHandler>;
 /**
  * Mapping between native widgets to virtual widgets
  */
-inline RoleHandlerMap kRoleWidgetMap = {REGISTER_HANDLER(kButtonRoleId, VirtualButtonWidget),
+const RoleHandlerMap kRoleWidgetMap = {REGISTER_HANDLER(kButtonRoleId, VirtualButtonWidget),
                                         REGISTER_HANDLER(kCheckBoxRoleId, VirtualButtonWidget),
                                         REGISTER_HANDLER(kComboBoxRoleId, VirtualButtonWidget),
                                         REGISTER_HANDLER(kRadioButtonRoleId, VirtualButtonWidget),

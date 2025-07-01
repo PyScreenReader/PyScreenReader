@@ -23,7 +23,6 @@ std::shared_ptr<VirtualWidget> vwidget_generator::GenerateVWidgetTree(AXUIElemen
     queue.pop();
 
     auto curr_vwidget = vwidget_generator::MapToVWidget(curr);
-    vwidget_factory::PopulateSharedAttributes(curr_vwidget);
 
     // Connect nodes to form a tree
     if (parent_vwidget) {
@@ -45,7 +44,7 @@ std::shared_ptr<VirtualWidget> vwidget_generator::GenerateVWidgetTree(AXUIElemen
       const auto *child = static_cast<AXUIElementRef>(CFArrayGetValueAtIndex(children_arr, i));
       queue.emplace(curr_vwidget, child);
     }
-    CFRelease(children_arr);
+//    CFRelease(children_arr);
   }
   return root;
 }
