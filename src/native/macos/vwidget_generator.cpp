@@ -3,6 +3,8 @@
 #include <optional>
 #include <string>
 
+#include <iostream>
+
 #include "src/native/macos/utils/cf_utils.h"
 #include "src/native/macos/vwidget_generator.h"
 #include "src/native/macos/vwidget_factory.h"
@@ -11,6 +13,7 @@ std::shared_ptr<VirtualWidget> vwidget_generator::GenerateVWidgetTree(AXUIElemen
   if (!root_element)
     return nullptr;
 
+  CFRetain(root_element);
   // each pair in the queue contains
   // [parent virtual widget of current AXUIElementRef, current AXUIElementRef]
   std::queue<std::pair<std::shared_ptr<VirtualWidget>, AXUIElementRef>> queue;
@@ -35,6 +38,7 @@ std::shared_ptr<VirtualWidget> vwidget_generator::GenerateVWidgetTree(AXUIElemen
 
     // Handle children of the current node
     std::optional<CFArrayRef> children_arr_opt = cf_utils::GetAttribute<CFArrayRef>(curr, kAXChildrenAttribute);
+    CFRelease(curr);
     if (!children_arr_opt.has_value())
       continue;
 
@@ -42,9 +46,10 @@ std::shared_ptr<VirtualWidget> vwidget_generator::GenerateVWidgetTree(AXUIElemen
     const CFIndex children_count = CFArrayGetCount(children_arr);
     for (CFIndex i = 0; i < children_count; ++i) {
       const auto *child = static_cast<AXUIElementRef>(CFArrayGetValueAtIndex(children_arr, i));
+      CFRetain(child);
       queue.emplace(curr_vwidget, child);
     }
-//    CFRelease(children_arr);
+    CFRelease(children_arr);
   }
   return root;
 }
@@ -60,6 +65,8 @@ std::shared_ptr<VirtualWidget> vwidget_generator::MapToVWidget(AXUIElementRef el
   if (iter != vwidget_generator::kRoleWidgetMap.end()) {
     return iter->second(element);
   }
+
+  std::cerr << "Unrecognized roleId: " << role_id_opt.value() << std::endl;
 
   // Falls back to virtual unknown widget
   return vwidget_factory::CreateWidget<VirtualUnknownWidget>(element);
