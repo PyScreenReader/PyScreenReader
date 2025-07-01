@@ -21,10 +21,10 @@ pybind_library(
 pybind_library(
     name = "vwidget_generator",
     hdrs = [
-        ":vwidget_generator.h",
+        ":vwidget_generator_mac.h",
     ],
     srcs = [
-        ":vwidget_generator.cpp",
+        ":vwidget_generator_mac.cpp",
     ],
     deps = [
         "//src/vwidget/widgets:virtual_components",
@@ -37,10 +37,10 @@ pybind_library(
 pybind_library(
     name = "vwidget_factory",
     hdrs = [
-        ":vwidget_factory.h",
+        ":vwidget_factory_mac.h",
     ],
     srcs = [
-        ":vwidget_factory.cpp",
+        ":vwidget_factory_mac.cpp",
     ],
     deps = [
         "//src/vwidget/widgets:virtual_components",

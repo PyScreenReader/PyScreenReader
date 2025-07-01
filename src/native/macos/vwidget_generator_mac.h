@@ -16,7 +16,7 @@
 #include "include/vwidget/widgets/virtual_unknown_widget.h"
 #include "include/vwidget/widgets/virtual_window_widget.h"
 
-#include "src/native/macos/vwidget_factory.h"
+#include "src/native/macos/vwidget_factory_mac.h"
 
 #define REGISTER_HANDLER(role_id, widget_type) \
   {role_id,                                    \

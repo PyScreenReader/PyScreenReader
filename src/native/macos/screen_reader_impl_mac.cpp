@@ -1,7 +1,7 @@
 #include "src/native/macos/screen_reader_impl_mac.h"
-#include "src/native/macos/utils/system_utils.h"
 #include "src/native/macos/utils/cf_utils.h"
-#include "src/native/macos/vwidget_generator.h"
+#include "src/native/macos/utils/system_utils.h"
+#include "src/native/macos/vwidget_generator_mac.h"
 
 #include <ApplicationServices/ApplicationServices.h>
 #include <CoreFoundation/CoreFoundation.h>

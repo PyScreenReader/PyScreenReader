@@ -1,6 +1,6 @@
-#include "src/native/macos/vwidget_factory.h"
-#include "src/native/macos/utils/cf_utils.h"
+#include "src/native/macos/vwidget_factory_mac.h"
 #include "include/vwidget/orientation.h"
+#include "src/native/macos/utils/cf_utils.h"
 
 template <>
 std::shared_ptr<VirtualButtonWidget> vwidget_factory::CreateWidget(AXUIElementRef element) {

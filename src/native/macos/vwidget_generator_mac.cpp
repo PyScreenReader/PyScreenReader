@@ -6,8 +6,8 @@
 #include <iostream>
 
 #include "src/native/macos/utils/cf_utils.h"
-#include "src/native/macos/vwidget_generator.h"
-#include "src/native/macos/vwidget_factory.h"
+#include "src/native/macos/vwidget_factory_mac.h"
+#include "src/native/macos/vwidget_generator_mac.h"
 
 std::shared_ptr<VirtualWidget> vwidget_generator::GenerateVWidgetTree(AXUIElementRef root_element) {
   if (!root_element)
