@@ -103,16 +103,14 @@ void vwidget_factory::PopulateSharedAttributes(std::shared_ptr<VirtualWidget> wi
     widget->SetY(static_cast<int>(position_opt->y));
   }
 
-  // Dimension (Width and Height)
+  // Visibility and Dimension (Width and Height)
   if (auto dim_opt = cf_utils::GetAttribute<CGSize>(element, kAXSizeAttribute)) {
-    widget->SetWidth(static_cast<int>(dim_opt->width));
-    widget->SetHeight(static_cast<int>(dim_opt->height));
-  }
+    auto width = static_cast<unsigned int>(dim_opt->width);
+    auto height = static_cast<unsigned int>(dim_opt->height);
+    widget->SetWidth(width);
+    widget->SetHeight(height);
 
-  // Visibility
-  if (auto hidden_opt = cf_utils::GetAttribute<bool>(element, kAXHiddenAttribute)) {
-    // kAXHiddenAttribute is true if hidden, so invert for IsVisible
-    widget->SetVisible(!hidden_opt.value());
+    widget->SetVisible(width != 0 && height != 0);
   }
 
   // Focused
