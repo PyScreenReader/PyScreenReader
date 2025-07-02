@@ -7,6 +7,12 @@
 #include <string>
 #include <typeinfo>
 
+/**
+ * cf_utils is a collection of helper functions that handles
+ * CoreFoundation(CF) data structures conversions. Importantly,
+ * cf_utils acts as a bridge between C++ data models (std::string, bool, etc.)
+ * and CoreFoundation data models (CFStringRef, CFArrayRef, etc.)
+ */
 namespace cf_utils {
 
 /**

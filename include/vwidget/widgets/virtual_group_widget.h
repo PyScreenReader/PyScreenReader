@@ -6,15 +6,17 @@
 class VirtualGroupWidget : public VirtualWidget {
  public:
   /**
-   * Initialize a VirtualGroupWidget.
+   * Initializes a VirtualGroupWidget.
    *
-   * A VirtualGroupWidget represents any container-like native widget
-   * that groups other widgets together, such as rows, columns, lists,
-   * or generic groups in the accessibility tree.
+   * A VirtualGroupWidget represents a container-like native widget
+   * that groups other widgets together in the accessibility tree.
+   * Examples include rows, columns, lists, or generic grouping elements.
    *
-   * This widget can have child widgets but does not typically have
-   * direct user interactions itself.
-     */
+   * This abstraction models the hierarchical structure of the widget tree.
+   * A VirtualGroupWidget typically does not handle direct user interactions itself.
+   * If the native widget has specific interactive behaviors or functionalities,
+   * it should generally not be mapped to a VirtualGroupWidget.
+   */
   VirtualGroupWidget();
   ~VirtualGroupWidget() override = default;
 };
