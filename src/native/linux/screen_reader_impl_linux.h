@@ -1,24 +1,20 @@
 #pragma once
 
-#include "include/vwidget/widgets/virtual_root_widget.h"
+#include "include/vwidget/virtual_widget.h"
 #include <atspi/atspi.h>
 #include <memory>
 
 namespace screen_reader {
 class ScreenReaderImpl {
 public:
-  ScreenReaderImpl() = default;
+  ScreenReaderImpl();
   ~ScreenReaderImpl() = default;
 
-  [[nodiscard]] std::shared_ptr<VirtualRootWidget>
-  getVirtualWidgetTreeByPID(const std::string &pid) const;
-  [[nodiscard]] std::shared_ptr<VirtualRootWidget>
-  getVirtualWidgetTreeByTitle(const std::string &title) const;
-  [[nodiscard]] std::shared_ptr<VirtualRootWidget>
-  getVirtualWidgetTreeByClassName(const std::string &className) const;
+  std::shared_ptr<VirtualWidget>
+  GetVirtualWidgetTreeByPID(const std::string &pid) const;
 
 private:
-  AtspiAccessible *findAtspiAccessibleByPID(AtspiAccessible *node,
-                                            const std::string &pid) const;
+  AtspiAccessible *FindAtspiAccessibleByPID(AtspiAccessible *node, pid_t pid) const;
 };
 } // namespace screen_reader
+

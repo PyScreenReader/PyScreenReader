@@ -8,7 +8,7 @@ common --skip_incompatible_explicit_targets
 build:macos --cxxopt="--std=c++17"
 test --test_output=all
 build:linux --cxxopt="--std=c++17" 
-# TODO(#17) Remove hard link, use system_lib macro instead
+# TODO(#17) Remove hard links and env vars, use system_lib macro instead
 build:linux --cxxopt="--std=c++17" # this is the only way I got it to work, probably not good practice though idk
 build:linux --action_env=CPLUS_INCLUDE_PATH="/usr/include/at-spi-2.0:/usr/include/dbus-1.0:/usr/lib/aarch64-linux-gnu/dbus-1.0/include:/usr/include/glib-2.0:/usr/lib/aarch64-linux-gnu/glib-2.0/include:/usr/include/libmount:/usr/include/blkid"
 build:linux --action_env=C_INCLUDE_PATH="/usr/include/at-spi-2.0:/usr/include/dbus-1.0:/usr/lib/aarch64-linux-gnu/dbus-1.0/include:/usr/include/glib-2.0:/usr/lib/aarch64-linux-gnu/glib-2.0/include:/usr/include/libmount:/usr/include/blkid"

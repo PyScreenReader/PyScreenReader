@@ -14,10 +14,11 @@ pybind_library(
         "-latspi",
         "-ldbus-1",
         "-lglib-2.0",
+        "-lgobject-2.0",
     ],
     deps = [
         "//src/vwidget/widgets:virtual_components",
-        "//src/native/linux:vwidget_generator",
+#         "//src/native/linux:vwidget_generator",
     ],
 )
 
