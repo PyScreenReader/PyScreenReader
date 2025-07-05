@@ -18,24 +18,26 @@ pybind_library(
     ],
     deps = [
         "//src/vwidget/widgets:virtual_components",
-#         "//src/native/linux:vwidget_generator",
+        "//src/native/linux:vwidget_generator_linux",
     ],
 )
 
 pybind_library(
-    name = "vwidget_generator",
+    name = "vwidget_generator_linux",
     hdrs = [
-        ":vwidget_generator.h",
+        ":vwidget_generator_linux.h",
     ],
     srcs = [
-        ":vwidget_generator.cpp",
+        ":vwidget_generator_linux.cpp",
     ],
     linkopts = [
         "-latspi",
         "-ldbus-1",
         "-lglib-2.0",
+        "-lgobject-2.0",
     ],
     deps = [
         "//src/vwidget/widgets:virtual_components",
     ],
 )
+

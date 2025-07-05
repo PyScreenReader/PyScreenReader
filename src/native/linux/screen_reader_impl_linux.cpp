@@ -1,5 +1,5 @@
-#include "screen_reader_impl_linux.h"
-// #include "vwidget_generator.h"
+#include "src/native/linux/screen_reader_impl_linux.h"
+#include "src/native/linux/vwidget_generator_linux.h"
 #include <cassert>
 #include <stdexcept>
 #include <iostream>
