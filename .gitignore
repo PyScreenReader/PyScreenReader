@@ -33,3 +33,6 @@ MODULE.bazel.lock
 
 # Compile commands
 compile_commands.json
+
+# Macos data storage
+.DS_Store
