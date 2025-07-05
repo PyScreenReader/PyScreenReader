@@ -1,4 +1,5 @@
 #include "src/native/linux/vwidget_factory_linux.h"
+#include "src/native/linux/utils/atspi_utils.h"
 #include "include/vwidget/orientation.h"
 
 template <>
@@ -98,15 +99,11 @@ std::optional<std::string> vwidget_factory::GetNonEmptyStringAttribute(AtspiAcce
 }
 
 void vwidget_factory::PopulateSharedAttributes(std::shared_ptr<VirtualWidget> widget, AtspiAccessible* element) {
-  if (!widget || !element) {
-    return;
-  }
+  assert (widget && element && "widget and element should not be null");
 
   // Title
-  if (auto title_opt = vwidget_factory::GetNonEmptyStringAttribute(element, kAXTitleAttribute)) {
+  if (auto title_opt = atspi_utils::get_primary_text(element)) {
     widget->SetTitleText(title_opt.value());
-  } else if (auto desc_opt = vwidget_factory::GetNonEmptyStringAttribute(element, kAXDescriptionAttribute)) {
-    widget->SetTitleText(desc_opt.value());
   }
 
   // Help text

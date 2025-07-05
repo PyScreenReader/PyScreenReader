@@ -26,6 +26,8 @@ std::shared_ptr<VirtualWidget> MapToVWidget(AtspiAccessible *elem_atspi) {
     element = kRoleWidgetMap.at(UNKNOWN_ROLE_ID)(elem_atspi);
   }
 
+
+
   return element;
 
   // elem->setTitleText(atspi_accessible_get_name(elem_atspi, nullptr));
