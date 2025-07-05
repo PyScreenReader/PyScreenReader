@@ -99,9 +99,7 @@ std::optional<std::string> vwidget_factory::GetNonEmptyStringAttribute(AXUIEleme
 }
 
 void vwidget_factory::PopulateSharedAttributes(std::shared_ptr<VirtualWidget> widget, AXUIElementRef element) {
-  if (!widget || !element) {
-    return;
-  }
+  assert (widget && element && "widget and element should not be null");
 
   // Title
   if (auto title_opt = vwidget_factory::GetNonEmptyStringAttribute(element, kAXTitleAttribute)) {

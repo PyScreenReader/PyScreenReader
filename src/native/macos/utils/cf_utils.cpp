@@ -42,7 +42,7 @@ std::optional<std::string> cf_utils::GetAttribute(AXUIElementRef element, CFStri
   }
 
   const auto *string_ref = static_cast<CFStringRef>(value_ref);
-  auto result_str = cf_utils::ToString(string_ref);
+  std::string result_str = cf_utils::ToString(string_ref);
 
   CFRelease(value_ref);
   string_ref = nullptr;
@@ -97,13 +97,13 @@ std::optional<CGPoint> cf_utils::GetAttribute(AXUIElementRef element, CFStringRe
   if (err != kAXErrorSuccess || !value_ref)
     return std::nullopt;
 
-  if (CFGetTypeID(value_ref) != AXValueGetTypeID() || AXValueGetType((AXValueRef)value_ref) != kAXValueTypeCGPoint) {
+  if (CFGetTypeID(value_ref) != AXValueGetTypeID() || AXValueGetType(static_cast<AXValueRef>(value_ref)) != kAXValueTypeCGPoint) {
     CFRelease(value_ref);
     return std::nullopt;
   }
 
   CGPoint point_val;
-  if (!AXValueGetValue((AXValueRef)value_ref, kAXValueTypeCGPoint, &point_val)) {
+  if (!AXValueGetValue(static_cast<AXValueRef>(value_ref), kAXValueTypeCGPoint, &point_val)) {
     CFRelease(value_ref);
     return std::nullopt;
   }
@@ -121,13 +121,13 @@ std::optional<CGSize> cf_utils::GetAttribute(AXUIElementRef element, CFStringRef
   if (err != kAXErrorSuccess || !value_ref)
     return std::nullopt;
 
-  if (CFGetTypeID(value_ref) != AXValueGetTypeID() || AXValueGetType((AXValueRef)value_ref) != kAXValueTypeCGSize) {
+  if (CFGetTypeID(value_ref) != AXValueGetTypeID() || AXValueGetType(static_cast<AXValueRef>(value_ref)) != kAXValueTypeCGSize) {
     CFRelease(value_ref);
     return std::nullopt;
   }
 
   CGSize size_value;
-  if (!AXValueGetValue((AXValueRef)value_ref, kAXValueTypeCGSize, &size_value)) {
+  if (!AXValueGetValue(static_cast<AXValueRef>(value_ref), kAXValueTypeCGSize, &size_value)) {
     CFRelease(value_ref);
     return std::nullopt;
   }

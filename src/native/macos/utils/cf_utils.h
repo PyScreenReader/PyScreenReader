@@ -12,6 +12,7 @@
  * CoreFoundation(CF) data structures conversions. Importantly,
  * cf_utils acts as a bridge between C++ data models (std::string, bool, etc.)
  * and CoreFoundation data models (CFStringRef, CFArrayRef, etc.)
+ * https://developer.apple.com/documentation/corefoundation?language=objc
  */
 namespace cf_utils {
 
