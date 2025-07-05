@@ -1,6 +1,6 @@
 #include "src/native/macos/utils/system_utils.h"
 
-AXUIElementRef SystemUtils::GetAXUIElementRefByPID(const std::string& pid) {
+AXUIElementRef system_utils::GetAXUIElementRefByPID(const std::string& pid) {
     pid_t pid_num;
     try {
         pid_num = std::stoi(pid);
