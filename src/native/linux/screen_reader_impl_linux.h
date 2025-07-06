@@ -8,7 +8,7 @@ namespace screen_reader {
 class ScreenReaderImpl {
 public:
   ScreenReaderImpl();
-  ~ScreenReaderImpl() = default;
+  ~ScreenReaderImpl();
 
   std::shared_ptr<VirtualWidget>
   GetVirtualWidgetTreeByPID(const std::string &pid) const;

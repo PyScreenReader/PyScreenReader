@@ -11,9 +11,6 @@
 namespace screen_reader {
 
 ScreenReaderImpl::ScreenReaderImpl() {
-  // FIXME: we should only call atspi_init() once per process.
-  // Since our user might initialize multiple screen readers, we should keep this idempotent.
-  // Related to above: we will also need to call atspi_exit() at the right time.
   int init_error_code = atspi_init();
 
   if (init_error_code == 1) {
@@ -21,6 +18,10 @@ ScreenReaderImpl::ScreenReaderImpl() {
   } else if (init_error_code != 0) {
     throw std::runtime_error("Failed to initialize at-spi API. Error code: " + std::to_string(init_error_code));
   }
+}
+
+ScreenReaderImpl::~ScreenReaderImpl() {
+  atspi_exit();
 }
 
 std::shared_ptr<VirtualWidget>
