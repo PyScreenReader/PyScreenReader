@@ -50,18 +50,27 @@ vwidget_generator::GenerateVWidgetTree(AtspiAccessible *root_element) {
 }
 
 std::shared_ptr<VirtualWidget> vwidget_generator::MapToVWidget(AtspiAccessible *element) {
-  AtspiRole elem_role = atspi_accessible_get_role(element, nullptr);
+  auto elem_role_opt = atspi_utils::GetRole(element);
+
+  if (!elem_role_opt.has_value())
+    return vwidget_factory::CreateWidget<VirtualUnknownWidget>(element);
 
   std::shared_ptr<VirtualWidget> vwidget_element;
-  auto iter = vwidget_generator::kRoleWidgetMap.find(elem_role);
+  auto iter = vwidget_generator::kRoleWidgetMap.find(elem_role_opt.value());
   if (iter != vwidget_generator::kRoleWidgetMap.end()) {
     vwidget_element = iter->second(element);
   } else {
+    auto elem_role_name_opt = atspi_utils::GetRoleName(element);
+
+    if (elem_role_name_opt.has_value()) {
+       std::cerr << "Unrecognized role name: " << elem_role_name_opt.value() << std::endl;
+    } else {
+       std::cerr << "Unrecognized role id: " << elem_role_opt.value() << std::endl;
+    }
+
     vwidget_element = vwidget_factory::CreateWidget<VirtualUnknownWidget>(element);
   }
 
-  std::cerr << "Unrecognized role name: " << elem_role << std::endl;
-  // Falls back to virtual unknown widget
-  return vwidget_factory::CreateWidget<VirtualUnknownWidget>(element);
+  return vwidget_element;
 }
 

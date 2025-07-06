@@ -95,7 +95,7 @@ void vwidget_factory::PopulateSharedAttributes(std::shared_ptr<VirtualWidget> wi
     if (auto position_opt = atspi_utils::GetPosition(element)) {
       widget->SetX(static_cast<int>(position_opt.value()->x));
       widget->SetY(static_cast<int>(position_opt.value()->y));
-      g_object_unref(position_opt.value());
+      free(position_opt.value());
     }
 
     // Dimension value is only meaningful only when the component is visible
@@ -105,7 +105,7 @@ void vwidget_factory::PopulateSharedAttributes(std::shared_ptr<VirtualWidget> wi
       auto height = static_cast<unsigned int>(dim_opt.value()->y);
       widget->SetWidth(width);
       widget->SetHeight(height);
-      g_object_unref(dim_opt.value());
+      free(dim_opt.value());
     }
   }
   //TODO: Focused

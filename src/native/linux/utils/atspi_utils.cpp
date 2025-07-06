@@ -7,6 +7,10 @@ std::optional<std::string> atspi_utils::GetPrimaryText(AtspiAccessible* element)
     return std::nullopt;
 
   AtspiText *text_interface = atspi_accessible_get_text_iface(element);
+
+  if (!text_interface)
+    return std::nullopt;
+
   GError *char_count_error = nullptr;
   gint num_chars = atspi_text_get_character_count(
     text_interface,
@@ -18,9 +22,8 @@ std::optional<std::string> atspi_utils::GetPrimaryText(AtspiAccessible* element)
     return std::nullopt;
   }
 
-  gchar *text = nullptr;
   GError *get_text_error = nullptr;
-  atspi_text_get_text(text_interface, 0, num_chars, &get_text_error);
+  gchar *text = atspi_text_get_text(text_interface, 0, num_chars, &get_text_error);
 
   if (get_text_error) {
     g_error_free(get_text_error);
@@ -46,7 +49,7 @@ std::optional<std::string> atspi_utils::GetHelpText(AtspiAccessible *element) {
 }
 
 
-std::optional<std::string> atspi_utils::GetRoleName(AtspiAccessible *element) {
+std::optional<AtspiRole> atspi_utils::GetRole(AtspiAccessible *element) {
   if (!element)
     return std::nullopt;
 
@@ -58,7 +61,18 @@ std::optional<std::string> atspi_utils::GetRoleName(AtspiAccessible *element) {
     return std::nullopt;
   }
 
-  gchar *role_name = atspi_role_get_name(element_role);
+  return element_role;
+}
+
+std::optional<std::string> atspi_utils::GetRoleName(AtspiAccessible *element) {
+  if (!element)
+    return std::nullopt;
+
+  auto role_opt = atspi_utils::GetRole(element);
+  if (!role_opt.has_value())
+    return std::nullopt;
+
+  gchar *role_name = atspi_role_get_name(role_opt.value());
   return atspi_utils::ConvertStringAndFree(role_name);
 }
 
@@ -147,7 +161,9 @@ std::optional<AtspiAccessible*> atspi_utils::GetChildAtIndex(AtspiAccessible *el
 }
 
 
-std::string atspi_utils::ConvertStringAndFree(gchar *text) {
+std::optional<std::string> atspi_utils::ConvertStringAndFree(gchar *text) {
+  if (!text)
+    return std::nullopt;
   std::string result(text);
   g_free(text);
   return result;

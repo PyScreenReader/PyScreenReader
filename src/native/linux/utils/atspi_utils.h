@@ -25,6 +25,16 @@ std::optional<std::string> GetHelpText(AtspiAccessible *element);
 
 
 /**
+ * Get AtspiRole from native widget
+ *
+ * @param element native atspi widget
+ * @return optional AtspiRole extracted from the widget
+ * @note About AtspiRole: https://docs.gtk.org/atspi2/enum.Role.html
+ */
+std::optional<AtspiRole> GetRole(AtspiAccessible *element);
+
+
+/**
  * Get role name from native widget.
  *
  * @param element native atspi widget
@@ -74,7 +84,7 @@ std::optional<unsigned int> GetChildrenCount(AtspiAccessible *element);
 
 
 /**
- * Get the child native widget of the given widget at the give index.
+ * Get the child natearve widget of the given widget at the give index.
  *
  * @param element native widget to get the child from
  * @param child_index index of the child
@@ -88,9 +98,9 @@ std::optional<AtspiAccessible*> GetChildAtIndex(AtspiAccessible *element, unsign
   * Convert glib string representation to std::string and free the original.
   *
   * @param text glib string representation
-  * @return copied std::string
+  * @return optional copied std::string
   * @note adjusted from https://github.com/mysql/mysql-workbench/blob/418f54b81440b974dba1ddc4a923334e0759fac5/tools/mga/src/aal/linux/accessible.cpp#L112
 */
-std::string ConvertStringAndFree(gchar *text);
+std::optional<std::string> ConvertStringAndFree(gchar *text);
 } // namespace atspi_utils
 

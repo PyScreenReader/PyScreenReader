@@ -190,7 +190,7 @@ const RoleHandlerMap kRoleWidgetMap = {
   REGISTER_HANDLER(AtspiRole::ATSPI_ROLE_UNKNOWN, VirtualUnknownWidget)};
 
 std::shared_ptr<VirtualWidget>
-GenerateVWidgetTree(AtspiAccessible *rootElement);
+GenerateVWidgetTree(AtspiAccessible *root_element);
 
 std::shared_ptr<VirtualWidget> MapToVWidget(AtspiAccessible *elem_atspi);
 } // namespace vwidget_generator

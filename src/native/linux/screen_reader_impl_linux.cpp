@@ -33,9 +33,10 @@ ScreenReaderImpl::GetVirtualWidgetTreeByPID(const std::string &pid) const {
 
   // TODO: (#46) remove redundant conversion for pid
   AtspiAccessible *target_app = FindAtspiAccessibleByPID(desktop, std::stoi(pid));
+  g_object_unref(desktop);
 
   std::shared_ptr<VirtualWidget> widget_tree = vwidget_generator::GenerateVWidgetTree(target_app);
-  g_object_unref(desktop);
+  g_object_unref(target_app);
   return widget_tree;
 }
 
