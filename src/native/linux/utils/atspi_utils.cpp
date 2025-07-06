@@ -38,14 +38,23 @@ std::optional<std::string> atspi_utils::GetHelpText(AtspiAccessible *element) {
   if (!element)
     return std::nullopt;
 
-  GError *help_text_error = nullptr;
-  gchar *help_text = atspi_accessible_get_help_text(element, &help_text_error);
-  if (help_text_error) {
-    g_error_free(help_text_error);
+  GError *get_text_error = nullptr;
+  gchar *help_text = atspi_accessible_get_help_text(element, &get_text_error);
+  if (get_text_error) {
+    g_error_free(get_text_error);
     return std::nullopt;
   }
 
-  return atspi_utils::ConvertStringAndFree(help_text);
+  if (help_text && help_text[0] != '\0')
+    return atspi_utils::ConvertStringAndFree(help_text);
+
+  gchar *desc_text = atspi_accessible_get_description(element, &get_text_error);
+  if (get_text_error) {
+    g_error_free(get_text_error);
+    return std::nullopt;
+  }
+
+  return atspi_utils::ConvertStringAndFree(desc_text);
 }
 
 

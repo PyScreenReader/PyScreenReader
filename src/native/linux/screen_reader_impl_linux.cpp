@@ -1,11 +1,12 @@
-#include "src/native/linux/screen_reader_impl_linux.h"
-#include "src/native/linux/vwidget_generator_linux.h"
 #include <cassert>
 #include <stdexcept>
 #include <iostream>
 #include <string>
 #include <sstream>
 #include <glib-object.h>
+
+#include "src/native/linux/screen_reader_impl_linux.h"
+#include "src/native/linux/vwidget_generator_linux.h"
 
 namespace screen_reader {
 
@@ -61,10 +62,12 @@ ScreenReaderImpl::FindAtspiAccessibleByPID(AtspiAccessible *desktop, pid_t targe
   }
 
   AtspiAccessible *target_app = nullptr;
+  std::vector<pid_t> available_apps;
 
   for (size_t i = 0; i < num_app; i++) {
     AtspiAccessible *app = atspi_accessible_get_child_at_index(desktop, i, nullptr);
     pid_t pid = static_cast<pid_t>(atspi_accessible_get_process_id(app, nullptr));
+    available_apps.push_back(pid);
     if (pid == target_pid) {
       target_app = app;
       break;
@@ -73,9 +76,16 @@ ScreenReaderImpl::FindAtspiAccessibleByPID(AtspiAccessible *desktop, pid_t targe
     g_object_unref(app);
   }
 
-  if (target_app == nullptr)
-    throw std::runtime_error("Cannot find the target app with PID: " + std::to_string(target_pid));
-
+  if (target_app == nullptr) {
+    std::stringstream stream;
+    stream << "Cannot find the target app with PID: ";
+    stream << std::to_string(target_pid);
+    stream << ". Available PIDs: ";
+    for (const auto &pid : available_apps) {
+      stream << std::to_string(pid) << ",";
+    }
+    throw std::runtime_error(stream.str());
+  }
   return target_app;
 }
 } // namespace screen_reader
