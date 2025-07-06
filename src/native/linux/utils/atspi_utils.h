@@ -12,7 +12,7 @@ namespace atspi_utils {
  * @return optional title extracted from the widget
  * @note More about Text Interface: https://docs.gtk.org/atspi2/iface.Text.html
  */
-std::optional<std::string> get_title_text(AtspiAccessible *element);
+std::optional<std::string> GetPrimaryText(AtspiAccessible *element);
 
 
 /**
@@ -21,7 +21,7 @@ std::optional<std::string> get_title_text(AtspiAccessible *element);
  * @param element native atspi widget
  * @return optional help text extracted from the widget
  */
-std::optional<std::string> get_help_text(AtspiAccessible *element);
+std::optional<std::string> GetHelpText(AtspiAccessible *element);
 
 
 /**
@@ -30,7 +30,7 @@ std::optional<std::string> get_help_text(AtspiAccessible *element);
  * @param element native atspi widget
  * @return optional role name extracted from the widget
  */
-std::optional<std::string> get_role_name(AtspiAccessible *element);
+std::optional<std::string> GetRoleName(AtspiAccessible *element);
 
 
 /**
@@ -39,7 +39,7 @@ std::optional<std::string> get_role_name(AtspiAccessible *element);
  * @param element native atspi widget
  * @return true if the native widget is visible on UI
  */
-bool get_visibility(AtspiAccessible *element);
+bool GetVisibility(AtspiAccessible *element);
 
 
 /**
@@ -50,7 +50,7 @@ bool get_visibility(AtspiAccessible *element);
  * @note the caller should take ownership of the returned object, thus, should
  * be responsible to release the object
  */
-std::optional<AtspiPoint*> get_position(AtspiAccessible *element);
+std::optional<AtspiPoint*> GetPosition(AtspiAccessible *element);
 
 
 /**
@@ -61,7 +61,27 @@ std::optional<AtspiPoint*> get_position(AtspiAccessible *element);
  * @note the caller should take ownership of the returned object, thus, should
  * be responsible to release the object
  */
-std::optional<AtspiPoint*> get_dimension(AtspiAccessible *element);
+std::optional<AtspiPoint*> GetDimension(AtspiAccessible *element);
+
+
+/**
+ * Get number of children belong to the given native widget.
+ *
+ * @param element native atspi widget
+ * @return optional number of children
+ */
+std::optional<unsigned int> GetChildrenCount(AtspiAccessible *element);
+
+
+/**
+ * Get the child native widget of the given widget at the give index.
+ *
+ * @param element native widget to get the child from
+ * @param child_index index of the child
+ * @return optional widget object
+ * @note the caller will take the ownership of the returned object
+ */
+std::optional<AtspiAccessible*> GetChildAtIndex(AtspiAccessible *element, unsigned int child_index);
 
 
 /**
@@ -71,6 +91,6 @@ std::optional<AtspiPoint*> get_dimension(AtspiAccessible *element);
   * @return copied std::string
   * @note adjusted from https://github.com/mysql/mysql-workbench/blob/418f54b81440b974dba1ddc4a923334e0759fac5/tools/mga/src/aal/linux/accessible.cpp#L112
 */
-std::string convert_string_and_free(gchar *text);
+std::string ConvertStringAndFree(gchar *text);
 } // namespace atspi_utils
 

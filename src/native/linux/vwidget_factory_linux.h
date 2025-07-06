@@ -1,5 +1,8 @@
 #pragma once
 
+#include <atspi/atspi.h>
+#include <optional>
+
 #include "include/vwidget/widgets/virtual_button_widget.h"
 #include "include/vwidget/widgets/virtual_group_widget.h"
 #include "include/vwidget/widgets/virtual_menu_item_widget.h"
@@ -52,17 +55,6 @@ std::shared_ptr<VirtualProgressBarWidget> CreateWidget(AtspiAccessible *element)
 
 template <>
 std::shared_ptr<VirtualSpinnerWidget> CreateWidget(AtspiAccessible *element);
-
-/**
- * Get string attribute values from AtspiAccessible object.
- * If the string attribute is ""(empty string), this function
- * will return std::nullopt
- *
- * @param element AtspiAccessible to get the value from
- * @param attr attribute name
- * @return std::nullopt if fails to get attribute or the value is "", otherwise the string value
- */
-std::optional<std::string> GetNonEmptyStringAttribute(AtspiAccessible *element, CFStringRef attr);
 
 /**
  * Populate shared attributes across all the virtual widgets.

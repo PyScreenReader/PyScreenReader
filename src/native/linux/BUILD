@@ -20,7 +20,7 @@ pybind_library(
     deps = [
         "//src/vwidget/widgets:virtual_components",
         "//src/native/linux:vwidget_generator_linux",
-        "//src/native/linux:atspi_utils",
+        "//src/native/linux/utils:atspi_utils",
     ],
 )
 
@@ -40,22 +40,28 @@ pybind_library(
     ],
     deps = [
         "//src/vwidget/widgets:virtual_components",
+        "//src/native/linux:vwidget_factory_linux",
+        "//src/native/linux/utils:atspi_utils",
     ],
 )
 
 pybind_library(
-    name = "atspi_utils",
+    name = "vwidget_factory_linux",
     hdrs = [
-        ":atspi_utils.h",
+        ":vwidget_factory_linux.h",
     ],
     srcs = [
-        ":atspi_utils.cpp",
+        ":vwidget_factory_linux.cpp",
     ],
     linkopts = [
         "-latspi",
         "-ldbus-1",
         "-lglib-2.0",
         "-lgobject-2.0",
+    ],
+    deps = [
+        "//src/vwidget/widgets:virtual_components",
+        "//src/native/linux/utils:atspi_utils",
     ],
 )
 

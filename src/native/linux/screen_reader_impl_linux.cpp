@@ -31,10 +31,10 @@ ScreenReaderImpl::GetVirtualWidgetTreeByPID(const std::string &pid) const {
     throw std::runtime_error("Cannot connect to desktop");
   }
 
-  // TODO (#46) remove redundant conversion for pid
+  // TODO: (#46) remove redundant conversion for pid
   AtspiAccessible *target_app = FindAtspiAccessibleByPID(desktop, std::stoi(pid));
 
-  std::shared_ptr<VirtualWidget> widget_tree; // = generator::GenerateVWidgetTree(target_node);
+  std::shared_ptr<VirtualWidget> widget_tree = vwidget_generator::GenerateVWidgetTree(target_app);
   g_object_unref(desktop);
   return widget_tree;
 }

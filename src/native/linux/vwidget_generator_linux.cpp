@@ -1,57 +1,67 @@
 #include <cassert>
 #include <glib-object.h>
-#include "src/native/linux/vwidget_generator_linux.h"
+#include <queue>
+#include <iostream>
 
-namespace generator {
+#include "src/native/linux/vwidget_generator_linux.h"
+#include "src/native/linux/utils/atspi_utils.h"
 
 std::shared_ptr<VirtualWidget>
-GenerateVWidgetTree(AtspiAccessible *root_element) {
+vwidget_generator::GenerateVWidgetTree(AtspiAccessible *root_element) {
   if (!root_element)
     return nullptr;
 
   g_object_ref(root_element);
 
+  std::queue<std::pair<std::shared_ptr<VirtualWidget>, AtspiAccessible*>> queue;
+  queue.emplace(nullptr, root_element);
 
+  std::shared_ptr<VirtualWidget> root = nullptr;
+
+  while (!queue.empty()) {
+    auto [parent_vwidget, curr] = queue.front();
+    queue.pop();
+
+    auto curr_vwidget = vwidget_generator::MapToVWidget(curr);
+
+    // Connect nodes to form a tree
+    if (parent_vwidget) {
+      parent_vwidget->AddChild(curr_vwidget);
+      curr_vwidget->SetParent(parent_vwidget);
+    } else {
+      // parent_vwidget is nullptr means the current node is the root
+      root = curr_vwidget;
+    }
+
+    std::optional<unsigned int> child_count_opt = atspi_utils::GetChildrenCount(curr);
+    if (!child_count_opt.has_value())
+      continue;
+
+    for (unsigned int i = 0; i < child_count_opt.value(); i++) {
+      auto child_opt = atspi_utils::GetChildAtIndex(curr, i);
+      if (!child_opt.has_value())
+        continue;
+
+      queue.emplace(curr_vwidget, child_opt.value());
+    }
+    g_object_unref(curr);
+  }
+  return root;
 }
 
-std::shared_ptr<VirtualWidget> MapToVWidget(AtspiAccessible *elem_atspi) {
-  AtspiRole elem_role = atspi_accessible_get_role(elem_atspi, nullptr);
-  std::string elem_name = std::string(atspi_role_get_name(elem_role));
+std::shared_ptr<VirtualWidget> vwidget_generator::MapToVWidget(AtspiAccessible *element) {
+  AtspiRole elem_role = atspi_accessible_get_role(element, nullptr);
 
-  std::shared_ptr<VirtualWidget> element;
-  auto it = kRoleWidgetMap.find(elem_name);
-  if (it != kRoleWidgetMap.end()) {
-    element = it->second(elem_atspi);
+  std::shared_ptr<VirtualWidget> vwidget_element;
+  auto iter = vwidget_generator::kRoleWidgetMap.find(elem_role);
+  if (iter != vwidget_generator::kRoleWidgetMap.end()) {
+    vwidget_element = iter->second(element);
   } else {
-    element = kRoleWidgetMap.at(UNKNOWN_ROLE_ID)(elem_atspi);
+    vwidget_element = vwidget_factory::CreateWidget<VirtualUnknownWidget>(element);
   }
 
-
-
-  return element;
-
-  // elem->setTitleText(atspi_accessible_get_name(elem_atspi, nullptr));
-  // elem->setHelpText(atspi_accessible_get_help_text(elem_atspi, nullptr));
-  //
-  // AtspiStateSet *states = atspi_accessible_get_state_set(elem_atspi);
-  // bool isVisible = atspi_state_set_contains(states, ATSPI_STATE_VISIBLE);
-  // bool isShowing = atspi_state_set_contains(states, ATSPI_STATE_SHOWING);
-  // if (isVisible && isShowing) {
-  //   AtspiComponent *comp = atspi_accessible_get_component(
-  //       elem_atspi); // assuming VirtualWidget.x and y are the it's MINIMUM x
-  //                    // and y coordinates, and not the center
-  //   AtspiPoint *coords =
-  //       atspi_component_get_position(comp, ATSPI_COORD_TYPE_SCREEN, nullptr);
-  //   elem->setX(coords->x);
-  //   elem->setY(coords->y);
-  //
-  //   AtspiPoint *dims = atspi_component_get_size(comp, nullptr);
-  //   elem->setWidth(dims->x);
-  //   elem->setHeight(dims->y);
-  // }
-  // elem->setVisible(isVisible);
-  //
-  // return elem;
+  std::cerr << "Unrecognized role name: " << elem_role << std::endl;
+  // Falls back to virtual unknown widget
+  return vwidget_factory::CreateWidget<VirtualUnknownWidget>(element);
 }
 
-} // namespace generator
