@@ -74,17 +74,25 @@ std::shared_ptr<VirtualUnknownWidget> vwidget_factory::CreateWidget(AtspiAccessi
 
 template <>
 std::shared_ptr<VirtualScrollbarWidget> vwidget_factory::CreateWidget(AtspiAccessible* element) {
-  return vwidget_factory::CreateWidgetWithAttributes<VirtualScrollbarWidget>(element);
+  auto widget = vwidget_factory::CreateWidgetWithAttributes<VirtualScrollbarWidget>(element);
+  if (auto value_opt = atspi_utils::GetNumericValue(element))
+    widget->SetValue(value_opt.value());
+  return widget;
 }
 
 template <>
 std::shared_ptr<VirtualSliderWidget> vwidget_factory::CreateWidget(AtspiAccessible* element) {
-  return vwidget_factory::CreateWidgetWithAttributes<VirtualSliderWidget>(element);
+  auto widget = vwidget_factory::CreateWidgetWithAttributes<VirtualSliderWidget>(element);
+  if (auto value_opt = atspi_utils::GetNumericValue(element))
+    widget->SetValue(value_opt.value());
+  return widget;
 }
 
 template <>
 std::shared_ptr<VirtualProgressBarWidget> vwidget_factory::CreateWidget(AtspiAccessible* element) {
   auto widget = vwidget_factory::CreateWidgetWithAttributes<VirtualProgressBarWidget>(element);
+  if (auto value_opt = atspi_utils::GetNumericValue(element))
+    widget->SetValue(value_opt.value());
   return widget;
 }
 

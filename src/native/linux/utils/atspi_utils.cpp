@@ -98,6 +98,25 @@ std::optional<std::string> atspi_utils::GetSelectedText(AtspiAccessible *element
   return stream.str();
 }
 
+
+std::optional<double> atspi_utils::GetNumericValue(AtspiAccessible *element) {
+  AtspiValue *value_iface = atspi_accessible_get_value_iface(element);
+  if (!value_iface)
+    return std::nullopt;
+
+  GError *error = nullptr;
+  double current_value = atspi_value_get_current_value(value_iface, &error);
+  if (error) {
+    g_error_free(error);
+    g_object_unref(value_iface);
+    return std::nullopt;
+  }
+
+  g_object_unref(value_iface);
+  return current_value;
+}
+
+
 std::optional<AtspiRole> atspi_utils::GetRole(AtspiAccessible *element) {
   if (!element)
     return std::nullopt;

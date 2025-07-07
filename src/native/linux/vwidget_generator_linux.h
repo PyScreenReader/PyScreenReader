@@ -51,6 +51,8 @@ const RoleHandlerMap kRoleWidgetMap = {
   REGISTER_HANDLER(AtspiRole::ATSPI_ROLE_TOGGLE_BUTTON, VirtualButtonWidget),
   REGISTER_HANDLER(AtspiRole::ATSPI_ROLE_PAGE_TAB, VirtualButtonWidget),
   REGISTER_HANDLER(AtspiRole::ATSPI_ROLE_LINK, VirtualButtonWidget),
+  REGISTER_HANDLER(AtspiRole::ATSPI_ROLE_CHECK_MENU_ITEM, VirtualMenuItemWidget),
+  REGISTER_HANDLER(AtspiRole::ATSPI_ROLE_RADIO_MENU_ITEM, VirtualMenuItemWidget),
 
   // Text display roles
   REGISTER_HANDLER(AtspiRole::ATSPI_ROLE_TEXT, VirtualTextWidget),
@@ -92,8 +94,6 @@ const RoleHandlerMap kRoleWidgetMap = {
   REGISTER_HANDLER(AtspiRole::ATSPI_ROLE_ENTRY, VirtualTextInputWidget),
 
   // Menu system roles
-  REGISTER_HANDLER(AtspiRole::ATSPI_ROLE_CHECK_MENU_ITEM, VirtualMenuItemWidget),
-  REGISTER_HANDLER(AtspiRole::ATSPI_ROLE_RADIO_MENU_ITEM, VirtualMenuItemWidget),
   REGISTER_HANDLER(AtspiRole::ATSPI_ROLE_POPUP_MENU, VirtualMenuWidget),
   REGISTER_HANDLER(AtspiRole::ATSPI_ROLE_MENU_ITEM, VirtualMenuItemWidget),
   REGISTER_HANDLER(AtspiRole::ATSPI_ROLE_MENU, VirtualMenuWidget),
@@ -157,18 +157,16 @@ const RoleHandlerMap kRoleWidgetMap = {
   REGISTER_HANDLER(AtspiRole::ATSPI_ROLE_AUTOCOMPLETE, VirtualGroupWidget),
   REGISTER_HANDLER(AtspiRole::ATSPI_ROLE_SCROLL_BAR, VirtualGroupWidget),
   REGISTER_HANDLER(AtspiRole::ATSPI_ROLE_SEPARATOR, VirtualGroupWidget),
-  REGISTER_HANDLER(AtspiRole::ATSPI_ROLE_SLIDER, VirtualGroupWidget),
-  REGISTER_HANDLER(AtspiRole::ATSPI_ROLE_SPIN_BUTTON, VirtualGroupWidget),
   REGISTER_HANDLER(AtspiRole::ATSPI_ROLE_STATUS_BAR, VirtualGroupWidget),
   REGISTER_HANDLER(AtspiRole::ATSPI_ROLE_TOOL_BAR, VirtualGroupWidget),
   REGISTER_HANDLER(AtspiRole::ATSPI_ROLE_TOOL_TIP, VirtualGroupWidget),
-  REGISTER_HANDLER(AtspiRole::ATSPI_ROLE_PROGRESS_BAR, VirtualGroupWidget),
   REGISTER_HANDLER(AtspiRole::ATSPI_ROLE_LIST_BOX, VirtualGroupWidget),
   REGISTER_HANDLER(AtspiRole::ATSPI_ROLE_CHART, VirtualGroupWidget),
   REGISTER_HANDLER(AtspiRole::ATSPI_ROLE_PAGE, VirtualGroupWidget),
   REGISTER_HANDLER(AtspiRole::ATSPI_ROLE_DIAL, VirtualGroupWidget),
   REGISTER_HANDLER(AtspiRole::ATSPI_ROLE_HTML_CONTAINER, VirtualGroupWidget),
   REGISTER_HANDLER(AtspiRole::ATSPI_ROLE_RULER, VirtualGroupWidget),
+  REGISTER_HANDLER(AtspiRole::ATSPI_ROLE_FILLER, VirtualGroupWidget),
 
   // Other interactive widgets
   REGISTER_HANDLER(AtspiRole::ATSPI_ROLE_SCROLL_BAR, VirtualScrollbarWidget),
@@ -180,7 +178,6 @@ const RoleHandlerMap kRoleWidgetMap = {
   REGISTER_HANDLER(AtspiRole::ATSPI_ROLE_ANIMATION, VirtualUnknownWidget),
   REGISTER_HANDLER(AtspiRole::ATSPI_ROLE_ARROW, VirtualUnknownWidget),
   REGISTER_HANDLER(AtspiRole::ATSPI_ROLE_DESKTOP_ICON, VirtualUnknownWidget),
-  REGISTER_HANDLER(AtspiRole::ATSPI_ROLE_FILLER, VirtualUnknownWidget),
   REGISTER_HANDLER(AtspiRole::ATSPI_ROLE_ICON, VirtualUnknownWidget),
   REGISTER_HANDLER(AtspiRole::ATSPI_ROLE_IMAGE, VirtualUnknownWidget),
   REGISTER_HANDLER(AtspiRole::ATSPI_ROLE_REDUNDANT_OBJECT, VirtualUnknownWidget),

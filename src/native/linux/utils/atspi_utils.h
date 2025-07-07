@@ -34,6 +34,15 @@ std::optional<std::string> GetSelectedText(AtspiAccessible *element);
 
 
 /**
+ * Get the numeric value represented by the native widget.
+ * For example, 100% in a progress bar, etc.
+ *
+ * @param element native atspi widget
+ * @return optional value
+ */
+std::optional<double> GetNumericValue(AtspiAccessible *element);
+
+/**
  * Get AtspiRole from native widget.
  *
  * @param element native atspi widget
