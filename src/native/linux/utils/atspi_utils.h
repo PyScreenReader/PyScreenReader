@@ -25,7 +25,16 @@ std::optional<std::string> GetHelpText(AtspiAccessible *element);
 
 
 /**
- * Get AtspiRole from native widget
+ * Get the selected text in a native widget.
+ *
+ * @param element native atspi widget
+ * @return optional user selected string value
+ */
+std::optional<std::string> GetSelectedText(AtspiAccessible *element);
+
+
+/**
+ * Get AtspiRole from native widget.
  *
  * @param element native atspi widget
  * @return optional AtspiRole extracted from the widget

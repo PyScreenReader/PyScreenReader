@@ -11,7 +11,11 @@ std::shared_ptr<VirtualButtonWidget> vwidget_factory::CreateWidget(AtspiAccessib
 
 template <>
 std::shared_ptr<VirtualTextWidget> vwidget_factory::CreateWidget(AtspiAccessible *element) {
-  return vwidget_factory::CreateWidgetWithAttributes<VirtualTextWidget>(element);
+  auto widget = vwidget_factory::CreateWidgetWithAttributes<VirtualTextWidget>(element);
+  if (auto selected_text_opt = atspi_utils::GetSelectedText(element)) {
+    widget->SetSelectedText(selected_text_opt.value());
+  }
+  return widget;
 }
 
 template <>
@@ -31,6 +35,10 @@ std::shared_ptr<VirtualTextInputWidget> vwidget_factory::CreateWidget(AtspiAcces
     // Mask the password, so we don't leak the information
     widget->SetTitleText("[REDACTED]");
     widget->SetHelpText("This is a password field, and the value may contain sensative password information.");
+  }
+
+  if (auto selected_text_opt = atspi_utils::GetSelectedText(element)) {
+    widget->SetSelectedText(selected_text_opt.value());
   }
   return widget;
 }
@@ -113,7 +121,7 @@ void vwidget_factory::PopulateSharedAttributes(std::shared_ptr<VirtualWidget> wi
     if (auto position_opt = atspi_utils::GetPosition(element)) {
       widget->SetX(static_cast<int>(position_opt.value()->x));
       widget->SetY(static_cast<int>(position_opt.value()->y));
-      free(position_opt.value());
+      g_free(position_opt.value());
     }
 
     // Dimension value is only meaningful only when the component is visible
@@ -123,7 +131,7 @@ void vwidget_factory::PopulateSharedAttributes(std::shared_ptr<VirtualWidget> wi
       auto height = static_cast<unsigned int>(dim_opt.value()->y);
       widget->SetWidth(width);
       widget->SetHeight(height);
-      free(dim_opt.value());
+      g_free(dim_opt.value());
     }
   }
 

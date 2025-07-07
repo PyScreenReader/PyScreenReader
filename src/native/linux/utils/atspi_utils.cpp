@@ -1,4 +1,5 @@
 #include <glib-object.h>
+#include <sstream>
 
 #include "src/native/linux/utils/atspi_utils.h"
 
@@ -19,6 +20,7 @@ std::optional<std::string> atspi_utils::GetPrimaryText(AtspiAccessible* element)
 
   if (char_count_error) {
     g_error_free(char_count_error);
+    g_object_unref(text_interface);
     return std::nullopt;
   }
 
@@ -27,9 +29,11 @@ std::optional<std::string> atspi_utils::GetPrimaryText(AtspiAccessible* element)
 
   if (get_text_error) {
     g_error_free(get_text_error);
+    g_object_unref(text_interface);
     return std::nullopt;
   }
 
+  g_object_unref(text_interface);
   return atspi_utils::ConvertStringAndFree(text);
 }
 
@@ -57,6 +61,42 @@ std::optional<std::string> atspi_utils::GetHelpText(AtspiAccessible *element) {
   return atspi_utils::ConvertStringAndFree(desc_text);
 }
 
+
+std::optional<std::string> atspi_utils::GetSelectedText(AtspiAccessible *element) {
+  AtspiText *text_iface = atspi_accessible_get_text_iface(element);
+  if (!text_iface)
+    return std::nullopt;
+
+  GError *error = nullptr;
+  unsigned int n_selections = atspi_text_get_n_selections(text_iface, &error);
+  if (error) {
+    g_error_free(error);
+    g_object_unref(text_iface);
+    return std::nullopt;
+  }
+
+  if (n_selections == 0) {
+    g_object_unref(text_iface);
+    return std::nullopt;
+  }
+
+  std::stringstream stream;
+  for (unsigned int i = 0; i < n_selections; i++) {
+    AtspiRange* range = atspi_text_get_selection(text_iface, i, &error);
+    if (range) {
+      gchar *selection_text = atspi_text_get_text(text_iface, range->start_offset, range->end_offset, &error);
+      if (error) {
+        g_error_free(error);
+      } else if (auto string_value = atspi_utils::ConvertStringAndFree(selection_text)) {
+        stream << string_value.value();
+        stream << '\n';
+      }
+      g_free(range);
+    }
+  }
+  g_object_unref(text_iface);
+  return stream.str();
+}
 
 std::optional<AtspiRole> atspi_utils::GetRole(AtspiAccessible *element) {
   if (!element)
