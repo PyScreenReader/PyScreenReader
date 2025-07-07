@@ -17,6 +17,21 @@ std::shared_ptr<VirtualTextWidget> vwidget_factory::CreateWidget(AtspiAccessible
 template <>
 std::shared_ptr<VirtualTextInputWidget> vwidget_factory::CreateWidget(AtspiAccessible* element) {
   auto widget = vwidget_factory::CreateWidgetWithAttributes<VirtualTextInputWidget>(element);
+
+  std::optional<AtspiRole> role_opt = atspi_utils::GetRole(element);
+  if (!role_opt.has_value())
+    return widget;
+
+  AtspiRole role = role_opt.value();
+  if (role == AtspiRole::ATSPI_ROLE_TEXT) {
+    // This is a text area that supports multiple lines
+    // https://docs.gtk.org/atspi2/enum.Role.html#text
+    widget->SetIsTextArea(true);
+  } else if (role == AtspiRole::ATSPI_ROLE_PASSWORD_TEXT) {
+    // Mask the password, so we don't leak the information
+    widget->SetTitleText("[REDACTED]");
+    widget->SetHelpText("This is a password field, and the value may contain sensative password information.");
+  }
   return widget;
 }
 
@@ -33,6 +48,9 @@ std::shared_ptr<VirtualMenuItemWidget> vwidget_factory::CreateWidget(AtspiAccess
 template <>
 std::shared_ptr<VirtualWindowWidget> vwidget_factory::CreateWidget(AtspiAccessible* element) {
   auto widget = vwidget_factory::CreateWidgetWithAttributes<VirtualWindowWidget>(element);
+  AtspiStateSet *states = atspi_accessible_get_state_set(element);
+  widget->SetIsModal(atspi_state_set_contains(states, ATSPI_STATE_MODAL));
+  g_object_unref(states);
   return widget;
 }
 
@@ -108,6 +126,10 @@ void vwidget_factory::PopulateSharedAttributes(std::shared_ptr<VirtualWidget> wi
       free(dim_opt.value());
     }
   }
-  //TODO: Focused
+
+  // Focused
+  AtspiStateSet *states = atspi_accessible_get_state_set(element);
+  widget->SetFocused(atspi_state_set_contains(states, ATSPI_STATE_FOCUSED));
+  g_object_unref(states);
 }
 

@@ -98,6 +98,7 @@ bool atspi_utils::GetVisibility(AtspiAccessible *element) {
   // https://gnome.pages.gitlab.gnome.org/at-spi2-core/libatspi/enum.StateType.html#showing
   bool is_showing = atspi_state_set_contains(states, ATSPI_STATE_SHOWING);
 
+  g_object_unref(states);
   return is_visible && is_showing;
 }
 
