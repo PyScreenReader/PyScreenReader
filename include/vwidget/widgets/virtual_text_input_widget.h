@@ -39,20 +39,20 @@ class VirtualTextInputWidget : public VirtualWidget {
   void SetInsertionPoint(int insertion_point) { insertion_point_ = insertion_point; }
 
   /**
-   * Get if the current text input is the text field invariant.
+   * Get if the current text input is the text area invariant.
    *
-   * @return True if the text input is a text field, otherwise False.
+   * @return True if the text input is a text area, otherwise False.
    */
-  bool IsTextField() const { return is_text_field_; }
+  bool IsTextArea() const { return is_text_area_; }
   /**
-   * Set if the current text input is the text field invariant.
+   * Set if the current text input is the text area invariant.
    *
-   * @param is_text_field True if the text input is a text field, otherwise False.
+   * @param is_text_area True if the text input is a text field, otherwise False.
    */
-  void SetIsTextField(bool is_text_field) { is_text_field_ = is_text_field; }
+  void SetIsTextArea(bool is_text_area) { is_text_area_ = is_text_area; }
 
  private:
   std::string selected_text_;
   int insertion_point_;
-  bool is_text_field_;
+  bool is_text_area_;
 };

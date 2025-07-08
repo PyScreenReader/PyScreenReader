@@ -57,7 +57,9 @@ void BindVirtualWidgets(py::module_& module) {
       .def("get_child", &VirtualWidget::GetChild)
       .def("add_child", &VirtualWidget::AddChild)
       .def("get_widget_name", &VirtualWidget::GetWidgetName)
-      .def("get_children", &VirtualWidget::GetChildren);
+      .def("get_children", &VirtualWidget::GetChildren)
+      .def("__repr__", &VirtualWidget::ToString)
+      .def("__str__", &VirtualWidget::ToString);
 
   // NumericValueWidget
   py::class_<NumericValueWidget, VirtualWidget,
@@ -118,8 +120,8 @@ void BindVirtualWidgets(py::module_& module) {
       .def("set_selected_text", &VirtualTextInputWidget::SetSelectedText)
       .def("get_insertion_point", &VirtualTextInputWidget::GetInsertionPoint)
       .def("set_insertion_point", &VirtualTextInputWidget::SetInsertionPoint)
-      .def("is_text_field", &VirtualTextInputWidget::IsTextField)
-      .def("set_is_text_field", &VirtualTextInputWidget::SetIsTextField);
+      .def("is_text_area", &VirtualTextInputWidget::IsTextArea)
+      .def("set_is_text_area", &VirtualTextInputWidget::SetIsTextArea);
 
   // VirtualTextWidget
   py::class_<VirtualTextWidget, VirtualWidget, std::shared_ptr<VirtualTextWidget>>(
@@ -149,14 +151,8 @@ void BindVirtualWidgets(py::module_& module) {
 void BindScreenReader(py::module_& module) {
   py::class_<ScreenReader>(module, "ScreenReader")
       .def(py::init())
-      .def("getVirtualWidgetTreeByPID",
+      .def("get_virtual_widget_tree_by_pid",
            &ScreenReader::GetVirtualWidgetTreeByPID,
-           py::return_value_policy::take_ownership)
-      .def("getVirtualWidgetTreeByTitle",
-           &ScreenReader::GetVirtualWidgetTreeByTitle,
-           py::return_value_policy::take_ownership)
-      .def("getVirtualWidgetTreeByClassName",
-           &ScreenReader::GetVirtualWidgetTreeByClassName,
            py::return_value_policy::take_ownership);
 }
 }  // namespace bindings

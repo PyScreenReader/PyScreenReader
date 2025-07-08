@@ -48,3 +48,20 @@ py_library(
     name = "tools_helper",
     srcs = ["tools_helper.py"],
 )
+
+cc_binary(
+    name = "cpp_inspect",
+    srcs = ["cpp_inspect.cpp"],
+    deps = [
+        "@cxxopts//:cxxopts",
+        "//src/api:screen_reader",
+    ],
+)
+
+py_binary(
+    name = "py_inspect",
+    srcs = ["py_inspect.py"],
+    deps = [
+        "//:PyScreenReader",
+    ]
+)

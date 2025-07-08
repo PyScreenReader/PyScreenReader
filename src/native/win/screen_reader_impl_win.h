@@ -11,9 +11,6 @@ class ScreenReaderImpl {
   ScreenReaderImpl();
   ~ScreenReaderImpl();
   std::shared_ptr<VirtualWidget> GetVirtualWidgetTreeByPID(const std::string& pid) const;
-  std::shared_ptr<VirtualWidget> GetVirtualWidgetTreeByTitle(const std::string& title) const;
-  std::shared_ptr<VirtualWidget> GetVirtualWidgetTreeByClassName(
-      const std::string& class_name) const;
 
  private:
   IUIAutomation* automation_;
