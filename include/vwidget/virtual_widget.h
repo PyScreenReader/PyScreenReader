@@ -3,6 +3,11 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include "src/base/build_flags.h"
+
+#if defined(WIN_OS)
+#include <uiautomationclient.h>
+#endif
 
 class VirtualWidget {
  public:
@@ -224,4 +229,8 @@ class VirtualWidget {
 
  protected:
   explicit VirtualWidget(std::string widget_name);
+
+#if defined(WIN_OS)
+  explicit VirtualWidget(IUIAutomationElement* element);
+#endif
 };

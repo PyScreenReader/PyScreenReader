@@ -7,6 +7,9 @@ class VirtualTextWidget : public VirtualWidget {
  public:
   VirtualTextWidget();
   ~VirtualTextWidget() override = default;
+#if defined(WIN_OS)
+  explicit VirtualTextWidget(IUIAutomationElement* element);
+#endif
 
   /**
    * Get cursor selected text in static text widget
