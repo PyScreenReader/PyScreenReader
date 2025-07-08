@@ -4,6 +4,7 @@
 #include <queue>
 #include <stdexcept>
 #include <utility>
+#include <comutil.h>
 
 namespace generator {
 std::shared_ptr<VirtualWidget> generator::GenerateVWidgetTree(
@@ -37,6 +38,23 @@ std::shared_ptr<VirtualWidget> generator::GenerateVWidgetTree(
     }
   }
   return root;
+}
+
+void VirtualWidgetFactory(VirtualWidget& widget, IUIAutomationElement* element) {
+  RECT rect;
+  HRESULT hresult = element->get_CurrentBoundingRectangle(&rect);
+  if (SUCCEEDED(hresult)) {
+    widget.SetX(rect.left);
+    widget.SetY(rect.top);
+    widget.SetWidth(abs(rect.right - rect.left));
+    widget.SetHeight(abs(rect.bottom - rect.top));
+  }
+  BSTR bstr;
+  hresult = element->get_CurrentName(&bstr);
+  if (SUCCEEDED(hresult)) {
+    widget.SetTitleText(_com_util::ConvertBSTRToString(bstr));
+  }
+  SysFreeString(bstr);
 }
 
 std::shared_ptr<VirtualWidget> generator::CreateVirtualWidget(IUIAutomationElement* element) {

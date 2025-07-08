@@ -14,6 +14,7 @@ pybind_library(
         "ole32.lib",
         "oleaut32.lib",
         "comsuppw.lib",
+        "comsuppw.lib",
     ],
     deps = [
         ":vwidget_generator_win",
