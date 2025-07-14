@@ -56,7 +56,4 @@ class NumericValueWidget : public VirtualWidget {
 
  protected:
   explicit NumericValueWidget(const std::string& widget_name);
-#if defined(WIN_OS)
-  explicit NumericValueWidget(IUIAutomationElement* element);
-#endif
 };

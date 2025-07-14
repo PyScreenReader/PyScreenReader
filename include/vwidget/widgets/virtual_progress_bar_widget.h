@@ -7,9 +7,6 @@ class VirtualProgressBarWidget : public NumericValueWidget {
  public:
   VirtualProgressBarWidget();
   ~VirtualProgressBarWidget() override = default;
-#if defined(WIN_OS)
-  explicit VirtualProgressBarWidget(IUIAutomationElement* element);
-#endif
   /**
    * Get current orientation of the widget.
    *

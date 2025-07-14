@@ -6,8 +6,8 @@
 #include <utility>
 #include <comutil.h>
 
-namespace generator {
-std::shared_ptr<VirtualWidget> generator::GenerateVWidgetTree(
+namespace vwidget_generator {
+std::shared_ptr<VirtualWidget> GenerateVWidgetTree(
     IUIAutomationElement* root_element,
     IUIAutomationTreeWalker* tree_walker) {
   auto root = std::make_shared<VirtualWindowWidget>();
@@ -40,24 +40,7 @@ std::shared_ptr<VirtualWidget> generator::GenerateVWidgetTree(
   return root;
 }
 
-void VirtualWidgetFactory(VirtualWidget& widget, IUIAutomationElement* element) {
-  RECT rect;
-  HRESULT hresult = element->get_CurrentBoundingRectangle(&rect);
-  if (SUCCEEDED(hresult)) {
-    widget.SetX(rect.left);
-    widget.SetY(rect.top);
-    widget.SetWidth(abs(rect.right - rect.left));
-    widget.SetHeight(abs(rect.bottom - rect.top));
-  }
-  BSTR bstr;
-  hresult = element->get_CurrentName(&bstr);
-  if (SUCCEEDED(hresult)) {
-    widget.SetTitleText(_com_util::ConvertBSTRToString(bstr));
-  }
-  SysFreeString(bstr);
-}
-
-std::shared_ptr<VirtualWidget> generator::CreateVirtualWidget(IUIAutomationElement* element) {
+std::shared_ptr<VirtualWidget> MapToVWidget(IUIAutomationElement* element) {
   CONTROLTYPEID type_id;
   element->get_CurrentControlType(&type_id);
   auto iterator = VIRTUAL_WIDGET_FACTORY.find(type_id);
@@ -67,4 +50,4 @@ std::shared_ptr<VirtualWidget> generator::CreateVirtualWidget(IUIAutomationEleme
   std::shared_ptr<VirtualWidget> result = iterator->second(element);
   return result;
 }
-}  // namespace generator
+}  // namespace vwidget_generator

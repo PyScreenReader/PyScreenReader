@@ -15,7 +15,4 @@ class VirtualUnknownWidget : public VirtualWidget {
    */
   VirtualUnknownWidget();
   ~VirtualUnknownWidget() override = default;
-#if defined(WIN_OS)
-  explicit VirtualUnknownWidget(IUIAutomationElement* element);
-#endif
 };

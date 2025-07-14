@@ -2,40 +2,64 @@
 #include <comutil.h>
 
 template <>
-std::shared_ptr<VirtualButtonWidget> vwidget_factory::CreateWidget(IUIAutomationElement* element);
+std::shared_ptr<VirtualButtonWidget> vwidget_factory::CreateWidget(IUIAutomationElement* element) {
+  return vwidget_factory::CreateWidgetWithAttributes<VirtualButtonWidget>(element);
+}
 
 template <>
-std::shared_ptr<VirtualTextWidget> vwidget_factory::CreateWidget(IUIAutomationElement* element);
+std::shared_ptr<VirtualTextWidget> vwidget_factory::CreateWidget(IUIAutomationElement* element) {
+  return vwidget_factory::CreateWidgetWithAttributes<VirtualTextWidget>(element);
+}
 
 template <>
-std::shared_ptr<VirtualTextInputWidget> vwidget_factory::CreateWidget(IUIAutomationElement* element);
+std::shared_ptr<VirtualTextInputWidget> vwidget_factory::CreateWidget(IUIAutomationElement* element) {
+  return vwidget_factory::CreateWidgetWithAttributes<VirtualTextInputWidget>(element);
+}
 
 template <>
-std::shared_ptr<VirtualMenuWidget> vwidget_factory::CreateWidget(IUIAutomationElement* element);
+std::shared_ptr<VirtualMenuWidget> vwidget_factory::CreateWidget(IUIAutomationElement* element) {
+  return vwidget_factory::CreateWidgetWithAttributes<VirtualMenuWidget>(element);
+}
 
 template <>
-std::shared_ptr<VirtualMenuItemWidget> vwidget_factory::CreateWidget(IUIAutomationElement* element);
+std::shared_ptr<VirtualMenuItemWidget> vwidget_factory::CreateWidget(IUIAutomationElement* element) {
+  return vwidget_factory::CreateWidgetWithAttributes<VirtualMenuItemWidget>(element);
+}
 
 template <>
-std::shared_ptr<VirtualWindowWidget> vwidget_factory::CreateWidget(IUIAutomationElement* element);
+std::shared_ptr<VirtualWindowWidget> vwidget_factory::CreateWidget(IUIAutomationElement* element) {
+  return vwidget_factory::CreateWidgetWithAttributes<VirtualWindowWidget>(element);
+}
 
 template <>
-std::shared_ptr<VirtualGroupWidget> vwidget_factory::CreateWidget(IUIAutomationElement* element);
+std::shared_ptr<VirtualGroupWidget> vwidget_factory::CreateWidget(IUIAutomationElement* element) {
+  return vwidget_factory::CreateWidgetWithAttributes<VirtualGroupWidget>(element);
+}
 
 template <>
-std::shared_ptr<VirtualUnknownWidget> vwidget_factory::CreateWidget(IUIAutomationElement* element);
+std::shared_ptr<VirtualUnknownWidget> vwidget_factory::CreateWidget(IUIAutomationElement* element) {
+  return vwidget_factory::CreateWidgetWithAttributes<VirtualUnknownWidget>(element);
+}
 
 template <>
-std::shared_ptr<VirtualScrollbarWidget> vwidget_factory::CreateWidget(IUIAutomationElement* element);
+std::shared_ptr<VirtualScrollbarWidget> vwidget_factory::CreateWidget(IUIAutomationElement* element) {
+  return vwidget_factory::CreateWidgetWithAttributes<VirtualScrollbarWidget>(element);
+}
 
 template <>
-std::shared_ptr<VirtualSliderWidget> vwidget_factory::CreateWidget(IUIAutomationElement* element);
+std::shared_ptr<VirtualSliderWidget> vwidget_factory::CreateWidget(IUIAutomationElement* element) {
+  return vwidget_factory::CreateWidgetWithAttributes<VirtualSliderWidget>(element);
+}
 
 template <>
-std::shared_ptr<VirtualProgressBarWidget> vwidget_factory::CreateWidget(IUIAutomationElement* element);
+std::shared_ptr<VirtualProgressBarWidget> vwidget_factory::CreateWidget(IUIAutomationElement* element) {
+  return vwidget_factory::CreateWidgetWithAttributes<VirtualProgressBarWidget>(element);
+}
 
 template <>
-std::shared_ptr<VirtualSpinnerWidget> vwidget_factory::CreateWidget(IUIAutomationElement* element);
+std::shared_ptr<VirtualSpinnerWidget> vwidget_factory::CreateWidget(IUIAutomationElement* element) {
+  return vwidget_factory::CreateWidgetWithAttributes<VirtualSpinnerWidget>(element);
+}
 
 /**
  * Populate shared attributes across all the virtual widgets.
@@ -61,8 +85,18 @@ void PopulateSharedAttributes(std::shared_ptr<VirtualWidget> widget, IUIAutomati
   current_name = nullptr;
 
   // Native name
+  BSTR control_type = nullptr;
+  hresult = element->get_CurrentLocalizedControlType(&control_type);
+  if (SUCCEEDED(hresult)) {
+    const std::string title_string(_com_util::ConvertBSTRToString(control_type));
+    widget->SetTitleText(title_string);
+  }
+  SysFreeString(control_type);
+  control_type = nullptr;
+
+  // Help text
   BSTR help_text = nullptr;
-  hresult = element->get_CurrentLocalizedControlType(&help_text);
+  hresult = element->get_CurrentHelpText(&help_text);
   if (SUCCEEDED(hresult)) {
     const std::string title_string(_com_util::ConvertBSTRToString(help_text));
     widget->SetTitleText(title_string);
@@ -80,6 +114,10 @@ void PopulateSharedAttributes(std::shared_ptr<VirtualWidget> widget, IUIAutomati
     widget->SetHeight(static_cast<int>(rect->bottom - rect->top));
   }
 
-  // Visibility
-
+  // Focus
+  BOOL* is_focused = nullptr;
+  hresult = element->get_CurrentHasKeyboardFocus(is_focused);
+  if (SUCCEEDED(hresult)) {
+    widget->SetFocused(static_cast<bool>(is_focused));
+  }
 }

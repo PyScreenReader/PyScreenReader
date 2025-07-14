@@ -2,8 +2,3 @@
 
 VirtualWindowWidget::VirtualWindowWidget()
     : VirtualWidget("VirtualWindowWidget"), is_modal_(false) {}
-
-#if defined(WIN_OS)
-VirtualWindowWidget::VirtualWindowWidget(IUIAutomationElement* element)
-    : VirtualWidget(element), is_modal_(false) {}
-#endif

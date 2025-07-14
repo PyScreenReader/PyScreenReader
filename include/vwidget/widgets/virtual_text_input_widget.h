@@ -7,10 +7,6 @@ class VirtualTextInputWidget : public VirtualWidget {
  public:
   VirtualTextInputWidget();
   ~VirtualTextInputWidget() override = default;
-#if defined(WIN_OS)
-  explicit VirtualTextInputWidget(IUIAutomationElement* element);
-#endif
-
 
   /**
    * Get cursor selected text in text input

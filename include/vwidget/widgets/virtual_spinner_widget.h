@@ -7,7 +7,4 @@ class VirtualSpinnerWidget : public NumericValueWidget {
  public:
   VirtualSpinnerWidget();
   ~VirtualSpinnerWidget() override = default;
-#if defined(WIN_OS)
-  explicit VirtualSpinnerWidget(IUIAutomationElement* element);
-#endif
 };

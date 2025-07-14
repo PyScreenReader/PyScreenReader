@@ -229,8 +229,4 @@ class VirtualWidget {
 
  protected:
   explicit VirtualWidget(std::string widget_name);
-
-#if defined(WIN_OS)
-  explicit VirtualWidget(IUIAutomationElement* element);
-#endif
 };

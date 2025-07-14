@@ -7,9 +7,6 @@ class VirtualScrollbarWidget : public NumericValueWidget {
  public:
   VirtualScrollbarWidget();
   ~VirtualScrollbarWidget() override = default;
-#if defined(WIN_OS)
-  explicit VirtualScrollbarWidget(IUIAutomationElement* element);
-#endif
 
   /**
    * Get current orientation of the widget.

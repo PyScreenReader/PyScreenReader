@@ -8,10 +8,6 @@ class VirtualWindowWidget : public VirtualWidget {
   VirtualWindowWidget();
   ~VirtualWindowWidget() override = default;
 
-#if defined(WIN_OS)
-  explicit VirtualWindowWidget(IUIAutomationElement* element);
-#endif
-
   /**
    * Get if the current window is a modal.
    *
