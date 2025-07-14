@@ -12,5 +12,6 @@ class ScreenReaderTest : public ::testing::Test {
 
 TEST_F(ScreenReaderTest, DefaultConstruction) {
   root_ = screen_reader_.GetVirtualWidgetTreeByPID(TEST_PID);
+  std::cout << "NAME: " << root_->GetWidgetName() << '\n';
   EXPECT_EQ(root_->GetWidgetName(), "VirtualWindowWidget");
 }

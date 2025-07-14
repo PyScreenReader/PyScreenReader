@@ -65,7 +65,7 @@ std::shared_ptr<VirtualWidget> ScreenReaderImpl::GetVirtualWidgetTreeByPID(
     throw std::runtime_error("Failed could not get tree walker");
 
   std::shared_ptr<VirtualWidget> root =
-      generator::GenerateVWidgetTree(matched_element, tree_walker);
+      vwidget_generator::GenerateVWidgetTree(matched_element, tree_walker);
 
   matched_element->Release();
   match_condition->Release();

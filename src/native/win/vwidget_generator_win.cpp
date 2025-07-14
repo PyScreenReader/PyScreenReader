@@ -25,7 +25,7 @@ std::shared_ptr<VirtualWidget> GenerateVWidgetTree(
     while (current_element) {
       // Check next sibling, add their first child to queue and bind
       // parent/child
-      curr_vwidget = CreateVirtualWidget(current_element);
+      curr_vwidget = MapToVWidget(current_element);
       curr_vwidget->SetParent(parent_vwidget);
       parent_vwidget->AddChild(curr_vwidget);
       tree_walker->GetFirstChildElement(current_element, &first_child_element);
@@ -43,8 +43,8 @@ std::shared_ptr<VirtualWidget> GenerateVWidgetTree(
 std::shared_ptr<VirtualWidget> MapToVWidget(IUIAutomationElement* element) {
   CONTROLTYPEID type_id;
   element->get_CurrentControlType(&type_id);
-  auto iterator = VIRTUAL_WIDGET_FACTORY.find(type_id);
-  if (iterator == VIRTUAL_WIDGET_FACTORY.end())
+  auto iterator = kRoleWidgetMap.find(type_id);
+  if (iterator == kRoleWidgetMap.end())
     throw std::runtime_error("Unknown control type");
 
   std::shared_ptr<VirtualWidget> result = iterator->second(element);

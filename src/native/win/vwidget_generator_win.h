@@ -1,10 +1,8 @@
 #pragma once
 
 #include <uiautomationclient.h>
-#include <windows.h>
 #include <functional>
 #include <unordered_map>
-#include <unordered_set>
 #include "include/vwidget/virtual_widget.h"
 #include "include/vwidget/widgets/virtual_button_widget.h"
 #include "include/vwidget/widgets/virtual_menu_item_widget.h"
@@ -27,12 +25,12 @@
 namespace vwidget_generator {
 
 /**
- * Type of a native widget handler.
+ * Type of native widget handler.
  */
 using NativeWidgetHandler = std::function<std::shared_ptr<VirtualWidget>(IUIAutomationElement*)>;
 
 /**
- * Type of a handler map, which registers all the native maps to its corresponding WidgetHandler.
+ * Type of handler map, which registers all the native maps to its corresponding WidgetHandler.
  */
 using RoleHandlerMap = std::unordered_map<CONTROLTYPEID, NativeWidgetHandler>;
 

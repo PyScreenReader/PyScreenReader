@@ -72,12 +72,12 @@ std::shared_ptr<VirtualSpinnerWidget> vwidget_factory::CreateWidget(IUIAutomatio
  * @param element native IUIAutomationElement* to copy the values from
  * @note this function modifies the param widget
  */
-void PopulateSharedAttributes(std::shared_ptr<VirtualWidget> widget, IUIAutomationElement* element) {
+void vwidget_factory::PopulateSharedAttributes(std::shared_ptr<VirtualWidget> widget, IUIAutomationElement* element) {
   HRESULT hresult = S_OK;
   // Title
   BSTR current_name = nullptr;
   hresult = element->get_CurrentName(&current_name);
-  if (SUCCEEDED(hresult)) {
+  if (current_name && SUCCEEDED(hresult)) {
     const std::string title_string(_com_util::ConvertBSTRToString(current_name));
     widget->SetTitleText(title_string);
   }
@@ -87,7 +87,7 @@ void PopulateSharedAttributes(std::shared_ptr<VirtualWidget> widget, IUIAutomati
   // Native name
   BSTR control_type = nullptr;
   hresult = element->get_CurrentLocalizedControlType(&control_type);
-  if (SUCCEEDED(hresult)) {
+  if (control_type && SUCCEEDED(hresult)) {
     const std::string title_string(_com_util::ConvertBSTRToString(control_type));
     widget->SetTitleText(title_string);
   }
@@ -97,7 +97,7 @@ void PopulateSharedAttributes(std::shared_ptr<VirtualWidget> widget, IUIAutomati
   // Help text
   BSTR help_text = nullptr;
   hresult = element->get_CurrentHelpText(&help_text);
-  if (SUCCEEDED(hresult)) {
+  if (help_text && SUCCEEDED(hresult)) {
     const std::string title_string(_com_util::ConvertBSTRToString(help_text));
     widget->SetTitleText(title_string);
   }
@@ -105,18 +105,18 @@ void PopulateSharedAttributes(std::shared_ptr<VirtualWidget> widget, IUIAutomati
   help_text = nullptr;
 
   // Position and Dimension (Width and Height)
-  RECT* rect = nullptr;
-  hresult = element->get_CurrentBoundingRectangle(rect);
+  RECT rect;
+  hresult = element->get_CurrentBoundingRectangle(&rect);
   if (SUCCEEDED(hresult)) {
-    widget->SetX(static_cast<int>(rect->left));
-    widget->SetY(static_cast<int>(rect->top));
-    widget->SetWidth(static_cast<int>(rect->right - rect->left));
-    widget->SetHeight(static_cast<int>(rect->bottom - rect->top));
+    widget->SetX(static_cast<int>(rect.left));
+    widget->SetY(static_cast<int>(rect.top));
+    widget->SetWidth(static_cast<int>(rect.right - rect.left));
+    widget->SetHeight(static_cast<int>(rect.bottom - rect.top));
   }
 
   // Focus
-  BOOL* is_focused = nullptr;
-  hresult = element->get_CurrentHasKeyboardFocus(is_focused);
+  BOOL is_focused = FALSE;
+  hresult = element->get_CurrentHasKeyboardFocus(&is_focused);
   if (SUCCEEDED(hresult)) {
     widget->SetFocused(static_cast<bool>(is_focused));
   }
