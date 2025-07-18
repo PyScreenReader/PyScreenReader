@@ -1,5 +1,5 @@
 ###############################################################################
-# Bazel now uses Bzlmod by default to manage external dependencies.
+#Bazel now uses Bzlmod by default to manage external dependencies.
 # Please consider migrating your external dependencies from WORKSPACE to MODULE.bazel.
 #
 # For more details, please check https://github.com/bazelbuild/bazel/issues/18958
@@ -28,6 +28,30 @@ git_override(
     remote = "https://github.com/hedronvision/bazel-compile-commands-extractor.git",
 )
 
+bazel_dep(name = "bazel_pkg_config", version = "master")
+git_override(
+    module_name = "bazel_pkg_config",
+    commit = "7aabd7ccd0fdbb80dc1afd6d627e45a886f50b62",
+    remote = "https://github.com/Lmh-java/bazel_pkg_config.git",
+)
+
+# Linux specific depedencies
+pkg_config_extension = use_extension("@bazel_pkg_config//:pkg_config.bzl", "pkg_config_extension")
+pkg_config_extension.package(
+    name = "glib",
+    pkg_name = "glib-2.0",
+    skip_platforms = ["windows", "macos"],
+)
+pkg_config_extension.package(
+    name = "atspi",
+    pkg_name = "atspi-2",
+    skip_platforms = ["windows", "macos"],
+)
+
+use_repo(pkg_config_extension, "glib")
+use_repo(pkg_config_extension, "atspi")
+
+# Pybind 11 Configurations
 pybind11_configure = use_extension("@pybind11_bazel//:internal_configure.bzl", "internal_configure_extension")
 use_repo(pybind11_configure, "pybind11")
 
@@ -54,3 +78,4 @@ pip.parse(
     requirements_lock = "//tools:requirements_lock.txt",
 )
 use_repo(pip, "dev_tools_env", "pytest_env")
+

@@ -9,11 +9,9 @@ pybind_library(
     srcs = [
         ":atspi_utils.cpp",
     ],
-    linkopts = [
-        "-latspi",
-        "-ldbus-1",
-        "-lglib-2.0",
-        "-lgobject-2.0",
-    ],
+    deps = [
+        "@glib//:lib",
+        "@atspi//:lib",
+    ]
 )
 
