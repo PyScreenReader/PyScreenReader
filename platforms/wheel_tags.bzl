@@ -37,3 +37,20 @@ arch_name = select({
 platform_tag = os_name + "_" + ((os_version + "_") if os_version else "") + arch_name
 
 python_tag = "cp" + python_version_string.replace(".", "")
+
+# Trove Classifiers
+# https://pypi.org/classifiers/
+trove_classifiers = [
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: MacOS",
+    "Operating System :: POSIX :: Linux",
+    "Topic :: Desktop Environment :: Gnome",
+    "Development Status :: 1 - Planning",
+    "Programming Language :: C++",
+    "Topic :: Software Development :: Libraries :: Application Frameworks",
+    "Topic :: Software Development :: Libraries",
+    "Typing :: Typed",
+    "Topic :: Utilities",
+    "License :: OSI Approved :: MIT License"
+]
+
