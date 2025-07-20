@@ -20,8 +20,8 @@ def test_additional_methods():
             "get_selected_text",
             "set_insertion_point",
             "get_insertion_point",
-            "set_is_text_field",
-            "is_text_field",
+            "set_is_text_area",
+            "is_text_area",
         ],
     )
 
@@ -47,10 +47,10 @@ def test_insertion_point_setter_getter(widget: VirtualTextInputWidget):
     assert widget.get_insertion_point() == 10
 
 
-def test_text_field_setter_getter(widget: VirtualTextInputWidget):
-    assert not widget.is_text_field(), "is_text_field should default to False"
-    widget.set_is_text_field(True)
-    assert widget.is_text_field()
+def test_text_area_setter_getter(widget: VirtualTextInputWidget):
+    assert not widget.is_text_area(), "is_text_area should default to False"
+    widget.set_is_text_area(True)
+    assert widget.is_text_area()
 
 
 def test_widget_name(widget: VirtualTextInputWidget):
