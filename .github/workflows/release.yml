@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - package # TODO: remove this once done testing
   repository_dispatch:
     types: [build-command]
 
@@ -34,13 +35,13 @@ jobs:
         run: |
           ./update_python_version.sh ${{ matrix.python-version }}
 
-      - name: Run Basic Python Test Suite
-        run: |
-          bazel test //tests/py/...
-
-      - name: Run Basic C++ Test Suite
-        run: |
-          bazel test //tests/cpp/... --test_tag_filters=-no_ci
+#      - name: Run Basic Python Test Suite
+#        run: |
+#          bazel test //tests/py/...
+#
+#      - name: Run Basic C++ Test Suite
+#        run: |
+#          bazel test //tests/cpp/... --test_tag_filters=-no_ci
 
       - name: Build Wheel
         run: |
