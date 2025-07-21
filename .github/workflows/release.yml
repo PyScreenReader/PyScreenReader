@@ -74,30 +74,3 @@ jobs:
           WHEEL_FILE=$(ls bazel-bin/dist/*.whl)
           set +x
           anaconda -t "$ANACONDA_API_TOKEN" upload "$WHEEL_FILE" --user lmh-java --label staging --force
-
-  notify-on-success:
-    name: Notify Caller on Success
-    if: github.event_name == 'repository_dispatch'
-    needs: build
-    runs-on: ubuntu-latest
-    env:
-      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      PR_NUMBER: ${{ github.event.client_payload.pull_request.number }}
-    steps:
-      - name: Notify Caller
-        run: |
-          gh pr comment "$PR_NUMBER" --body "✅ All builds for all Python versions completed successfully on all platforms. They were pushed to Anaconda Staging."
-
-  failure-check:
-    name: Notify on Failure
-    if: ${{ failure() && github.event_name == 'repository_dispatch' }}
-    needs: build
-    runs-on: ubuntu-latest
-    env:
-      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      PR_NUMBER: ${{ github.event.client_payload.pull_request.number }}
-    steps:
-      - name: Comment failure
-        run: |
-          ACTION_URL="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          gh pr comment "$PR_NUMBER" --body "❌ One or more builds failed. Please check the [logs]($ACTION_URL) for details."
