@@ -35,6 +35,9 @@ arch_name = select({
 })
 
 platform_tag = os_name + "_" + ((os_version + "_") if os_version else "") + arch_name
+print("os_version", os_version)
+print("os_name", os_name)
+print("arch_name", arch_name)
 
 python_tag = "cp" + python_version_string.replace(".", "")
 
