@@ -9,7 +9,7 @@
 set -e
 
 # List of files that contains python version number
-FILES=("wheel_tags.bzl" "MODULE.bazel")
+FILES=("platforms/wheel_tags.bzl" "MODULE.bazel")
 
 if [ -z "$1" ]; then
   echo "Usage: $0 <python_version>"
