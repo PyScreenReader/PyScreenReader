@@ -61,7 +61,7 @@ jobs:
         with:
           # Note: this python version is the dev tool python version
           # which is isolated from ${{ matrix.python-version }}, which is the build version
-          python-version: '3.12'
+          python-version: '3.13'
 
       - name: Install Anaconda Client
         run: |
