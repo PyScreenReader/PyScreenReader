@@ -32,8 +32,9 @@ jobs:
           disk-cache: ${{ github.workflow }}
 
       - name: Prepare Bazel Config
+        working-directory: ${{ github.workspace }}
         run: |
-          ./update_python_version.sh ${{ matrix.python-version }}
+          ./.github/workflows/update_python_version.sh ${{ matrix.python-version }}
 
 #      - name: Run Basic Python Test Suite
 #        run: |
