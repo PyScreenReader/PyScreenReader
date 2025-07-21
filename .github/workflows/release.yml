@@ -34,7 +34,7 @@ jobs:
       - name: Setup Linux Native Libs
         if: runner.os == 'Linux'
         run: |
-          sudo apt-get install libatk-bridge2.0-0 at-spi2-core libatspi2.0-dev libglib2.0-dev
+          sudo apt-get install libatk-bridge2.0-0 at-spi2-core libatspi2.0-dev libglib2.0-dev libsystemd-dev
 
       - name: Prepare Bazel Config
         working-directory: ${{ github.workspace }}
