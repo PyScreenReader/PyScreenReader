@@ -34,10 +34,10 @@ arch_name = select({
     "//conditions:default": "unknown",
 })
 
-platform_tag = os_name + "_" + ((os_version + "_") if os_version else "") + arch_name
-print("os_version", os_version)
-print("os_name", os_name)
-print("arch_name", arch_name)
+# Due to evaluation order of `select` clause, we need this extra variable.
+# See https://github.com/bazelbuild/bazel/issues/8171
+os_version_segment = os_version + "_"
+platform_tag = os_name + "_" + (os_version_segment if os_version_segment != '_' else "") + arch_name
 
 python_tag = "cp" + python_version_string.replace(".", "")
 
