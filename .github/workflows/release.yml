@@ -34,6 +34,7 @@ jobs:
       - name: Prepare Bazel Config
         working-directory: ${{ github.workspace }}
         run: |
+          chmod +x ./.github/workflows/update_python_version.sh
           ./.github/workflows/update_python_version.sh ${{ matrix.python-version }}
 
 #      - name: Run Basic Python Test Suite
