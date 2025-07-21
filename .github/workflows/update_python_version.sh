@@ -4,7 +4,7 @@
 # This script lookups patterns of "python_version_string=[Python Version Number]" in the hardcoded file list
 # below, and update them to the provided python version.
 
-# Usage: ./update_python_version.sh 3.11
+# Usage: update_python_version.sh 3.11
 
 set -e
 
