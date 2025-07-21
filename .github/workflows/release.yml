@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         # TODO: Also add macos, windows when the repo is public. These system costs a lot if the repo is private
-        os: [ubuntu-24.04]
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
         python-version: [3.11, 3.12, 3.13]
 
     steps:
