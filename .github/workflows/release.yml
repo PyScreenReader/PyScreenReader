@@ -1,4 +1,4 @@
-name: Release Pipeline
+name: Build Pipeline
 on:
   push:
     branches:
@@ -12,8 +12,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        # TODO: Also add macos, windows when the repo is public. These system costs a lot if the repo is private
-        os: [ubuntu-24.04, ubuntu-24.04-arm]
+        # TODO (#10): Also add macos, windows and different architectures when the repo is public.
+        os: [ubuntu-24.04]
         python-version: [3.11, 3.12, 3.13]
 
     steps:
@@ -42,13 +42,13 @@ jobs:
           chmod +x ./.github/workflows/update_python_version.sh
           ./.github/workflows/update_python_version.sh ${{ matrix.python-version }}
 
-#      - name: Run Basic Python Test Suite
-#        run: |
-#          bazel test //tests/py/...
-#
-#      - name: Run Basic C++ Test Suite
-#        run: |
-#          bazel test //tests/cpp/... --test_tag_filters=-no_ci
+      - name: Run Basic Python Test Suite
+        run: |
+          bazel test //tests/py/...
+
+      - name: Run Basic C++ Test Suite
+        run: |
+          bazel test //tests/cpp/... --test_tag_filters=-no_ci
 
       - name: Build Wheel
         run: |
