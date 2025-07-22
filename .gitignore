@@ -31,11 +31,11 @@ bazel-PyScreenReader/
 bazel-testlogs/
 MODULE.bazel.lock
 
-# PyEnv
-.python-version
-
 # Compile commands
 compile_commands.json
 
 # Macos data storage
 .DS_Store
+
+# Documentation build
+doc/build
