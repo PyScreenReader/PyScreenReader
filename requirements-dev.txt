@@ -2,3 +2,6 @@ pytest==8.3.5
 ruff==0.11.10
 virtualenv==20.30.0
 clang-format==20.1.8
+markdown-it-py==3.0.0
+sphinx-book-theme==1.1.4
+Sphinx==8.2.3
