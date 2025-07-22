@@ -24,6 +24,10 @@ ignore = ["N813", "INP001", "S101", "FBT001", "PERF401", "D211", "D213", "D203"]
 #       therefore, starting a process with a partial executable path is okay
 "tools/*.py" = ["T201", "S603", "S607"]
 
+# Disabled checks for Sphinx config script
+# A001: `copyright` field shadows a python module, but is also required by Sphinx.
+"doc/source/conf.py" = ["A001"]
+
 # Disabled checks for entire
 # ANN201: it's okay to not have `-> None` in test cases
 # D100: it's okay to not have docstrings on test modules
