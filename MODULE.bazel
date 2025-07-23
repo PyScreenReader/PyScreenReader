@@ -31,7 +31,7 @@ git_override(
 bazel_dep(name = "bazel_pkg_config", version = "master")
 git_override(
     module_name = "bazel_pkg_config",
-    commit = "e247fb3b4007e63bb5110808df6e2c57eb518f16",
+    commit = "70416c613a0a3e5bd2fd538d92ec63e40ec3278b",
     remote = "https://github.com/Lmh-java/bazel_pkg_config.git",
 )
 
