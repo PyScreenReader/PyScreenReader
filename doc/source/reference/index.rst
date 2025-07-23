@@ -10,3 +10,6 @@ In this section, we provide a detailed description of each API in PyScreenReader
 .. toctree::
    :maxdepth: 1
    :caption: API Reference:
+
+   screenreader/index
+   virtualwidgets/index

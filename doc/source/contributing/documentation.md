@@ -1,4 +1,4 @@
-# Documentation
+# Documentation Generation
 
 If you find an error in the PyScreenReader documentation (this site), notice missing or outdated information, or have suggestions to improve clarity or completeness, we warmly welcome your feedback.
 
