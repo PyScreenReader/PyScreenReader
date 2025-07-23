@@ -84,3 +84,4 @@ Useful Links
 
    quickstart
    reference/index
+   contributing/index
