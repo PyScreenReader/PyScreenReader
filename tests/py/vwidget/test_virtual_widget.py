@@ -1,4 +1,4 @@
-from PyScreenReader import VirtualWidget
+from PyScreenReader.virtual_widgets import VirtualWidget
 
 from tests.py.tools.utils import assert_abstract_class, assert_all_base_functions_exist
 

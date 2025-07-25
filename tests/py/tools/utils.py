@@ -2,7 +2,7 @@ import inspect
 from collections.abc import Iterable
 
 import pytest
-from PyScreenReader import VirtualWidget
+from PyScreenReader.virtual_widgets import VirtualWidget
 
 """
 All the base methods that the children of VirtualWidget should have.

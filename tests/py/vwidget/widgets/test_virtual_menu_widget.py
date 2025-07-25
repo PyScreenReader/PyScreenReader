@@ -1,5 +1,5 @@
 import pytest
-from PyScreenReader import VirtualMenuWidget, VirtualWidget
+from PyScreenReader.virtual_widgets import VirtualMenuWidget, VirtualWidget
 
 from tests.py.tools.utils import assert_all_base_functions_exist, assert_correct_inheritance
 
