@@ -5,3 +5,4 @@ clang-format==20.1.8
 markdown-it-py==3.0.0
 sphinx-book-theme==1.1.4
 Sphinx==8.2.3
+pybind11-stubgen==2.5.4
