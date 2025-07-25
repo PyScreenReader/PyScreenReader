@@ -23,9 +23,10 @@ namespace py = pybind11;
 /**
  * Bind all virtual widgets
  *
- * @param module python module object
+ * @param root_module root project module
  */
-void BindVirtualWidgets(py::module_& module) {
+void BindVirtualWidgets(py::module_& root_module) {
+  py::module_ module = root_module.def_submodule("virtual_widgets", "A submodule containing virtual widgets definitions");
   // Orientation
   py::enum_<Orientation>(module, "Orientation", R"doc(
 Enum representing the orientation of widgets.
@@ -457,9 +458,10 @@ Set whether the current window is a modal.
 /**
  * Bind all screen reader APIs
  *
- * @param module python module object
+ * @param root_module root project module
  */
-void BindScreenReader(py::module_& module) {
+void BindScreenReader(py::module_& root_module) {
+  py::module_ module = root_module.def_submodule("screen_reader", "A submodule containing screen reader APIs");
   py::class_<ScreenReader>(module, "ScreenReader", R"doc(
 ScreenReader provides access to virtual widget trees for applications identified by process ID.
 )doc")
