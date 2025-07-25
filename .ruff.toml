@@ -3,6 +3,9 @@ line-length = 100
 # Assume Python 3.12, since we primarily use 3.12 as the dev version
 target-version = "py312"
 
+# exclude auto-generated pyi files
+exclude = ["src/stubs/*.pyi"]
+
 [lint]
 select = ["ALL"]
 
@@ -30,7 +33,7 @@ ignore = ["N813", "INP001", "S101", "FBT001", "FBT002", "PERF401", "D211", "D213
 # A001: `copyright` field shadows a python module, but is also required by Sphinx.
 "doc/source/conf.py" = ["A001"]
 
-# Disabled checks for entire
+# Disabled checks for entire test python files
 # ANN201: it's okay to not have `-> None` in test cases
 # D100: it's okay to not have docstrings on test modules
 # D103: it's okay to not have a docstring on test assertions (their name should be clear enough)
@@ -38,3 +41,6 @@ ignore = ["N813", "INP001", "S101", "FBT001", "FBT002", "PERF401", "D211", "D213
 # BLE001: for test purposes, sometimes it is easier to catch all exceptions to assert no exceptions happened
 # T201: `print` statement is temporarily allowed before we finalize our test cases
 "tests/py/*.py" = ["ANN201", "D100", "D103", "PLR2004", "BLE001", "T201"]
+
+# Disabled checks for auto-generated pyi files
+"src/stubs/*.pyi" = ["ALL"]
