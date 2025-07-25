@@ -44,7 +44,10 @@ py_wheel(
     description_file = ":readme",
     homepage = "https://github.com/Lmh-java/PyScreenReader",
     summary = "PyScreenReader is a cross-platform Python library that wraps native accessibility APIs to collect widget tree information on the screen.",
-    deps = [":PyScreenReader"],
+    deps = [
+        ":PyScreenReader",
+        "//src/stubs:py_stubs"
+    ],
 )
 
 py_wheel_dist(
