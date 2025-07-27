@@ -89,7 +89,7 @@ void vwidget_factory::PopulateSharedAttributes(std::shared_ptr<VirtualWidget> wi
   hresult = element->get_CurrentLocalizedControlType(&control_type);
   if (control_type && SUCCEEDED(hresult)) {
     const std::string title_string(_com_util::ConvertBSTRToString(control_type));
-    widget->SetTitleText(title_string);
+    widget->SetNativeName(title_string);
   }
   SysFreeString(control_type);
   control_type = nullptr;
@@ -99,7 +99,7 @@ void vwidget_factory::PopulateSharedAttributes(std::shared_ptr<VirtualWidget> wi
   hresult = element->get_CurrentHelpText(&help_text);
   if (help_text && SUCCEEDED(hresult)) {
     const std::string title_string(_com_util::ConvertBSTRToString(help_text));
-    widget->SetTitleText(title_string);
+    widget->SetHelpText(title_string);
   }
   SysFreeString(help_text);
   help_text = nullptr;

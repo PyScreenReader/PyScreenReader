@@ -14,8 +14,6 @@
 #include "include/vwidget/widgets/virtual_unknown_widget.h"
 #include "include/vwidget/widgets/virtual_window_widget.h"
 
-#include <optional>
-
 namespace vwidget_factory {
 template <typename T>
 std::shared_ptr<T> CreateWidget(IUIAutomationElement* element);

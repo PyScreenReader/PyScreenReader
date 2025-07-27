@@ -34,9 +34,6 @@ using NativeWidgetHandler = std::function<std::shared_ptr<VirtualWidget>(IUIAuto
  */
 using RoleHandlerMap = std::unordered_map<CONTROLTYPEID, NativeWidgetHandler>;
 
-
-// NOLINTBEGIN(readability-identifier-length)
-// clang-format off
 /**
  * Mapping between native widgets to virtual widgets, effectively the Widget Factory
  *
@@ -46,79 +43,76 @@ using RoleHandlerMap = std::unordered_map<CONTROLTYPEID, NativeWidgetHandler>;
  * which provides currently selected text by the user).
  */
 const RoleHandlerMap kRoleWidgetMap = {
-  // IExpandCollapseProvider OR (IInvokeProvider XOR IToggleProvider)
-  REGISTER_HANDLER(UIA_ButtonControlTypeId, VirtualButtonWidget),
-  // IToggleProvider
-  REGISTER_HANDLER(UIA_CheckBoxControlTypeId,VirtualButtonWidget),
-  // IExpandCollapseProvider
-  REGISTER_HANDLER(UIA_ComboBoxControlTypeId, VirtualButtonWidget),
-  // IInvokeProvider (IValueProvider OR Value)?
-  REGISTER_HANDLER(UIA_HyperlinkControlTypeId, VirtualButtonWidget),
-  // IExpandCollapseProvider AND IInvokeProvider
-  REGISTER_HANDLER(UIA_SplitButtonControlTypeId, VirtualButtonWidget),
-  // ISelectionItemProvider AND SelectionContainer
-  REGISTER_HANDLER(UIA_RadioButtonControlTypeId, VirtualButtonWidget),
+    // IExpandCollapseProvider OR (IInvokeProvider XOR IToggleProvider)
+    REGISTER_HANDLER(UIA_ButtonControlTypeId, VirtualButtonWidget),
+    // IToggleProvider
+    REGISTER_HANDLER(UIA_CheckBoxControlTypeId, VirtualButtonWidget),
+    // IExpandCollapseProvider
+    REGISTER_HANDLER(UIA_ComboBoxControlTypeId, VirtualButtonWidget),
+    // IInvokeProvider (IValueProvider OR Value)?
+    REGISTER_HANDLER(UIA_HyperlinkControlTypeId, VirtualButtonWidget),
+    // IExpandCollapseProvider AND IInvokeProvider
+    REGISTER_HANDLER(UIA_SplitButtonControlTypeId, VirtualButtonWidget),
+    // ISelectionItemProvider AND SelectionContainer
+    REGISTER_HANDLER(UIA_RadioButtonControlTypeId, VirtualButtonWidget),
 
-  // ITextProvider
-  REGISTER_HANDLER(UIA_EditControlTypeId, VirtualTextInputWidget),
-  // ITextProvider
-  REGISTER_HANDLER(UIA_TextControlTypeId, VirtualTextWidget),
-  // ITextProvider
-  REGISTER_HANDLER(UIA_DocumentControlTypeId,VirtualTextWidget),
-  // ITextProvider
-  REGISTER_HANDLER(UIA_ToolTipControlTypeId, VirtualTextWidget),
-  // Value
-  REGISTER_HANDLER(UIA_ProgressBarControlTypeId, VirtualProgressBarWidget),
+    // ITextProvider
+    REGISTER_HANDLER(UIA_EditControlTypeId, VirtualTextInputWidget),
+    // ITextProvider
+    REGISTER_HANDLER(UIA_TextControlTypeId, VirtualTextWidget),
+    // ITextProvider
+    REGISTER_HANDLER(UIA_DocumentControlTypeId, VirtualTextWidget),
+    // ITextProvider
+    REGISTER_HANDLER(UIA_ToolTipControlTypeId, VirtualTextWidget),
+    // Value
+    REGISTER_HANDLER(UIA_ProgressBarControlTypeId, VirtualProgressBarWidget),
 
-  // ISelectionProvider
-  REGISTER_HANDLER(UIA_TabControlTypeId, VirtualMenuWidget),
-  // ISelectionItemProvider
-  REGISTER_HANDLER(UIA_TabItemControlTypeId, VirtualMenuItemWidget),
+    // ISelectionProvider
+    REGISTER_HANDLER(UIA_TabControlTypeId, VirtualMenuWidget),
+    // ISelectionItemProvider
+    REGISTER_HANDLER(UIA_TabItemControlTypeId, VirtualMenuItemWidget),
 
-  // IExpandCollapseProvider AND SelectionContainer
-  REGISTER_HANDLER(UIA_TreeItemControlTypeId, VirtualGroupWidget),
-  // IExpandCollapseProvider?
-  REGISTER_HANDLER(UIA_GroupControlTypeId, VirtualGroupWidget),
-  // IGridProvider
-  REGISTER_HANDLER(UIA_DataGridControlTypeId, VirtualGroupWidget),
-  // IGridProvider AND ITableProvider
-  REGISTER_HANDLER(UIA_TableControlTypeId, VirtualGroupWidget),
+    // IExpandCollapseProvider AND SelectionContainer
+    REGISTER_HANDLER(UIA_TreeItemControlTypeId, VirtualGroupWidget),
+    // IExpandCollapseProvider?
+    REGISTER_HANDLER(UIA_GroupControlTypeId, VirtualGroupWidget),
+    // IGridProvider
+    REGISTER_HANDLER(UIA_DataGridControlTypeId, VirtualGroupWidget),
+    // IGridProvider AND ITableProvider
+    REGISTER_HANDLER(UIA_TableControlTypeId, VirtualGroupWidget),
 
-  // ITransformProvider AND IWindowProvider
-  REGISTER_HANDLER(UIA_WindowControlTypeId,VirtualWindowWidget),
+    // ITransformProvider AND IWindowProvider
+    REGISTER_HANDLER(UIA_WindowControlTypeId, VirtualWindowWidget),
 
-  // Misc. none or optional control patterns
-  REGISTER_HANDLER(UIA_CalendarControlTypeId, VirtualUnknownWidget),
-  REGISTER_HANDLER(UIA_ImageControlTypeId, VirtualUnknownWidget),
-  REGISTER_HANDLER(UIA_ListItemControlTypeId, VirtualGroupWidget),
-  REGISTER_HANDLER(UIA_ListControlTypeId, VirtualGroupWidget),
-  REGISTER_HANDLER(UIA_MenuControlTypeId, VirtualMenuWidget),
-  REGISTER_HANDLER(UIA_MenuBarControlTypeId, VirtualMenuWidget),
-  REGISTER_HANDLER(UIA_MenuItemControlTypeId, VirtualMenuItemWidget),
-  REGISTER_HANDLER(UIA_SliderControlTypeId, VirtualSliderWidget),
-  REGISTER_HANDLER(UIA_SpinnerControlTypeId, VirtualSpinnerWidget),
-  REGISTER_HANDLER(UIA_StatusBarControlTypeId, VirtualUnknownWidget),
-  REGISTER_HANDLER(UIA_CustomControlTypeId, VirtualUnknownWidget),
-  REGISTER_HANDLER(UIA_DataItemControlTypeId, VirtualGroupWidget),
-  REGISTER_HANDLER(UIA_PaneControlTypeId, VirtualGroupWidget),
-  REGISTER_HANDLER(UIA_HeaderControlTypeId, VirtualMenuWidget),
-  REGISTER_HANDLER(UIA_HeaderItemControlTypeId, VirtualMenuItemWidget),
-  REGISTER_HANDLER(UIA_TitleBarControlTypeId, VirtualUnknownWidget),
-  REGISTER_HANDLER(UIA_SeparatorControlTypeId, VirtualUnknownWidget),
-  REGISTER_HANDLER(UIA_SemanticZoomControlTypeId, VirtualUnknownWidget),
-  REGISTER_HANDLER(UIA_AppBarControlTypeId, VirtualUnknownWidget),
-  REGISTER_HANDLER(UIA_ToolBarControlTypeId, VirtualMenuWidget),
-  REGISTER_HANDLER(UIA_TreeControlTypeId, VirtualGroupWidget),
+    // Misc. none or optional control patterns
+    REGISTER_HANDLER(UIA_CalendarControlTypeId, VirtualUnknownWidget),
+    REGISTER_HANDLER(UIA_ImageControlTypeId, VirtualUnknownWidget),
+    REGISTER_HANDLER(UIA_ListItemControlTypeId, VirtualGroupWidget),
+    REGISTER_HANDLER(UIA_ListControlTypeId, VirtualGroupWidget),
+    REGISTER_HANDLER(UIA_MenuControlTypeId, VirtualMenuWidget),
+    REGISTER_HANDLER(UIA_MenuBarControlTypeId, VirtualMenuWidget),
+    REGISTER_HANDLER(UIA_MenuItemControlTypeId, VirtualMenuItemWidget),
+    REGISTER_HANDLER(UIA_SliderControlTypeId, VirtualSliderWidget),
+    REGISTER_HANDLER(UIA_SpinnerControlTypeId, VirtualSpinnerWidget),
+    REGISTER_HANDLER(UIA_StatusBarControlTypeId, VirtualUnknownWidget),
+    REGISTER_HANDLER(UIA_CustomControlTypeId, VirtualUnknownWidget),
+    REGISTER_HANDLER(UIA_DataItemControlTypeId, VirtualGroupWidget),
+    REGISTER_HANDLER(UIA_PaneControlTypeId, VirtualGroupWidget),
+    REGISTER_HANDLER(UIA_HeaderControlTypeId, VirtualMenuWidget),
+    REGISTER_HANDLER(UIA_HeaderItemControlTypeId, VirtualMenuItemWidget),
+    REGISTER_HANDLER(UIA_TitleBarControlTypeId, VirtualUnknownWidget),
+    REGISTER_HANDLER(UIA_SeparatorControlTypeId, VirtualUnknownWidget),
+    REGISTER_HANDLER(UIA_SemanticZoomControlTypeId, VirtualUnknownWidget),
+    REGISTER_HANDLER(UIA_AppBarControlTypeId, VirtualUnknownWidget),
+    REGISTER_HANDLER(UIA_ToolBarControlTypeId, VirtualMenuWidget),
+    REGISTER_HANDLER(UIA_TreeControlTypeId, VirtualGroupWidget),
 
-  // Special cases:
-  REGISTER_HANDLER(UIA_ScrollBarControlTypeId, VirtualScrollbarWidget),
-  // ITransformProvider
-  REGISTER_HANDLER(UIA_ThumbControlTypeId, VirtualUnknownWidget),
-
+    // Special cases:
+    REGISTER_HANDLER(UIA_ScrollBarControlTypeId, VirtualScrollbarWidget),
+    // ITransformProvider
+    REGISTER_HANDLER(UIA_ThumbControlTypeId, VirtualUnknownWidget),
 
 };
-// clang-format on
-// NOLINTEND(readability-identifier-length)
 
 std::shared_ptr<VirtualWidget> GenerateVWidgetTree(IUIAutomationElement* root_element,
                                                    IUIAutomationTreeWalker* tree_walker);

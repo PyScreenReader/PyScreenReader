@@ -33,8 +33,9 @@ std::shared_ptr<VirtualWidget> GenerateVWidgetTree(
         queue.emplace(curr_vwidget, first_child_element);
       }
       hresult = tree_walker->GetNextSiblingElement(current_element, &current_element);
-      if (FAILED(hresult))
-        throw std::runtime_error("Failed GetNextSiblingElement");
+      // TODO: Use DCHECK_EQ in #56
+      // if (FAILED(hresult))
+      //   throw std::runtime_error("Failed GetNextSiblingElement");
     }
   }
   return root;
@@ -43,11 +44,14 @@ std::shared_ptr<VirtualWidget> GenerateVWidgetTree(
 std::shared_ptr<VirtualWidget> MapToVWidget(IUIAutomationElement* element) {
   CONTROLTYPEID type_id;
   element->get_CurrentControlType(&type_id);
+  std::shared_ptr<VirtualWidget> result = nullptr;
   auto iterator = kRoleWidgetMap.find(type_id);
-  if (iterator == kRoleWidgetMap.end())
-    throw std::runtime_error("Unknown control type");
+  if (iterator == kRoleWidgetMap.end()) {
+    result = vwidget_factory::CreateWidget<VirtualUnknownWidget>(element);
+  } else {
+    result = iterator->second(element);
+  }
 
-  std::shared_ptr<VirtualWidget> result = iterator->second(element);
   return result;
 }
 }  // namespace vwidget_generator
