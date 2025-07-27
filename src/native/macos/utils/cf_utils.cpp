@@ -42,7 +42,7 @@ std::optional<std::string> cf_utils::GetAttribute(AXUIElementRef element, CFStri
   }
 
   const auto *string_ref = static_cast<CFStringRef>(value_ref);
-  std::string result_str = cf_utils::ToString(string_ref);
+  std::optional<std::string> result_str = cf_utils::ToString(string_ref);
 
   CFRelease(value_ref);
   string_ref = nullptr;

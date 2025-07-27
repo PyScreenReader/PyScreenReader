@@ -22,7 +22,9 @@ def test_widget_name(widget: VirtualButtonWidget):
 
 
 def test_repr_str(widget: VirtualButtonWidget):
-    expected_str = "{VirtualButtonWidget, title=, help=, x=0, y=0, width=0, height=0}"
+    expected_str = (
+        "{VirtualButtonWidget, title=, help=, x=0, y=0, width=0, height=0, visible=false}"
+    )
     assert str(widget) == expected_str
     assert repr(widget) == expected_str
 
@@ -32,6 +34,9 @@ def test_repr_str(widget: VirtualButtonWidget):
     widget.set_height(4)
     widget.set_help_text("help")
     widget.set_title_text("title")
-    expected_str = "{VirtualButtonWidget, title=title, help=help, x=1, y=2, width=3, height=4}"
+    widget.set_visible(True)
+    expected_str = (
+        "{VirtualButtonWidget, title=title, help=help, x=1, y=2, width=3, height=4, visible=true}"
+    )
     assert str(widget) == expected_str
     assert repr(widget) == expected_str

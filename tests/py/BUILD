@@ -8,4 +8,5 @@ compile_pip_requirements(
     name = "requirements",
     src = "//tests/py:requirements.in",
     requirements_txt = "//tests/py:requirements_lock.txt",
+    requirements_windows = "//tests/py:requirements_lock_win.txt",
 )
