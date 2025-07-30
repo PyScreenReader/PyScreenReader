@@ -7,6 +7,7 @@ class VirtualScrollbarWidget : public NumericValueWidget {
  public:
   VirtualScrollbarWidget();
   ~VirtualScrollbarWidget() override = default;
+
   /**
    * Get current orientation of the widget.
    *

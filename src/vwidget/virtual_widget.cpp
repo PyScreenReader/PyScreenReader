@@ -1,6 +1,8 @@
 #include "include/vwidget/virtual_widget.h"
 
 #include <sstream>
+
+#include <ostream>
 #include <utility>
 
 VirtualWidget::VirtualWidget(std::string widget_name) : widget_name_(std::move(widget_name)) {}

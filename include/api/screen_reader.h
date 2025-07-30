@@ -3,11 +3,12 @@
 #include <memory>
 #include <string>
 
+#include "src/base/build_flags.h"
 #include "include/vwidget/virtual_widget.h"
 
-#if defined(__APPLE__)
+#if defined(MAC_OS)
 #include "src/native/macos/screen_reader_impl_mac.h"
-#elif defined(_WIN64) || defined(_WIN32) || defined(__CYGWIN__)
+#elif defined(WIN_OS)
 #include "src/native/win/screen_reader_impl_win.h"
 #endif
 

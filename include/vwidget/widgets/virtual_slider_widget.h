@@ -7,6 +7,7 @@ class VirtualSliderWidget : public NumericValueWidget {
  public:
   VirtualSliderWidget();
   ~VirtualSliderWidget() override = default;
+
   /**
    * Get current orientation of the widget.
    *

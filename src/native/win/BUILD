@@ -14,9 +14,29 @@ pybind_library(
         "ole32.lib",
         "oleaut32.lib",
         "comsuppw.lib",
+        "comsuppw.lib",
     ],
     deps = [
         ":vwidget_generator_win",
+    ],
+)
+
+pybind_library(
+    name = "vwidget_factory",
+    srcs = [
+        ":vwidget_factory_win.cpp",
+    ],
+    hdrs = [
+        ":vwidget_factory_win.h",
+    ],
+    linkopts = [
+        "ole32.lib",
+        "oleaut32.lib",
+        "comsuppw.lib",
+        "comsuppw.lib",
+    ],
+    deps = [
+        "//src/vwidget/widgets:virtual_components",
     ],
 )
 
@@ -29,6 +49,7 @@ pybind_library(
         ":vwidget_generator_win.h",
     ],
     deps = [
+        "//src/native/win:vwidget_factory",
         "//src/vwidget/widgets:virtual_components",
     ],
 )

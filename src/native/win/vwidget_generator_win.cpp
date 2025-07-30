@@ -4,9 +4,10 @@
 #include <queue>
 #include <stdexcept>
 #include <utility>
+#include <comutil.h>
 
-namespace generator {
-std::shared_ptr<VirtualWidget> generator::GenerateVWidgetTree(
+namespace vwidget_generator {
+std::shared_ptr<VirtualWidget> GenerateVWidgetTree(
     IUIAutomationElement* root_element,
     IUIAutomationTreeWalker* tree_walker) {
   auto root = std::make_shared<VirtualWindowWidget>();
@@ -24,7 +25,7 @@ std::shared_ptr<VirtualWidget> generator::GenerateVWidgetTree(
     while (current_element) {
       // Check next sibling, add their first child to queue and bind
       // parent/child
-      curr_vwidget = CreateVirtualWidget(current_element);
+      curr_vwidget = MapToVWidget(current_element);
       curr_vwidget->SetParent(parent_vwidget);
       parent_vwidget->AddChild(curr_vwidget);
       tree_walker->GetFirstChildElement(current_element, &first_child_element);
@@ -32,21 +33,25 @@ std::shared_ptr<VirtualWidget> generator::GenerateVWidgetTree(
         queue.emplace(curr_vwidget, first_child_element);
       }
       hresult = tree_walker->GetNextSiblingElement(current_element, &current_element);
-      if (FAILED(hresult))
-        throw std::runtime_error("Failed GetNextSiblingElement");
+      // TODO: Use DCHECK_EQ in #56
+      // if (FAILED(hresult))
+      //   throw std::runtime_error("Failed GetNextSiblingElement");
     }
   }
   return root;
 }
 
-std::shared_ptr<VirtualWidget> generator::CreateVirtualWidget(IUIAutomationElement* element) {
+std::shared_ptr<VirtualWidget> MapToVWidget(IUIAutomationElement* element) {
   CONTROLTYPEID type_id;
   element->get_CurrentControlType(&type_id);
-  auto iterator = VIRTUAL_WIDGET_FACTORY.find(type_id);
-  if (iterator == VIRTUAL_WIDGET_FACTORY.end())
-    throw std::runtime_error("Unknown control type");
+  std::shared_ptr<VirtualWidget> result = nullptr;
+  auto iterator = kRoleWidgetMap.find(type_id);
+  if (iterator == kRoleWidgetMap.end()) {
+    result = vwidget_factory::CreateWidget<VirtualUnknownWidget>(element);
+  } else {
+    result = iterator->second(element);
+  }
 
-  std::shared_ptr<VirtualWidget> result = iterator->second(element);
   return result;
 }
-}  // namespace generator
+}  // namespace vwidget_generator
