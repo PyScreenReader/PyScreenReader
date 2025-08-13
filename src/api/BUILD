@@ -15,6 +15,7 @@ pybind_library(
     select({
        "@platforms//os:macos": ["//src/native/macos:screen_reader_impl_mac"],
        "@platforms//os:windows": ["//src/native/win:screen_reader_impl_win"],
+       "@platforms//os:linux": ["//src/native/linux:screen_reader_impl_linux"],
        "//conditions:default": [],
    }),
 )
