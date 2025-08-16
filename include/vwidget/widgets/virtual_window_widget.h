@@ -27,5 +27,5 @@ class VirtualWindowWidget : public VirtualWidget {
   void SetIsModal(bool is_modal) { is_modal_ = is_modal; }
 
  private:
-  bool is_modal_;
+  bool is_modal_ = false;
 };
