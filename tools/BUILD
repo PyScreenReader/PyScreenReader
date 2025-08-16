@@ -1,3 +1,5 @@
+# Buildifier Config
+load("@buildifier_prebuilt//:rules.bzl", "buildifier")
 load("@dev_tools_env//:requirements.bzl", "requirement")
 load("@hedron_compile_commands//:refresh_compile_commands.bzl", "refresh_compile_commands")
 load("@rules_python//python:pip.bzl", "compile_pip_requirements")
@@ -22,6 +24,7 @@ refresh_compile_commands(
     },
 )
 
+# Debug Tools Config
 py_binary(
     name = "lint_cpp",
     srcs = ["lint_cpp.py"],
@@ -40,8 +43,8 @@ py_binary(
     name = "lint_py",
     srcs = ["lint_py.py"],
     deps = [
-        "tools_helper"
-    ]
+        "tools_helper",
+    ],
 )
 
 py_library(
@@ -53,8 +56,8 @@ cc_binary(
     name = "cpp_inspect",
     srcs = ["cpp_inspect.cpp"],
     deps = [
-        "@cxxopts//:cxxopts",
         "//src/api:screen_reader",
+        "@cxxopts",
     ],
 )
 
@@ -63,5 +66,14 @@ py_binary(
     srcs = ["py_inspect.py"],
     deps = [
         "//:PyScreenReader",
-    ]
+    ],
+)
+
+buildifier(
+    name = "buildifier.fix",
+    exclude_patterns = [
+        "./.git/*",
+    ],
+    lint_mode = "warn",
+    mode = "fix",
 )
