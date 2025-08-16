@@ -1,6 +1,6 @@
 load("@pybind11_bazel//:build_defs.bzl", "pybind_library_test")
 
-def gtest_test(name, srcs, deps, platform, size="small", no_ci=False, **kwargs):
+def gtest_test(name, srcs, deps, platform, size = "small", no_ci = False, **kwargs):
     """
     Build a PyScreenReader gtest target
     This function wraps the pybind_library_test
@@ -33,7 +33,7 @@ def gtest_test(name, srcs, deps, platform, size="small", no_ci=False, **kwargs):
         srcs = srcs,
         size = size,
         target_compatible_with = compatible_platform,
-        tags = ['no_ci'] if no_ci else [],
+        tags = ["no_ci"] if no_ci else [],
         deps = deps + ["@googletest//:gtest", "@googletest//:gtest_main"],
         **kwargs
     )

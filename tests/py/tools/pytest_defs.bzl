@@ -1,7 +1,7 @@
-load("@rules_python//python:defs.bzl", "py_test")
 load("@pytest_env//:requirements.bzl", "requirement")
+load("@rules_python//python:defs.bzl", "py_test")
 
-def pytest_test(name, srcs, deps=[], args=[], data=[], **kwargs):
+def pytest_test(name, srcs, deps = [], args = [], data = [], **kwargs):
     """
     Build a pytest target
     This function wraps the original py_test target
@@ -35,5 +35,5 @@ def pytest_suite(test_files, deps = []):
         pytest_test(
             name = test_name,
             srcs = [test_file],
-            deps = deps
+            deps = deps,
         )
