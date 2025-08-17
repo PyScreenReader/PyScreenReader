@@ -30,8 +30,7 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-"""
-Script to download PyScreenReader wheels from the Anaconda staging area.
+"""Script to download PyScreenReader wheels from the Anaconda staging area.
 
 Usage::
 
@@ -45,17 +44,17 @@ Dependencies
 
 Examples
 --------
-
 While in the repository root::
 
     $ python tools/download-wheels.py 0.1.0
     $ python tools/download-wheels.py 0.1.0 -w ~/wheelhouse
 
 """
+
 import argparse
-import os
 import re
 import shutil
+from pathlib import Path
 
 import urllib3
 from bs4 import BeautifulSoup
@@ -73,7 +72,7 @@ PREFIX = "pyscreenreader"
 SUFFIX = r"-.*\.whl$"
 
 
-def get_wheel_names(version):
+def get_wheel_names(version: str) -> list[str]:
     """Get wheel names from Anaconda HTML directory."""
     http = urllib3.PoolManager(cert_reqs="CERT_REQUIRED")
     tmpl = re.compile(rf"^.*{PREFIX}-{version}{SUFFIX}")
@@ -82,25 +81,27 @@ def get_wheel_names(version):
     return sorted(soup.find_all(string=tmpl))
 
 
-def download_wheels(version, wheelhouse, test=False):
+def download_wheels(version: str, wheelhouse: Path, test: bool = False) -> None:
     """Download release wheels for PyScreenReader."""
     http = urllib3.PoolManager(cert_reqs="CERT_REQUIRED")
     wheel_names = get_wheel_names(version)
 
     for i, wheel_name in enumerate(wheel_names):
         wheel_url = f"{FILES_URL}/{version}/download/{wheel_name}"
-        wheel_path = os.path.join(wheelhouse, wheel_name)
-        with open(wheel_path, "wb") as f:
-            with http.request("GET", wheel_url, preload_content=False) as r:
-                info = r.info()
-                length = int(info.get("Content-Length", "0"))
-                if length == 0:
-                    length_str = "unknown size"
-                else:
-                    length_str = f"{(length / 1024 / 1024):.2f}MB"
-                print(f"{i + 1:<4}{wheel_name} {length_str}")
-                if not test:
-                    shutil.copyfileobj(r, f)
+        wheel_path = wheelhouse / wheel_name
+        with (
+            Path.open(wheel_path, "wb") as f,
+            http.request("GET", wheel_url, preload_content=False) as r,
+        ):
+            info = r.info()
+            length = int(info.get("Content-Length", "0"))
+            if length == 0:
+                length_str = "unknown size"
+            else:
+                length_str = f"{(length / 1024 / 1024):.2f}MB"
+            print(f"{i + 1:<4}{wheel_name} {length_str}")
+            if not test:
+                shutil.copyfileobj(r, f)
     print(f"\nTotal files downloaded: {len(wheel_names)}")
 
 
@@ -108,27 +109,29 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "version",
-        help="PyScreenReader version to download from stalling."
+        help="PyScreenReader version to download from stalling.",
     )
     parser.add_argument(
-        "-w", "--wheelhouse",
-        default=os.path.join(os.getcwd(), "release"),
-        help="Directory in which to store downloaded wheels\n"
-             "[defaults to <cwd>/release/]"
+        "-w",
+        "--wheelhouse",
+        default=Path.cwd() / "release",
+        help="Directory in which to store downloaded wheels\n[defaults to <cwd>/release/]",
     )
     parser.add_argument(
-        "-t", "--test",
+        "-t",
+        "--test",
         action="store_true",
-        help="Only list available wheels, do not download"
+        help="Only list available wheels, do not download",
     )
 
     args = parser.parse_args()
 
-    wheelhouse = os.path.expanduser(args.wheelhouse)
-    if not os.path.isdir(wheelhouse):
-        raise RuntimeError(
-            f"{wheelhouse} wheelhouse directory is not present."
-            " Perhaps you need to use the '-w' flag to specify one."
+    wheelhouse = Path.expanduser(args.wheelhouse)
+    if not Path.is_dir(wheelhouse):
+        error_msg = (
+            f"{wheelhouse} wheelhouse directory is not present. "
+            f"Perhaps you need to use the '-w' flag to specify one."
         )
+        raise RuntimeError(error_msg)
 
     download_wheels(args.version, wheelhouse, test=args.test)

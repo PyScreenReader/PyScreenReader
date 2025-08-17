@@ -11,10 +11,11 @@ select = ["ALL"]
 # INP001: __init__.py is not used since everything is managed by bazel
 # S101: For pytest, we use `assert` to provide assertions
 # FBT001: Allow taking boolean as a positional argument to the function
+# FBT002: It's a common practice to use boolean default positional argument
 # PERF401: We don't enforce list.extend over list.append + for loop, for loops can perform additional logic
 # D211: This conflicts with D203, so disbaled
 # D213: This conflicts with D212, so disabled
-ignore = ["N813", "INP001", "S101", "FBT001", "PERF401", "D211", "D213", "D203"]
+ignore = ["N813", "INP001", "S101", "FBT001", "FBT002", "PERF401", "D211", "D213", "D203"]
 
 [lint.per-file-ignores]
 # Disabled checks for tool scripts:
@@ -22,7 +23,8 @@ ignore = ["N813", "INP001", "S101", "FBT001", "PERF401", "D211", "D213", "D203"]
 # S603: Allow subprocess call in tool scripts
 # S607: For tool scripts, sometimes a command lookup through system is necessary,
 #       therefore, starting a process with a partial executable path is okay
-"tools/*.py" = ["T201", "S603", "S607"]
+# SIM108: there should be no reason to encourage the use of ternary rather than if-else
+"tools/*.py" = ["T201", "S603", "S607", "SIM108"]
 
 # Disabled checks for entire
 # ANN201: it's okay to not have `-> None` in test cases
