@@ -6,10 +6,10 @@ on:
         required: true
         type: string
         description: version to release
-      ref_name:
+      commit_hash:
+        required: true
         type: string
-        default: main
-        description: The branch / tag / commit hash to create release from
+        description: The commit hash to create release from
 
 jobs:
   build:
@@ -24,7 +24,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.inputs.ref_name }}
+          ref: ${{ github.event.inputs.commit_hash }}
 
       - name: Setup Bazel
         uses: bazel-contrib/setup-bazel@0.15.0
@@ -82,4 +82,4 @@ jobs:
         run: |
           WHEEL_FILE=$(ls bazel-bin/dist/*.whl)
           set +x
-          anaconda -t "$ANACONDA_API_TOKEN" upload "$WHEEL_FILE" --user lmh-java --label ${{ github.event.inputs.ref_name }} --force
+          anaconda -t "$ANACONDA_API_TOKEN" upload "$WHEEL_FILE" --user lmh-java --label main --force

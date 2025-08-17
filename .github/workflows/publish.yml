@@ -1,0 +1,85 @@
+name: Publish Pipeline
+on:
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        required: true
+        type: string
+        description: version to release
+      commit_hash:
+        required: true
+        type: string
+        description: The commit hash to create release from
+
+jobs:
+  publish:
+    runs-on: ubuntu-24.04
+    env:
+      GITHUB_RELEASE_TAG: v${{ github.event.inputs.release_tag }}
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Bazel
+        uses: bazel-contrib/setup-bazel@0.15.0
+        with:
+          # Avoid downloading Bazel every time.
+          bazelisk-cache: true
+          # Store build cache per workflow.
+          disk-cache: ${{ github.workflow }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          # Note: this python version is the dev tool python version
+          # which is isolated from the build python version
+          python-version: '3.13'
+
+      - name: Download Wheels from Staging
+        run: |
+          mkdir -p /tmp/release
+          bazel run //tools:download_wheels -- ${{ github.event.inputs.release_tag }} -w /tmp/release
+          ls -lh /tmp/release
+
+      - name: Create Archive Branch & Generate Release Note
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch origin
+          git checkout ${{ github.event.inputs.commit_hash }}
+
+          git checkout -b "archive/$GITHUB_RELEASE_TAG"
+          git push origin "archive/$GITHUB_RELEASE_TAG"
+
+          git tag "$GITHUB_RELEASE_TAG"
+          git push origin "$GITHUB_RELEASE_TAG"
+
+      - name: Draft Release Notes
+        uses: release-drafter/release-drafter@v6
+        with:
+          version: ${{ env.GITHUB_RELEASE_TAG }}
+          tag: ${{ env.GITHUB_RELEASE_TAG }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Wheels to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.GITHUB_RELEASE_TAG }}
+          name: Release ${{ env.GITHUB_RELEASE_TAG }}
+          files: /tmp/release/*
+          draft: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install Twine
+        run: |
+          pip install --upgrade twine
+
+      - name: Upload to PyPI
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+        run: |
+          twine upload /tmp/release

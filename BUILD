@@ -17,6 +17,9 @@ pybind_extension(
         "//src/api:screen_reader",
         "//src/vwidget:all_virtual_widgets",
     ],
+    copts = [
+        "-DVERSION_INFO=\"{}\"".format(release_version),
+    ],
 )
 
 # Readme file target
