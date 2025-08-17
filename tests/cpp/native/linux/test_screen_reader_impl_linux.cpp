@@ -10,5 +10,6 @@
  * for debugging with IDE breakpoints.
  */
 TEST(ScreenReaderImplLinuxTest, TestPidSanityCheck) {
-  screen_reader::ScreenReaderImpl::GetVirtualWidgetTreeByPID("82534");
+  screen_reader::ScreenReaderImpl impl;
+  impl.GetVirtualWidgetTreeByPID("82534");
 }
