@@ -53,6 +53,8 @@ jobs:
 
       - name: Run Basic Python Test Suite
         run: |
+          # Manually update requirements lock since switching Python version will fail the test
+          bazel run //tests/py:requirements.update
           bazel test //tests/py/...
 
       - name: Run Basic C++ Test Suite
