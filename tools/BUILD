@@ -37,6 +37,15 @@ py_binary(
 )
 
 py_binary(
+    name = "download_wheels",
+    srcs = ["download_wheels.py"],
+    deps = [
+        requirement("beautifulsoup4"),
+        requirement("urllib3"),
+    ]
+)
+
+py_binary(
     name = "lint_py",
     srcs = ["lint_py.py"],
     deps = [
