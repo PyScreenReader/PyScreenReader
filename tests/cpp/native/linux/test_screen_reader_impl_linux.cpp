@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include <string>
 
-#include "src/native/macos/screen_reader_impl_linux.h"
+#include "src/native/linux/screen_reader_impl_linux.h"
 
 /**
  * This is a test case that only serves as a sanity check.
