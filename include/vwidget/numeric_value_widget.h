@@ -50,9 +50,9 @@ class NumericValueWidget : public VirtualWidget {
   ~NumericValueWidget() override = default;
 
  private:
-  int value_;
-  int min_value_;
-  int max_value_;
+  int value_ = -1;
+  int min_value_ = -1;
+  int max_value_ = -1;
 
  protected:
   explicit NumericValueWidget(const std::string& widget_name);

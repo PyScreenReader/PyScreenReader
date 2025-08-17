@@ -53,6 +53,6 @@ class VirtualTextInputWidget : public VirtualWidget {
 
  private:
   std::string selected_text_;
-  int insertion_point_;
-  bool is_text_area_;
+  int insertion_point_ = -1;
+  bool is_text_area_ = false;
 };

@@ -23,5 +23,5 @@ class VirtualSliderWidget : public NumericValueWidget {
   void SetOrientation(const Orientation& orientation) { orientation_ = orientation; }
 
  private:
-  Orientation orientation_;
+  Orientation orientation_ = Orientation::VERTICAL;
 };
