@@ -42,7 +42,7 @@ def test_selected_text_setter_getter(widget: VirtualTextInputWidget):
 
 
 def test_insertion_point_setter_getter(widget: VirtualTextInputWidget):
-    assert widget.get_insertion_point() == 0, "insertion_point should default to 0"
+    assert widget.get_insertion_point() == -1, "insertion_point should default to -1"
     widget.set_insertion_point(10)
     assert widget.get_insertion_point() == 10
 

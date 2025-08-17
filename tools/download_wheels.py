@@ -126,7 +126,7 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    wheelhouse = Path.expanduser(args.wheelhouse)
+    wheelhouse = Path.expanduser(Path(args.wheelhouse))
     if not Path.is_dir(wheelhouse):
         error_msg = (
             f"{wheelhouse} wheelhouse directory is not present. "
