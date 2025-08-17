@@ -1,9 +1,7 @@
 #include <gtest/gtest.h>
-#include <ApplicationServices/ApplicationServices.h>
-#include <CoreFoundation/CoreFoundation.h>
 #include <string>
 
-#include "src/native/macos/screen_reader_impl_mac.h"
+#include "src/native/macos/screen_reader_impl_linux.h"
 
 /**
  * This is a test case that only serves as a sanity check.
@@ -11,6 +9,6 @@
  * In most cases, we could also use this as a handy entry point
  * for debugging with IDE breakpoints.
  */
-TEST(ScreenReaderImplMacTest, TestPidSanityCheck) {
+TEST(ScreenReaderImplLinuxTest, TestPidSanityCheck) {
   screen_reader::ScreenReaderImpl::GetVirtualWidgetTreeByPID("82534");
 }
