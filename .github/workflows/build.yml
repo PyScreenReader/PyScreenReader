@@ -1,0 +1,85 @@
+name: Build Pipeline
+on:
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        required: true
+        type: string
+        description: version to release
+      commit_hash:
+        required: true
+        type: string
+        description: The commit hash to create release from
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        # TODO (#10): Also add macos, windows and different architectures when the repo is public.
+        os: [ubuntu-24.04]
+        python-version: [3.11, 3.12, 3.13]
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.commit_hash }}
+
+      - name: Setup Bazel
+        uses: bazel-contrib/setup-bazel@0.15.0
+        with:
+          # Avoid downloading Bazel every time.
+          bazelisk-cache: true
+          # Store build cache per workflow.
+          disk-cache: ${{ github.workflow }}
+
+      - name: Setup Linux Native Libs
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get install libatk-bridge2.0-0 at-spi2-core libatspi2.0-dev libglib2.0-dev libsystemd-dev
+
+      - name: Update Release Version
+        working-directory: ${{ github.workspace }}
+        run: |
+          chmod +x ./.github/workflows/update_release_version.sh
+          ./.github/workflows/update_release_version.sh ${{ github.event.inputs.release_tag }}
+
+      - name: Update Python Version
+        working-directory: ${{ github.workspace }}
+        run: |
+          chmod +x ./.github/workflows/update_python_version.sh
+          ./.github/workflows/update_python_version.sh ${{ matrix.python-version }}
+
+      - name: Run Basic Python Test Suite
+        run: |
+          bazel test //tests/py/...
+
+      - name: Run Basic C++ Test Suite
+        run: |
+          bazel test //tests/cpp/... --test_tag_filters=-no_ci
+
+      - name: Build Wheel
+        run: |
+          bazel build //:dist
+          WHEEL_FILE=$(ls bazel-bin/dist/*.whl)
+          echo "Created wheel package: $WHEEL_FILE successfully"
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          # Note: this python version is the dev tool python version
+          # which is isolated from ${{ matrix.python-version }}, which is the build version
+          python-version: '3.13'
+
+      - name: Install Anaconda Client
+        run: |
+          pip install --upgrade anaconda-client
+
+      - name: Upload Wheel to Staging
+        env:
+          ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        run: |
+          WHEEL_FILE=$(ls bazel-bin/dist/*.whl)
+          set +x
+          anaconda -t "$ANACONDA_API_TOKEN" upload "$WHEEL_FILE" --user lmh-java --label main --force
