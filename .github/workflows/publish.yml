@@ -5,11 +5,15 @@ on:
       release_tag:
         required: true
         type: string
-        description: version to release
+        description: Version to release
       commit_hash:
         required: true
         type: string
-        description: The commit hash to create release from
+        description: Commit hash to create release from
+      dry_run:
+        default: true
+        type: boolean
+        description: Is dry run (without upload to PyPI Prod)
 
 permissions:
   contents: write
@@ -53,10 +57,10 @@ jobs:
           git checkout ${{ github.event.inputs.commit_hash }}
 
           git checkout -b "archive/$GITHUB_RELEASE_TAG"
-          git push origin "archive/$GITHUB_RELEASE_TAG"
+          git push origin "archive/$GITHUB_RELEASE_TAG" --force
 
           git tag "$GITHUB_RELEASE_TAG"
-          git push origin "$GITHUB_RELEASE_TAG"
+          git push origin "$GITHUB_RELEASE_TAG" --force
 
       - name: Draft Release Notes
         uses: release-drafter/release-drafter@v6
@@ -80,9 +84,18 @@ jobs:
         run: |
           pip install --upgrade twine
 
-      - name: Upload to PyPI
+      - name: Upload to TestPyPI Staging
+        if: ${{ github.event.inputs.dry_run == 'true' }}
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.TEST_PYPI_API_TOKEN }}
+        run: |
+          twine upload --repository testpypi /tmp/release/* 
+
+      - name: Upload to PyPI Prod
+        if: ${{ github.event.inputs.dry_run != 'true' }}
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
         run: |
-          twine upload /tmp/release
+          twine upload /tmp/release/* 
