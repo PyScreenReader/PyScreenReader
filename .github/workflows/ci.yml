@@ -1,0 +1,38 @@
+name: General CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  ubuntu-sanity:
+    - runs-on: ubuntu-latest
+
+    - steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Bazel
+        uses: bazel-contrib/setup-bazel@0.15.0
+        with:
+          # Avoid downloading Bazel every time.
+          bazelisk-cache: true
+          # Store build cache per workflow.
+          disk-cache: ${{ github.workflow }}
+
+      - name: Setup Linux Native Libs
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get install libatk-bridge2.0-0 at-spi2-core libatspi2.0-dev libglib2.0-dev libsystemd-dev
+
+      - name: Run Basic Python Test Suite
+        run: |
+          bazel test //tests/py/...
+
+      - name: Run Basic C++ Test Suite
+        run: |
+          bazel test //tests/cpp/... --test_tag_filters=-no_ci
