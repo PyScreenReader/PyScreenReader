@@ -10,10 +10,10 @@ on:
         required: true
         type: string
         description: Commit hash to create release from
-      dry_run:
-        default: true
+      live_run:
+        default: false
         type: boolean
-        description: Is dry run (without upload to PyPI Prod)
+        description: Upload to PyPI (Unchecked will only upload to TestPyPI)
 
 permissions:
   contents: write
@@ -59,8 +59,12 @@ jobs:
           git checkout -b "archive/$GITHUB_RELEASE_TAG"
           git push origin "archive/$GITHUB_RELEASE_TAG" --force
 
-          git tag "$GITHUB_RELEASE_TAG"
-          git push origin "$GITHUB_RELEASE_TAG" --force
+          if git rev-parse "$GITHUB_RELEASE_TAG" >/dev/null 2>&1; then
+            echo "Tag $GITHUB_RELEASE_TAG already exists, skipping."
+          else
+            git tag "$GITHUB_RELEASE_TAG"
+            git push origin "$GITHUB_RELEASE_TAG" --force
+          fi
 
       - name: Draft Release Notes
         uses: release-drafter/release-drafter@v6
@@ -85,7 +89,7 @@ jobs:
           pip install --upgrade twine
 
       - name: Upload to TestPyPI Staging
-        if: ${{ github.event.inputs.dry_run == 'true' }}
+        if: ${{ github.event.inputs.live_run != 'true' }}
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.TEST_PYPI_API_TOKEN }}
@@ -93,7 +97,7 @@ jobs:
           twine upload --repository testpypi /tmp/release/* 
 
       - name: Upload to PyPI Prod
-        if: ${{ github.event.inputs.dry_run != 'true' }}
+        if: ${{ github.event.inputs.live_run == 'true' }}
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
