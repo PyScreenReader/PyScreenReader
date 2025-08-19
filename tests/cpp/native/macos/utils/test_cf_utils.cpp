@@ -1,6 +1,6 @@
-#include <gtest/gtest.h>
 #include <ApplicationServices/ApplicationServices.h>
 #include <CoreFoundation/CoreFoundation.h>
+#include <gtest/gtest.h>
 #include <string>
 
 #include "src/native/macos/utils/cf_utils.h"
@@ -32,7 +32,8 @@ TEST(CFUtilsTest, ToStringEmpty) {
 }
 
 TEST(CFUtilsTest, ToStringMalformed) {
-  const CFStringRef string_ref = CFStringCreateWithCString(nullptr, "\0\0\0\0\0", kCFStringEncodingUTF8);
+  const CFStringRef string_ref =
+      CFStringCreateWithCString(nullptr, "\0\0\0\0\0", kCFStringEncodingUTF8);
 
   auto actual_string = cf_utils::ToString(string_ref);
 
@@ -45,7 +46,8 @@ TEST(CFUtilsTest, ToStringMalformed) {
 }
 
 TEST(CFUtilsTest, ToStringNoOptimization) {
-  const CFStringRef string_ref = CFStringCreateWithCString(nullptr, "Hello", kCFStringEncodingASCII);
+  const CFStringRef string_ref =
+      CFStringCreateWithCString(nullptr, "Hello", kCFStringEncodingASCII);
 
   // Assert no optimization is done by CoreFoundation
   EXPECT_EQ(CFStringGetCStringPtr(string_ref, kCFStringEncodingUTF8), nullptr);
@@ -61,8 +63,8 @@ TEST(CFUtilsTest, ToStringNoOptimization) {
 
 TEST(CFUtilsTest, ToStringNoOptimizationEmbeddedNull) {
   const char data[] = {'H', 'e', 'l', 'l', 'o', '\0', 'x'};
-  CFStringRef string_ref = CFStringCreateWithBytes(nullptr, reinterpret_cast<const UInt8*>(data), sizeof(data),
-                                          kCFStringEncodingUTF8, false);
+  CFStringRef string_ref = CFStringCreateWithBytes(nullptr, reinterpret_cast<const UInt8*>(data),
+                                                   sizeof(data), kCFStringEncodingUTF8, false);
 
   // Assert no optimization is done by CoreFoundation
   EXPECT_EQ(CFStringGetCStringPtr(string_ref, kCFStringEncodingUTF8), nullptr);

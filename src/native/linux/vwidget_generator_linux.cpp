@@ -1,13 +1,13 @@
-#include <cassert>
 #include <glib-object.h>
-#include <queue>
+#include <cassert>
 #include <iostream>
+#include <queue>
 
-#include "src/native/linux/vwidget_generator_linux.h"
 #include "src/native/linux/utils/atspi_utils.h"
+#include "src/native/linux/vwidget_generator_linux.h"
 
-std::shared_ptr<VirtualWidget>
-vwidget_generator::GenerateVWidgetTree(AtspiAccessible *root_element) {
+std::shared_ptr<VirtualWidget> vwidget_generator::GenerateVWidgetTree(
+    AtspiAccessible* root_element) {
   if (!root_element)
     return nullptr;
 
@@ -49,7 +49,7 @@ vwidget_generator::GenerateVWidgetTree(AtspiAccessible *root_element) {
   return root;
 }
 
-std::shared_ptr<VirtualWidget> vwidget_generator::MapToVWidget(AtspiAccessible *element) {
+std::shared_ptr<VirtualWidget> vwidget_generator::MapToVWidget(AtspiAccessible* element) {
   auto elem_role_opt = atspi_utils::GetRole(element);
 
   if (!elem_role_opt.has_value())
@@ -63,9 +63,9 @@ std::shared_ptr<VirtualWidget> vwidget_generator::MapToVWidget(AtspiAccessible *
     auto elem_role_name_opt = atspi_utils::GetRoleName(element);
 
     if (elem_role_name_opt.has_value()) {
-       std::cerr << "Unrecognized role name: " << elem_role_name_opt.value() << std::endl;
+      std::cerr << "Unrecognized role name: " << elem_role_name_opt.value() << std::endl;
     } else {
-       std::cerr << "Unrecognized role id: " << elem_role_opt.value() << std::endl;
+      std::cerr << "Unrecognized role id: " << elem_role_opt.value() << std::endl;
     }
 
     vwidget_element = vwidget_factory::CreateWidget<VirtualUnknownWidget>(element);
@@ -73,4 +73,3 @@ std::shared_ptr<VirtualWidget> vwidget_generator::MapToVWidget(AtspiAccessible *
 
   return vwidget_element;
 }
-

@@ -21,16 +21,6 @@ bazel_dep(name = "bazel_skylib", version = "1.7.1")
 bazel_dep(name = "cxxopts", version = "3.0.0", dev_dependency = True)
 bazel_dep(name = "buildifier_prebuilt", version = "8.2.0.2", dev_dependency = True)
 
-# hedron_compile_commands is used to build compilation database for linters
-# run `bazel run @hedron_compile_commands//:refresh_all`
-# TODO (Issue #15): also write this to a separate documentation
-bazel_dep(name = "hedron_compile_commands", version = "1.0.5", dev_dependency = True)
-git_override(
-    module_name = "hedron_compile_commands",
-    commit = "4f28899228fb3ad0126897876f147ca15026151e",
-    remote = "https://github.com/hedronvision/bazel-compile-commands-extractor.git",
-)
-
 # TODO: pin the version of bazel_pkg_config
 bazel_dep(name = "bazel_pkg_config", version = "master")
 archive_override(
@@ -40,7 +30,7 @@ archive_override(
     url = "https://github.com/Lmh-java/bazel_pkg_config/archive/refs/heads/master.zip",
 )
 
-# Linux specific depedencies
+# Linux specific dependencies
 pkg_config_extension = use_extension("@bazel_pkg_config//:pkg_config.bzl", "pkg_config_extension")
 pkg_config_extension.package(
     name = "glib",

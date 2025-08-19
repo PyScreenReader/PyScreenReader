@@ -3,8 +3,8 @@
 #include <memory>
 #include <string>
 
-#include "src/base/build_flags.h"
 #include "include/vwidget/virtual_widget.h"
+#include "src/base/build_flags.h"
 
 #if defined(MAC_OS)
 #include "src/native/macos/screen_reader_impl_mac.h"
@@ -17,7 +17,7 @@
 class ScreenReaderImpl;
 
 class ScreenReader {
-public:
+ public:
   ScreenReader() = default;
   ~ScreenReader() = default;
   /**
@@ -27,9 +27,9 @@ public:
    * @param pid The process ID used to identify the target application
    * @return pointer to the VirtualWidget corresponding to the given PID
    */
-  [[nodiscard]] std::shared_ptr<VirtualWidget>
-  GetVirtualWidgetTreeByPID(const std::string &pid) const;
+  [[nodiscard]] std::shared_ptr<VirtualWidget> GetVirtualWidgetTreeByPID(
+      const std::string& pid) const;
 
-private:
+ private:
   screen_reader::ScreenReaderImpl screen_reader_impl_;
 };

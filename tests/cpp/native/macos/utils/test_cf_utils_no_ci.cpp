@@ -1,9 +1,9 @@
-#include <gtest/gtest.h>
 #include <ApplicationServices/ApplicationServices.h>
 #include <CoreFoundation/CoreFoundation.h>
-#include <string>
+#include <gtest/gtest.h>
 #include <iostream>
 #include <stdexcept>
+#include <string>
 
 #include "src/native/macos/utils/cf_utils.h"
 
@@ -18,7 +18,8 @@ class CFUtilsTest : public ::testing::Test {
 
   static void SetUpTestSuite() {
     AssertPermission();
-    dummy_attr_name_ = CFStringCreateWithCString(nullptr, "FakeAttributeName", kCFStringEncodingUTF8);
+    dummy_attr_name_ =
+        CFStringCreateWithCString(nullptr, "FakeAttributeName", kCFStringEncodingUTF8);
     window_ref_ = FindFirstWindowElement();
   }
 
@@ -31,15 +32,12 @@ class CFUtilsTest : public ::testing::Test {
     /**
      * Assert there is proper accessibility permission
      */
-    CFStringRef keys[] = { kAXTrustedCheckOptionPrompt };
-    CFBooleanRef values[] = { kCFBooleanTrue };
+    CFStringRef keys[] = {kAXTrustedCheckOptionPrompt};
+    CFBooleanRef values[] = {kCFBooleanTrue};
     CFDictionaryRef options =
-        CFDictionaryCreate(kCFAllocatorDefault,
-                           reinterpret_cast<const void**>(keys),
-                           reinterpret_cast<const void**>(values),
-                           1,
-                           &kCFTypeDictionaryKeyCallBacks,
-                           &kCFTypeDictionaryValueCallBacks);
+        CFDictionaryCreate(kCFAllocatorDefault, reinterpret_cast<const void**>(keys),
+                           reinterpret_cast<const void**>(values), 1,
+                           &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
     Boolean trusted = AXIsProcessTrustedWithOptions(options);
     CFRelease(options);
     if (!trusted) {
@@ -164,7 +162,5 @@ TEST_F(CFUtilsTest, GetAttributeCGSizeTargetDoesNotExist) {
 }
 
 TEST_F(CFUtilsTest, GetAttributeNotSupportedType) {
-  ASSERT_THROW({
-    cf_utils::GetAttribute<long>(window_ref_, kAXRoleAttribute);
-  }, std::logic_error);
+  ASSERT_THROW({ cf_utils::GetAttribute<long>(window_ref_, kAXRoleAttribute); }, std::logic_error);
 }

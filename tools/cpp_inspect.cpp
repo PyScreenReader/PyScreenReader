@@ -19,7 +19,6 @@
 #include "include/api/screen_reader.h"
 #include "include/vwidget/virtual_widget.h"
 
-
 void PrintTree(const std::shared_ptr<VirtualWidget>& root) {
   std::stack<std::pair<std::shared_ptr<VirtualWidget>, int>> node_stack;
   node_stack.emplace(root, 0);
@@ -36,24 +35,21 @@ void PrintTree(const std::shared_ptr<VirtualWidget>& root) {
     std::cout << std::string(indent * 2, ' ');
     std::cout << curr_node->ToString() << std::endl;
 
-    for (const auto &child : curr_node->GetChildren()) {
+    for (const auto& child : curr_node->GetChildren()) {
       node_stack.emplace(child, indent + 1);
     }
   }
 }
 
-
 int main(int argc, char* argv[]) {
   cxxopts::Options options("PyScreenReader - Inspect C++",
                            "Run ScreenReader C++ implementation directly");
 
-  options.add_options()
-      ("p,pid", "pid number of the program", cxxopts::value<int>());
+  options.add_options()("p,pid", "pid number of the program", cxxopts::value<int>());
 
   auto result = options.parse(argc, argv);
 
-  if (result.count("pid") == 0)
-  {
+  if (result.count("pid") == 0) {
     std::cout << options.help() << '\n';
     return 1;
   }

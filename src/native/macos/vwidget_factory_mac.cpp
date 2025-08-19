@@ -19,7 +19,8 @@ std::shared_ptr<VirtualTextWidget> vwidget_factory::CreateWidget(AXUIElementRef 
 template <>
 std::shared_ptr<VirtualTextInputWidget> vwidget_factory::CreateWidget(AXUIElementRef element) {
   auto widget = vwidget_factory::CreateWidgetWithAttributes<VirtualTextInputWidget>(element);
-  if (auto selected_text_opt = vwidget_factory::GetNonEmptyStringAttribute(element, kAXSelectedTextAttribute)) {
+  if (auto selected_text_opt =
+          vwidget_factory::GetNonEmptyStringAttribute(element, kAXSelectedTextAttribute)) {
     widget->SetSelectedText(selected_text_opt.value());
   }
   widget->SetIsTextArea(widget->GetNativeName() == "AXTextArea");
@@ -74,12 +75,13 @@ std::shared_ptr<VirtualSliderWidget> vwidget_factory::CreateWidget(AXUIElementRe
 template <>
 std::shared_ptr<VirtualProgressBarWidget> vwidget_factory::CreateWidget(AXUIElementRef element) {
   auto widget = vwidget_factory::CreateWidgetWithAttributes<VirtualProgressBarWidget>(element);
-  if (auto orientation_opt = vwidget_factory::GetNonEmptyStringAttribute(element, kAXOrientationAttribute)) {
+  if (auto orientation_opt =
+          vwidget_factory::GetNonEmptyStringAttribute(element, kAXOrientationAttribute)) {
     if (orientation_opt.value() == "AXVerticalOrientation") {
       widget->SetOrientation(Orientation::VERTICAL);
     } else {
-      // it is possible that native orientation to be kAXUnknownOrientationValue, but we don't handle that
-      // just defaulting to horizontal.
+      // it is possible that native orientation to be kAXUnknownOrientationValue, but we don't
+      // handle that just defaulting to horizontal.
       widget->SetOrientation(Orientation::HORIZONTAL);
     }
   }
@@ -91,20 +93,24 @@ std::shared_ptr<VirtualSpinnerWidget> vwidget_factory::CreateWidget(AXUIElementR
   return vwidget_factory::CreateWidgetWithAttributes<VirtualSpinnerWidget>(element);
 }
 
-std::optional<std::string> vwidget_factory::GetNonEmptyStringAttribute(AXUIElementRef element, CFStringRef attr) {
+std::optional<std::string> vwidget_factory::GetNonEmptyStringAttribute(AXUIElementRef element,
+                                                                       CFStringRef attr) {
   if (auto str_opt = cf_utils::GetAttribute<std::string>(element, attr)) {
-    if (!str_opt->empty()) return str_opt;
+    if (!str_opt->empty())
+      return str_opt;
   }
   return std::nullopt;
 }
 
-void vwidget_factory::PopulateSharedAttributes(std::shared_ptr<VirtualWidget> widget, AXUIElementRef element) {
-  assert (widget && element && "widget and element should not be null");
+void vwidget_factory::PopulateSharedAttributes(std::shared_ptr<VirtualWidget> widget,
+                                               AXUIElementRef element) {
+  assert(widget && element && "widget and element should not be null");
 
   // Title
   if (auto title_opt = vwidget_factory::GetNonEmptyStringAttribute(element, kAXTitleAttribute)) {
     widget->SetTitleText(title_opt.value());
-  } else if (auto desc_opt = vwidget_factory::GetNonEmptyStringAttribute(element, kAXDescriptionAttribute)) {
+  } else if (auto desc_opt =
+                 vwidget_factory::GetNonEmptyStringAttribute(element, kAXDescriptionAttribute)) {
     widget->SetTitleText(desc_opt.value());
   }
 
@@ -112,12 +118,14 @@ void vwidget_factory::PopulateSharedAttributes(std::shared_ptr<VirtualWidget> wi
   // This falls back to kAXRoleDescriptionAttribute when there is no kAXHelpAttribute
   if (auto help_opt = vwidget_factory::GetNonEmptyStringAttribute(element, kAXHelpAttribute)) {
     widget->SetHelpText(help_opt.value());
-  } else if (auto role_desc_opt = vwidget_factory::GetNonEmptyStringAttribute(element, kAXRoleDescriptionAttribute)) {
+  } else if (auto role_desc_opt = vwidget_factory::GetNonEmptyStringAttribute(
+                 element, kAXRoleDescriptionAttribute)) {
     widget->SetHelpText(role_desc_opt.value());
   }
 
   // Native name (AXRole)
-  if (auto native_name_opt = vwidget_factory::GetNonEmptyStringAttribute(element, kAXRoleAttribute)) {
+  if (auto native_name_opt =
+          vwidget_factory::GetNonEmptyStringAttribute(element, kAXRoleAttribute)) {
     widget->SetNativeName(native_name_opt.value());
   }
 

@@ -16,7 +16,8 @@ std::optional<std::string> cf_utils::ToString(CFStringRef string_ref) {
   CFIndex utf16_length = CFStringGetLength(string_ref);
 
   // utf8_length + 1 is the max length we should use (+1 for the space of the \0 termination)
-  CFIndex max_utf8_length = CFStringGetMaximumSizeForEncoding(utf16_length, kCFStringEncodingUTF8) + 1;
+  CFIndex max_utf8_length =
+      CFStringGetMaximumSizeForEncoding(utf16_length, kCFStringEncodingUTF8) + 1;
 
   std::string res(max_utf8_length, '\0');
   if (!CFStringGetCString(string_ref, res.data(), max_utf8_length, kCFStringEncodingUTF8))
@@ -41,7 +42,7 @@ std::optional<std::string> cf_utils::GetAttribute(AXUIElementRef element, CFStri
     return std::nullopt;
   }
 
-  const auto *string_ref = static_cast<CFStringRef>(value_ref);
+  const auto* string_ref = static_cast<CFStringRef>(value_ref);
   std::optional<std::string> result_str = cf_utils::ToString(string_ref);
 
   CFRelease(value_ref);
@@ -62,7 +63,7 @@ std::optional<bool> cf_utils::GetAttribute(AXUIElementRef element, CFStringRef a
     return std::nullopt;
   }
 
-  const auto *bool_ref = static_cast<CFBooleanRef>(value_ref);
+  const auto* bool_ref = static_cast<CFBooleanRef>(value_ref);
 
   bool result_bool = (bool_ref == kCFBooleanTrue);
   CFRelease(value_ref);
@@ -85,7 +86,7 @@ std::optional<CFArrayRef> cf_utils::GetAttribute(AXUIElementRef element, CFStrin
     return std::nullopt;
   }
 
-  const auto *array_ref = static_cast<CFArrayRef>(value_ref);
+  const auto* array_ref = static_cast<CFArrayRef>(value_ref);
   return array_ref;
 }
 
@@ -97,7 +98,8 @@ std::optional<CGPoint> cf_utils::GetAttribute(AXUIElementRef element, CFStringRe
   if (err != kAXErrorSuccess || !value_ref)
     return std::nullopt;
 
-  if (CFGetTypeID(value_ref) != AXValueGetTypeID() || AXValueGetType(static_cast<AXValueRef>(value_ref)) != kAXValueTypeCGPoint) {
+  if (CFGetTypeID(value_ref) != AXValueGetTypeID() ||
+      AXValueGetType(static_cast<AXValueRef>(value_ref)) != kAXValueTypeCGPoint) {
     CFRelease(value_ref);
     return std::nullopt;
   }
@@ -112,7 +114,6 @@ std::optional<CGPoint> cf_utils::GetAttribute(AXUIElementRef element, CFStringRe
   return point_val;
 }
 
-
 template <>
 std::optional<CGSize> cf_utils::GetAttribute(AXUIElementRef element, CFStringRef attr_name) {
   CFTypeRef value_ref;
@@ -121,7 +122,8 @@ std::optional<CGSize> cf_utils::GetAttribute(AXUIElementRef element, CFStringRef
   if (err != kAXErrorSuccess || !value_ref)
     return std::nullopt;
 
-  if (CFGetTypeID(value_ref) != AXValueGetTypeID() || AXValueGetType(static_cast<AXValueRef>(value_ref)) != kAXValueTypeCGSize) {
+  if (CFGetTypeID(value_ref) != AXValueGetTypeID() ||
+      AXValueGetType(static_cast<AXValueRef>(value_ref)) != kAXValueTypeCGSize) {
     CFRelease(value_ref);
     return std::nullopt;
   }

@@ -197,7 +197,7 @@ class VirtualWidget {
    *
    * @return all the children of this widget
    */
-  const std::vector<std::shared_ptr<VirtualWidget>> &GetChildren() const { return children_; }
+  const std::vector<std::shared_ptr<VirtualWidget>>& GetChildren() const { return children_; }
 
   /**
    * Convert this object to a formatted printable string.

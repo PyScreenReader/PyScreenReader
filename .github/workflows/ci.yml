@@ -1,0 +1,62 @@
+name: General CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  ubuntu-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: "./.github/actions/setup"
+
+      - name: Run Basic Python Test Suite
+        run: |
+          bazel test //tests/py/...
+
+      - name: Run Basic C++ Test Suite
+        run: |
+          bazel test //tests/cpp/... --test_tag_filters=-no_ci
+
+      - name: Build All Linux Targets
+        run: |
+          bazel build //src/api/... //src/base/... //src/native/linux/... //src/vwidget/... //tools/...
+
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: "./.github/actions/setup"
+
+      - name: Install Python Dev Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
+
+      - name: Run Ruff (Python)
+        run: |
+          ruff format --check --diff
+
+      - name: Run Clang-format (C++)
+        run: |
+          git ls-files '*.h' '*.cpp' | xargs clang-format --dry-run --Werror
+
+      - name: Run Buildifier (Bazel)
+        run: |
+          bazel run //tools:buildifier.fix
