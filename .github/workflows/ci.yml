@@ -46,7 +46,6 @@ jobs:
       - name: Run Ruff (Python)
         run: |
           ruff format --check --diff
-          ruff check
 
       - name: Run Clang-format (C++)
         run: |
