@@ -48,6 +48,10 @@ jobs:
           ruff format --check --diff
           ruff check
 
+      - name: Run Clang-format (C++)
+        run: |
+          git ls-files '*.h' '*.cpp' | xargs clang-format --dry-run --Werror
+
       - name: Run Buildifier (Bazel)
         run: |
           bazel run //tools:buildifier.fix
