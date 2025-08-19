@@ -21,6 +21,11 @@ jobs:
         python-version: [3.11, 3.12, 3.13]
 
     steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.commit_hash }}
+
       - uses: "./.github/actions/setup"
 
       - name: Update Release Version

@@ -5,9 +5,6 @@ description: setup CI environment
 runs:
   using: "composite"
   steps:
-    - name: Checkout Code
-      uses: actions/checkout@v4
-
     - name: Setup Bazel
       uses: bazel-contrib/setup-bazel@0.15.0
       with:

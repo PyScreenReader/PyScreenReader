@@ -18,6 +18,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v4
       - uses: "./.github/actions/setup"
 
       - name: Run Basic Python Test Suite
@@ -36,6 +37,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v4
       - uses: "./.github/actions/setup"
 
       - name: Install Python Dev Dependencies
