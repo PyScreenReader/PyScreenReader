@@ -21,23 +21,7 @@ jobs:
         python-version: [3.11, 3.12, 3.13]
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.inputs.commit_hash }}
-
-      - name: Setup Bazel
-        uses: bazel-contrib/setup-bazel@0.15.0
-        with:
-          # Avoid downloading Bazel every time.
-          bazelisk-cache: true
-          # Store build cache per workflow.
-          disk-cache: ${{ github.workflow }}
-
-      - name: Setup Linux Native Libs
-        if: runner.os == 'Linux'
-        run: |
-          sudo apt-get install libatk-bridge2.0-0 at-spi2-core libatspi2.0-dev libglib2.0-dev libsystemd-dev
+      - uses: "./.github/actions/setup"
 
       - name: Update Release Version
         working-directory: ${{ github.workspace }}

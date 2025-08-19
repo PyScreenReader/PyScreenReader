@@ -25,23 +25,7 @@ jobs:
       GITHUB_RELEASE_TAG: v${{ github.event.inputs.release_tag }}
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Setup Bazel
-        uses: bazel-contrib/setup-bazel@0.15.0
-        with:
-          # Avoid downloading Bazel every time.
-          bazelisk-cache: true
-          # Store build cache per workflow.
-          disk-cache: ${{ github.workflow }}
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          # Note: this python version is the dev tool python version
-          # which is isolated from the build python version
-          python-version: '3.13'
+      - uses: "./.github/actions/setup"
 
       - name: Download Wheels from Staging
         run: |

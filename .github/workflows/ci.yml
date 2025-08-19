@@ -18,21 +18,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Setup Bazel
-        uses: bazel-contrib/setup-bazel@0.15.0
-        with:
-          # Avoid downloading Bazel every time.
-          bazelisk-cache: true
-          # Store build cache per workflow.
-          disk-cache: ${{ github.workflow }}
-
-      - name: Setup Linux Native Libs
-        if: runner.os == 'Linux'
-        run: |
-          sudo apt-get install libatk-bridge2.0-0 at-spi2-core libatspi2.0-dev libglib2.0-dev libsystemd-dev
+      - uses: "./.github/actions/setup"
 
       - name: Run Basic Python Test Suite
         run: |
@@ -45,3 +31,19 @@ jobs:
       - name: Build All Linux Targets
         run: |
           bazel build //src/api/... //src/base/... //src/native/linux/... //src/vwidget/...
+
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: "./.github/actions/setup"
+
+      - name: Install Python Dev Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
+
+      - name: Run Ruff (Python)
+        run: |
+          ruff format --check --diff
+          ruff check
