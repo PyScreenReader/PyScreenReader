@@ -5,6 +5,6 @@ filegroup(
     srcs = [
         ":__init__.pyi",
         ":screen_reader.pyi",
-        ":virtual_widgets.pyi"
+        ":virtual_widgets.pyi",
     ],
 )
