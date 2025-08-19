@@ -33,6 +33,5 @@ trove_classifiers = [
     "Topic :: Software Development :: Libraries",
     "Typing :: Typed",
     "Topic :: Utilities",
-    "License :: OSI Approved :: MIT License"
+    "License :: OSI Approved :: MIT License",
 ]
-
