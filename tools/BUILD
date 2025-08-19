@@ -1,6 +1,6 @@
+load("@buildifier_prebuilt//:rules.bzl", "buildifier")
 load("@dev_tools_env//:requirements.bzl", "requirement")
 load("@rules_python//python:pip.bzl", "compile_pip_requirements")
-load("@rules_python//python:py_library.bzl", "py_library")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -16,9 +16,10 @@ py_binary(
     deps = [
         requirement("beautifulsoup4"),
         requirement("urllib3"),
-    ]
+    ],
 )
 
+# Debug Tools Config
 cc_binary(
     name = "cpp_inspect",
     srcs = ["cpp_inspect.cpp"],
@@ -36,11 +37,11 @@ py_binary(
     ],
 )
 
+# Buildifier Config
 buildifier(
     name = "buildifier.fix",
     exclude_patterns = [
         "./.git/*",
     ],
-    lint_mode = "warn",
     mode = "fix",
 )
