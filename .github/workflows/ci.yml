@@ -7,12 +7,17 @@ on:
   pull_request:
     branches:
       - main
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
 
 jobs:
   ubuntu-sanity:
-    - runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
 
-    - steps:
+    steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
@@ -36,3 +41,7 @@ jobs:
       - name: Run Basic C++ Test Suite
         run: |
           bazel test //tests/cpp/... --test_tag_filters=-no_ci
+
+      - name: Build All Linux Targets
+        run: |
+          bazel build //src/api/... //src/base/... //src/native/linux/... //src/vwidget/...
