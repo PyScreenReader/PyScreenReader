@@ -1,6 +1,6 @@
-#include <gtest/gtest.h>
 #include <ApplicationServices/ApplicationServices.h>
 #include <CoreFoundation/CoreFoundation.h>
+#include <gtest/gtest.h>
 #include <string>
 
 #include "src/native/macos/screen_reader_impl_mac.h"

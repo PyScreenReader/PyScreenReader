@@ -4,14 +4,12 @@
 
 #include "include/vwidget/virtual_widget.h"
 
-namespace screen_reader
-{
-    class ScreenReaderImpl
-    {
-    public:
-        ScreenReaderImpl() = default;
-        ~ScreenReaderImpl() = default;
+namespace screen_reader {
+class ScreenReaderImpl {
+ public:
+  ScreenReaderImpl() = default;
+  ~ScreenReaderImpl() = default;
 
-        static std::shared_ptr<VirtualWidget> GetVirtualWidgetTreeByPID(const std::string& pid) ;
-    };
-} // namespace screen_reader
+  static std::shared_ptr<VirtualWidget> GetVirtualWidgetTreeByPID(const std::string& pid);
+};
+}  // namespace screen_reader

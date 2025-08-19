@@ -1,7 +1,7 @@
-#include <queue>
-#include <utility>
 #include <optional>
+#include <queue>
 #include <string>
+#include <utility>
 
 #include <iostream>
 
@@ -37,7 +37,8 @@ std::shared_ptr<VirtualWidget> vwidget_generator::GenerateVWidgetTree(AXUIElemen
     }
 
     // Handle children of the current node
-    std::optional<CFArrayRef> children_arr_opt = cf_utils::GetAttribute<CFArrayRef>(curr, kAXChildrenAttribute);
+    std::optional<CFArrayRef> children_arr_opt =
+        cf_utils::GetAttribute<CFArrayRef>(curr, kAXChildrenAttribute);
     CFRelease(curr);
     if (!children_arr_opt.has_value())
       continue;
@@ -45,7 +46,7 @@ std::shared_ptr<VirtualWidget> vwidget_generator::GenerateVWidgetTree(AXUIElemen
     CFArrayRef children_arr = children_arr_opt.value();
     const CFIndex children_count = CFArrayGetCount(children_arr);
     for (CFIndex i = 0; i < children_count; ++i) {
-      const auto *child = static_cast<AXUIElementRef>(CFArrayGetValueAtIndex(children_arr, i));
+      const auto* child = static_cast<AXUIElementRef>(CFArrayGetValueAtIndex(children_arr, i));
       CFRetain(child);
       queue.emplace(curr_vwidget, child);
     }
@@ -55,7 +56,8 @@ std::shared_ptr<VirtualWidget> vwidget_generator::GenerateVWidgetTree(AXUIElemen
 }
 
 std::shared_ptr<VirtualWidget> vwidget_generator::MapToVWidget(AXUIElementRef element) {
-  std::optional<std::string> role_id_opt = cf_utils::GetAttribute<std::string>(element, kAXRoleAttribute);
+  std::optional<std::string> role_id_opt =
+      cf_utils::GetAttribute<std::string>(element, kAXRoleAttribute);
   if (!role_id_opt.has_value()) {
     // Falls back to virtual unknown widget if fails to get role_id
     return vwidget_factory::CreateWidget<VirtualUnknownWidget>(element);

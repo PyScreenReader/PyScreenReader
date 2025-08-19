@@ -1,5 +1,5 @@
-#include <gtest/gtest.h>
 #include <ApplicationServices/ApplicationServices.h>
+#include <gtest/gtest.h>
 
 #include "src/native/macos/utils/system_utils.h"
 
@@ -13,9 +13,7 @@ TEST(SystemUtilsTest, ValidPIDReturnsAXUIElementRef) {
 
 TEST(SystemUtilsTest, InvalidPIDThrows) {
   std::string invalid_pid = "abc123";
-  EXPECT_THROW({
-    system_utils::GetAXUIElementRefByPID(invalid_pid);
-  }, std::invalid_argument);
+  EXPECT_THROW({ system_utils::GetAXUIElementRefByPID(invalid_pid); }, std::invalid_argument);
 }
 
 TEST(SystemUtilsTest, NonExistentPIDStillReturnsNonNullElement) {

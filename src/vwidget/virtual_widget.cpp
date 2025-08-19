@@ -17,15 +17,8 @@ std::shared_ptr<VirtualWidget> VirtualWidget::GetChild(int index) const {
 
 std::string VirtualWidget::ToString() const {
   std::ostringstream oss;
-  oss << "{"
-      << GetWidgetName()
-      << ", title=" << GetTitleText()
-      << ", help=" << GetHelpText()
-      << ", x=" << GetX()
-      << ", y=" << GetY()
-      << ", width=" << GetWidth()
-      << ", height=" << GetHeight()
-      << ", visible=" << (IsVisible() ? "true" : "false")
-      << "}";
+  oss << "{" << GetWidgetName() << ", title=" << GetTitleText() << ", help=" << GetHelpText()
+      << ", x=" << GetX() << ", y=" << GetY() << ", width=" << GetWidth()
+      << ", height=" << GetHeight() << ", visible=" << (IsVisible() ? "true" : "false") << "}";
   return oss.str();
 }

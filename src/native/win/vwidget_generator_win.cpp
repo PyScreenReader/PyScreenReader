@@ -1,15 +1,14 @@
 #include "src/native/win/vwidget_generator_win.h"
 
+#include <comutil.h>
 #include <iostream>
 #include <queue>
 #include <stdexcept>
 #include <utility>
-#include <comutil.h>
 
 namespace vwidget_generator {
-std::shared_ptr<VirtualWidget> GenerateVWidgetTree(
-    IUIAutomationElement* root_element,
-    IUIAutomationTreeWalker* tree_walker) {
+std::shared_ptr<VirtualWidget> GenerateVWidgetTree(IUIAutomationElement* root_element,
+                                                   IUIAutomationTreeWalker* tree_walker) {
   auto root = std::make_shared<VirtualWindowWidget>();
   std::queue<std::pair<std::shared_ptr<VirtualWidget>, IUIAutomationElement*>> queue;
   queue.emplace(root, root_element);

@@ -12,7 +12,8 @@ std::shared_ptr<VirtualTextWidget> vwidget_factory::CreateWidget(IUIAutomationEl
 }
 
 template <>
-std::shared_ptr<VirtualTextInputWidget> vwidget_factory::CreateWidget(IUIAutomationElement* element) {
+std::shared_ptr<VirtualTextInputWidget> vwidget_factory::CreateWidget(
+    IUIAutomationElement* element) {
   return vwidget_factory::CreateWidgetWithAttributes<VirtualTextInputWidget>(element);
 }
 
@@ -22,7 +23,8 @@ std::shared_ptr<VirtualMenuWidget> vwidget_factory::CreateWidget(IUIAutomationEl
 }
 
 template <>
-std::shared_ptr<VirtualMenuItemWidget> vwidget_factory::CreateWidget(IUIAutomationElement* element) {
+std::shared_ptr<VirtualMenuItemWidget> vwidget_factory::CreateWidget(
+    IUIAutomationElement* element) {
   return vwidget_factory::CreateWidgetWithAttributes<VirtualMenuItemWidget>(element);
 }
 
@@ -42,7 +44,8 @@ std::shared_ptr<VirtualUnknownWidget> vwidget_factory::CreateWidget(IUIAutomatio
 }
 
 template <>
-std::shared_ptr<VirtualScrollbarWidget> vwidget_factory::CreateWidget(IUIAutomationElement* element) {
+std::shared_ptr<VirtualScrollbarWidget> vwidget_factory::CreateWidget(
+    IUIAutomationElement* element) {
   return vwidget_factory::CreateWidgetWithAttributes<VirtualScrollbarWidget>(element);
 }
 
@@ -52,7 +55,8 @@ std::shared_ptr<VirtualSliderWidget> vwidget_factory::CreateWidget(IUIAutomation
 }
 
 template <>
-std::shared_ptr<VirtualProgressBarWidget> vwidget_factory::CreateWidget(IUIAutomationElement* element) {
+std::shared_ptr<VirtualProgressBarWidget> vwidget_factory::CreateWidget(
+    IUIAutomationElement* element) {
   return vwidget_factory::CreateWidgetWithAttributes<VirtualProgressBarWidget>(element);
 }
 
@@ -72,7 +76,8 @@ std::shared_ptr<VirtualSpinnerWidget> vwidget_factory::CreateWidget(IUIAutomatio
  * @param element native IUIAutomationElement* to copy the values from
  * @note this function modifies the param widget
  */
-void vwidget_factory::PopulateSharedAttributes(std::shared_ptr<VirtualWidget> widget, IUIAutomationElement* element) {
+void vwidget_factory::PopulateSharedAttributes(std::shared_ptr<VirtualWidget> widget,
+                                               IUIAutomationElement* element) {
   HRESULT hresult = S_OK;
   // Title
   BSTR current_name = nullptr;

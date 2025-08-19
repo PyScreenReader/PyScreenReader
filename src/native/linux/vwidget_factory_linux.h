@@ -18,43 +18,43 @@
 
 namespace vwidget_factory {
 template <typename T>
-std::shared_ptr<T> CreateWidget(AtspiAccessible *element);
+std::shared_ptr<T> CreateWidget(AtspiAccessible* element);
 
 template <>
-std::shared_ptr<VirtualButtonWidget> CreateWidget(AtspiAccessible *element);
+std::shared_ptr<VirtualButtonWidget> CreateWidget(AtspiAccessible* element);
 
 template <>
-std::shared_ptr<VirtualTextWidget> CreateWidget(AtspiAccessible *element);
+std::shared_ptr<VirtualTextWidget> CreateWidget(AtspiAccessible* element);
 
 template <>
-std::shared_ptr<VirtualTextInputWidget> CreateWidget(AtspiAccessible *element);
+std::shared_ptr<VirtualTextInputWidget> CreateWidget(AtspiAccessible* element);
 
 template <>
-std::shared_ptr<VirtualMenuWidget> CreateWidget(AtspiAccessible *element);
+std::shared_ptr<VirtualMenuWidget> CreateWidget(AtspiAccessible* element);
 
 template <>
-std::shared_ptr<VirtualMenuItemWidget> CreateWidget(AtspiAccessible *element);
+std::shared_ptr<VirtualMenuItemWidget> CreateWidget(AtspiAccessible* element);
 
 template <>
-std::shared_ptr<VirtualWindowWidget> CreateWidget(AtspiAccessible *element);
+std::shared_ptr<VirtualWindowWidget> CreateWidget(AtspiAccessible* element);
 
 template <>
-std::shared_ptr<VirtualGroupWidget> CreateWidget(AtspiAccessible *element);
+std::shared_ptr<VirtualGroupWidget> CreateWidget(AtspiAccessible* element);
 
 template <>
-std::shared_ptr<VirtualUnknownWidget> CreateWidget(AtspiAccessible *element);
+std::shared_ptr<VirtualUnknownWidget> CreateWidget(AtspiAccessible* element);
 
 template <>
-std::shared_ptr<VirtualScrollbarWidget> CreateWidget(AtspiAccessible *element);
+std::shared_ptr<VirtualScrollbarWidget> CreateWidget(AtspiAccessible* element);
 
 template <>
-std::shared_ptr<VirtualSliderWidget> CreateWidget(AtspiAccessible *element);
+std::shared_ptr<VirtualSliderWidget> CreateWidget(AtspiAccessible* element);
 
 template <>
-std::shared_ptr<VirtualProgressBarWidget> CreateWidget(AtspiAccessible *element);
+std::shared_ptr<VirtualProgressBarWidget> CreateWidget(AtspiAccessible* element);
 
 template <>
-std::shared_ptr<VirtualSpinnerWidget> CreateWidget(AtspiAccessible *element);
+std::shared_ptr<VirtualSpinnerWidget> CreateWidget(AtspiAccessible* element);
 
 /**
  * Populate shared attributes across all the virtual widgets.
@@ -67,7 +67,7 @@ std::shared_ptr<VirtualSpinnerWidget> CreateWidget(AtspiAccessible *element);
  * @param element native AtspiAccessible to copy the values from
  * @note this function modifies the param widget
  */
-void PopulateSharedAttributes(std::shared_ptr<VirtualWidget> widget, AtspiAccessible *element);
+void PopulateSharedAttributes(std::shared_ptr<VirtualWidget> widget, AtspiAccessible* element);
 
 /**
  * Create virtual widget corresponds to the given AtspiAccessible
@@ -78,7 +78,7 @@ void PopulateSharedAttributes(std::shared_ptr<VirtualWidget> widget, AtspiAccess
  * @return virtual widget of type T with basic attributed populated
  */
 template <typename T>
-std::shared_ptr<T> CreateWidgetWithAttributes(AtspiAccessible *element) {
+std::shared_ptr<T> CreateWidgetWithAttributes(AtspiAccessible* element) {
   auto widget = std::make_shared<T>();
   vwidget_factory::PopulateSharedAttributes(widget, element);
   return widget;

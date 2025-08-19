@@ -1,7 +1,7 @@
 #pragma once
 
-#include "include/vwidget/orientation.h"
 #include "include/vwidget/numeric_value_widget.h"
+#include "include/vwidget/orientation.h"
 
 class VirtualSliderWidget : public NumericValueWidget {
  public:

@@ -8,8 +8,7 @@
 #include <stdexcept>
 
 namespace screen_reader {
-std::shared_ptr<VirtualWidget> ScreenReaderImpl::GetVirtualWidgetTreeByPID(
-    const std::string& pid) {
+std::shared_ptr<VirtualWidget> ScreenReaderImpl::GetVirtualWidgetTreeByPID(const std::string& pid) {
   if (pid.empty()) {
     throw std::invalid_argument("PID cannot be empty");
   }
@@ -23,7 +22,9 @@ std::shared_ptr<VirtualWidget> ScreenReaderImpl::GetVirtualWidgetTreeByPID(
   auto root_role_id_opt = cf_utils::GetAttribute<std::string>(axui_element, kAXRoleAttribute);
 
   if (!root_role_id_opt.has_value())
-    throw std::runtime_error("Failed to create AXUIElement - the process might not exist or this program does not have permission");
+    throw std::runtime_error(
+        "Failed to create AXUIElement - the process might not exist or this program does not have "
+        "permission");
 
   std::shared_ptr<VirtualWidget> root = vwidget_generator::GenerateVWidgetTree(axui_element);
   CFRelease(axui_element);

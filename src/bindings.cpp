@@ -1,9 +1,10 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 
-#include "include/vwidget/virtual_widget.h"
 #include "include/vwidget/numeric_value_widget.h"
+#include "include/vwidget/virtual_widget.h"
 
+#include "include/api/screen_reader.h"
 #include "include/vwidget/widgets/virtual_button_widget.h"
 #include "include/vwidget/widgets/virtual_menu_item_widget.h"
 #include "include/vwidget/widgets/virtual_menu_widget.h"
@@ -15,7 +16,6 @@
 #include "include/vwidget/widgets/virtual_text_widget.h"
 #include "include/vwidget/widgets/virtual_unknown_widget.h"
 #include "include/vwidget/widgets/virtual_window_widget.h"
-#include "include/api/screen_reader.h"
 
 namespace bindings {
 namespace py = pybind11;
@@ -62,8 +62,8 @@ void BindVirtualWidgets(py::module_& module) {
       .def("__str__", &VirtualWidget::ToString);
 
   // NumericValueWidget
-  py::class_<NumericValueWidget, VirtualWidget,
-                   std::shared_ptr<NumericValueWidget>>(module, "NumericValueWidget")
+  py::class_<NumericValueWidget, VirtualWidget, std::shared_ptr<NumericValueWidget>>(
+      module, "NumericValueWidget")
       .def("get_value", &NumericValueWidget::GetValue)
       .def("set_value", &NumericValueWidget::SetValue)
       .def("get_min_value", &NumericValueWidget::GetMinValue)
@@ -131,8 +131,8 @@ void BindVirtualWidgets(py::module_& module) {
       .def("set_selected_text", &VirtualTextWidget::SetSelectedText);
 
   // VirtualUnknownWidget
-  py::class_<VirtualUnknownWidget, VirtualWidget,
-             std::shared_ptr<VirtualUnknownWidget>>(module, "VirtualUnknownWidget")
+  py::class_<VirtualUnknownWidget, VirtualWidget, std::shared_ptr<VirtualUnknownWidget>>(
+      module, "VirtualUnknownWidget")
       .def(py::init());
 
   // VirtualWindowWidget
@@ -151,12 +151,10 @@ void BindVirtualWidgets(py::module_& module) {
 void BindScreenReader(py::module_& module) {
   py::class_<ScreenReader>(module, "ScreenReader")
       .def(py::init())
-      .def("get_virtual_widget_tree_by_pid",
-           &ScreenReader::GetVirtualWidgetTreeByPID,
+      .def("get_virtual_widget_tree_by_pid", &ScreenReader::GetVirtualWidgetTreeByPID,
            py::return_value_policy::take_ownership);
 }
 }  // namespace bindings
-
 
 // ================================================
 // Main Entry Point of Bindings
