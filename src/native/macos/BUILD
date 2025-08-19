@@ -1,50 +1,51 @@
-package(default_visibility = ["//visibility:public"])
 load("@pybind11_bazel//:build_defs.bzl", "pybind_library")
+
+package(default_visibility = ["//visibility:public"])
 
 pybind_library(
     name = "screen_reader_impl_mac",
-    hdrs = [
-        ":screen_reader_impl_mac.h",
-    ],
     srcs = [
         ":screen_reader_impl_mac.cpp",
     ],
-    deps = [
-        "//src/native/macos/utils:system_utils",
-        "//src/native/macos/utils:cf_utils",
-        "//src/vwidget/widgets:virtual_components",
-        "//src/native/macos:vwidget_generator",
+    hdrs = [
+        ":screen_reader_impl_mac.h",
     ],
     linkopts = ["-framework ApplicationServices"],
+    deps = [
+        "//src/native/macos:vwidget_generator",
+        "//src/native/macos/utils:cf_utils",
+        "//src/native/macos/utils:system_utils",
+        "//src/vwidget/widgets:virtual_components",
+    ],
 )
 
 pybind_library(
     name = "vwidget_generator",
-    hdrs = [
-        ":vwidget_generator_mac.h",
-    ],
     srcs = [
         ":vwidget_generator_mac.cpp",
     ],
-    deps = [
-        "//src/vwidget/widgets:virtual_components",
-        "//src/native/macos/utils:cf_utils",
-        ":vwidget_factory",
+    hdrs = [
+        ":vwidget_generator_mac.h",
     ],
     linkopts = ["-framework ApplicationServices"],
+    deps = [
+        ":vwidget_factory",
+        "//src/native/macos/utils:cf_utils",
+        "//src/vwidget/widgets:virtual_components",
+    ],
 )
 
 pybind_library(
     name = "vwidget_factory",
-    hdrs = [
-        ":vwidget_factory_mac.h",
-    ],
     srcs = [
         ":vwidget_factory_mac.cpp",
     ],
-    deps = [
-        "//src/vwidget/widgets:virtual_components",
-        "//src/native/macos/utils:cf_utils",
+    hdrs = [
+        ":vwidget_factory_mac.h",
     ],
     linkopts = ["-framework ApplicationServices"],
+    deps = [
+        "//src/native/macos/utils:cf_utils",
+        "//src/vwidget/widgets:virtual_components",
+    ],
 )
