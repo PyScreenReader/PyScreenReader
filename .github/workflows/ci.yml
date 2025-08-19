@@ -13,8 +13,12 @@ on:
       - synchronize
       - ready_for_review
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
 jobs:
-  ubuntu-sanity:
+  ubuntu-test:
     runs-on: ubuntu-latest
 
     steps:
