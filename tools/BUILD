@@ -42,7 +42,7 @@ py_binary(
     srcs = ["generate_doc.py"],
     deps = [
         requirement("pybind11-stubgen"),
-    ]
+    ],
 )
 
 # Buildifier Config
