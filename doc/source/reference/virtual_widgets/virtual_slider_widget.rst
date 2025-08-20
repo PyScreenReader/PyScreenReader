@@ -1,0 +1,23 @@
+.. class:: VirtualSliderWidget
+
+   A widget representing a slider widget with numeric value and orientation.
+
+   Inherits from NumericValueWidget and adds orientation property.
+
+   Inherited from NumericValueWidget
+
+   .. method:: __init__() -> None
+
+   Create a new VirtualSliderWidget instance.
+
+   .. method:: get_orientation() -> Orientation
+
+   Get the current orientation of the slider widget.
+
+   :return: Orientation of the widget.
+
+   .. method:: set_orientation(orientation) -> None
+
+   Set the current orientation of the slider widget.
+
+   :param orientation: Orientation of the widget.

@@ -11,5 +11,5 @@ In this section, we provide a detailed description of each API in PyScreenReader
    :maxdepth: 1
    :caption: API Reference:
 
-   screenreader/index
-   virtualwidgets/index
+   screen_reader/index
+   virtual_widgets/index

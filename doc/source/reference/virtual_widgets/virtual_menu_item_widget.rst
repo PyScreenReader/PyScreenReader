@@ -1,0 +1,11 @@
+.. class:: VirtualMenuItemWidget
+
+   A widget representing a menu item widget.
+
+   Inherits from VirtualWidget.
+
+   Inherited from VirtualWidget
+
+   .. method:: __init__() -> None
+
+   Create a new VirtualMenuItemWidget instance.
