@@ -37,6 +37,14 @@ py_binary(
     ],
 )
 
+py_binary(
+    name = "generate_doc",
+    srcs = ["generate_doc.py"],
+    deps = [
+        requirement("pybind11-stubgen"),
+    ]
+)
+
 # Buildifier Config
 buildifier(
     name = "buildifier.fix",
