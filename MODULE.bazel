@@ -4,7 +4,7 @@
 #
 # For more details, please check https://github.com/bazelbuild/bazel/issues/18958
 ###############################################################################
-python_version_string = "3.12"
+python_version_string = "3.13"
 
 module(
     name = "py_screen_reader",
