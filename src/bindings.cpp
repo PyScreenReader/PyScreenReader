@@ -26,7 +26,8 @@ namespace py = pybind11;
  * @param root_module root project module
  */
 void BindVirtualWidgets(py::module_& root_module) {
-  py::module_ module = root_module.def_submodule("virtual_widgets", "A submodule containing virtual widgets definitions");
+  py::module_ module = root_module.def_submodule(
+      "virtual_widgets", "A submodule containing virtual widgets definitions");
   // Orientation
   py::enum_<Orientation>(module, "Orientation", R"doc(
 Enum representing the orientation of widgets.
@@ -204,8 +205,7 @@ Get value contained in the widget.
 
 :return: Value contained in the widget.
 )doc")
-      .def("set_value", &NumericValueWidget::SetValue,
-           py::arg("value"), R"doc(
+      .def("set_value", &NumericValueWidget::SetValue, py::arg("value"), R"doc(
 Set value contained in the widget.
 
 :param value: Number value.
@@ -215,8 +215,7 @@ Get lower bound of the value.
 
 :return: Minimum value of the range.
 )doc")
-      .def("set_min_value", &NumericValueWidget::SetMinValue,
-           py::arg("min_value"), R"doc(
+      .def("set_min_value", &NumericValueWidget::SetMinValue, py::arg("min_value"), R"doc(
 Set lower bound of the value.
 
 :param min_value: Minimum value of the range.
@@ -226,13 +225,11 @@ Get upper bound of the value.
 
 :return: Maximum value of the range.
 )doc")
-      .def("set_max_value", &NumericValueWidget::SetMaxValue,
-           py::arg("max_value"), R"doc(
+      .def("set_max_value", &NumericValueWidget::SetMaxValue, py::arg("max_value"), R"doc(
 Set upper bound of the value.
 
 :param max_value: Maximum value of the range.
 )doc");
-
 
   // VirtualButtonWidget
   py::class_<VirtualButtonWidget, VirtualWidget, std::shared_ptr<VirtualButtonWidget>>(
@@ -282,8 +279,8 @@ Get the current orientation of the progress bar widget.
 
 :return: Orientation of the widget.
 )doc")
-      .def("set_orientation", &VirtualProgressBarWidget::SetOrientation,
-           py::arg("orientation"), R"doc(
+      .def("set_orientation", &VirtualProgressBarWidget::SetOrientation, py::arg("orientation"),
+           R"doc(
 Set the current orientation of the progress bar widget.
 
 :param orientation: Orientation of the widget.
@@ -304,8 +301,8 @@ Get the current orientation of the scrollbar widget.
 
 :return: Orientation of the widget.
 )doc")
-      .def("set_orientation", &VirtualScrollbarWidget::SetOrientation,
-           py::arg("orientation"), R"doc(
+      .def("set_orientation", &VirtualScrollbarWidget::SetOrientation, py::arg("orientation"),
+           R"doc(
 Set the current orientation of the scrollbar widget.
 
 :param orientation: Orientation of the widget.
@@ -326,8 +323,7 @@ Get the current orientation of the slider widget.
 
 :return: Orientation of the widget.
 )doc")
-      .def("set_orientation", &VirtualSliderWidget::SetOrientation,
-           py::arg("orientation"), R"doc(
+      .def("set_orientation", &VirtualSliderWidget::SetOrientation, py::arg("orientation"), R"doc(
 Set the current orientation of the slider widget.
 
 :param orientation: Orientation of the widget.
@@ -360,8 +356,8 @@ Get the currently selected text in the input field.
 
 :return: Selected text.
 )doc")
-      .def("set_selected_text", &VirtualTextInputWidget::SetSelectedText,
-           py::arg("selected_text"), R"doc(
+      .def("set_selected_text", &VirtualTextInputWidget::SetSelectedText, py::arg("selected_text"),
+           R"doc(
 Set the currently selected text in the input field.
 
 :param selected_text: Selected text string.
@@ -386,13 +382,12 @@ Check if the current input widget is a text area.
 
 :return: True if it's a text area, otherwise False.
 )doc")
-      .def("set_is_text_area", &VirtualTextInputWidget::SetIsTextArea,
-           py::arg("is_text_area"), R"doc(
+      .def("set_is_text_area", &VirtualTextInputWidget::SetIsTextArea, py::arg("is_text_area"),
+           R"doc(
 Set whether the input widget is a text area.
 
 :param is_text_area: True if it's a text area, otherwise False.
 )doc");
-
 
   // VirtualTextWidget
   py::class_<VirtualTextWidget, VirtualWidget, std::shared_ptr<VirtualTextWidget>>(
@@ -409,8 +404,8 @@ Get the cursor-selected text in the static text widget.
 
 :return: Selected text.
 )doc")
-      .def("set_selected_text", &VirtualTextWidget::SetSelectedText,
-           py::arg("selected_text"), R"doc(
+      .def("set_selected_text", &VirtualTextWidget::SetSelectedText, py::arg("selected_text"),
+           R"doc(
 Set the cursor-selected text in the static text widget.
 
 :param selected_text: Selected text string.
@@ -447,8 +442,7 @@ until the user completes specific actions or dismisses it.
 
 :return: True if the window is modal, otherwise False.
 )doc")
-      .def("set_is_modal", &VirtualWindowWidget::SetIsModal,
-           py::arg("is_modal"), R"doc(
+      .def("set_is_modal", &VirtualWindowWidget::SetIsModal, py::arg("is_modal"), R"doc(
 Set whether the current window is a modal.
 
 :param is_modal: True if the window is modal, otherwise False.
@@ -461,7 +455,8 @@ Set whether the current window is a modal.
  * @param root_module root project module
  */
 void BindScreenReader(py::module_& root_module) {
-  py::module_ module = root_module.def_submodule("screen_reader", "A submodule containing screen reader APIs");
+  py::module_ module =
+      root_module.def_submodule("screen_reader", "A submodule containing screen reader APIs");
   py::class_<ScreenReader>(module, "ScreenReader", R"doc(
 ScreenReader provides access to virtual widget trees for applications identified by process ID.
 )doc")
@@ -469,8 +464,7 @@ ScreenReader provides access to virtual widget trees for applications identified
 Create a new ScreenReader instance.
 )doc")
       .def("get_virtual_widget_tree_by_pid", &ScreenReader::GetVirtualWidgetTreeByPID,
-           py::arg("pid"),
-           py::return_value_policy::take_ownership, R"doc(
+           py::arg("pid"), py::return_value_policy::take_ownership, R"doc(
 Retrieve the virtual widget tree associated with the specified process ID (PID).
 
 :param pid: The process ID identifying the target application.
