@@ -1,3 +1,50 @@
+"""
+Script to generate Python stubs (.pyi) and reStructuredText (RST) documentation
+from PyScreenReader wheels or existing stub directories.
+
+Usage
+-----
+
+    $ bazel //tools:generate_doc -- <input_path> [--stub] [--doc] [--test]
+
+Arguments
+---------
+
+- input_path
+  Path to a wheel file (when generating stubs) or a directory containing
+  existing stubs (when generating docs only).
+
+Options
+-------
+
+- -s, --stub
+  Generate stub (.pyi) files from the given wheel. The wheel will be
+  installed in a temporary directory and `pybind11-stubgen` will be used
+  to create the stubs, which are then copied into `src/stubs`.
+
+- -d, --doc
+  Generate RST documentation from stub (.pyi) files. Each class defined in
+  the stubs will have a dedicated `.rst` file created under
+  `doc/source/reference`.
+
+Dependencies
+------------
+
+- pybind11-stubgen (for stub generation)
+- pip (to install the wheel into a temporary directory)
+
+Examples
+--------
+
+Generate both stubs and docs from a wheel::
+
+    $ bazel //tools:generate_doc -- dist/PyScreenReader-0.1.0-py3-none-any.whl --stub --doc
+
+Generate only docs from an existing stub directory::
+
+    $ bazel //tools:generate_doc -- src/stubs --doc
+"""
+
 import argparse
 import ast
 import os
@@ -12,6 +59,7 @@ from pathlib import Path
 
 from pybind11_stubgen import main as stubgen_main
 
+
 PYI_FILE_SUFFIX = ".pyi"
 MODULE_NAME = "PyScreenReader"
 
@@ -19,6 +67,8 @@ BAZEL_WORKSPACE_ENV_KEY = "BUILD_WORKSPACE_DIRECTORY"
 SOURCE_CODE_ROOT = Path(os.environ.get(BAZEL_WORKSPACE_ENV_KEY, Path.cwd()))
 STUB_OUTPUT_DIR = SOURCE_CODE_ROOT / "src" / "stubs"
 DOC_OUTPUT_DIR = SOURCE_CODE_ROOT / "doc" / "source" / "reference"
+
+SKIP_PYTHON_MODULES = frozenset(("__init__", ))
 
 
 def camel_to_snake_case(name: str) -> str:
@@ -103,7 +153,7 @@ def process_class(cls: ast.ClassDef, output_dir: str) -> None:
 
     with open(filepath, "w", encoding="utf-8") as f:
         f.write("\n".join(lines))
-    print(f"Generated doc: {filepath}")
+    print(f"Generated doc: {filepath.replace(str(DOC_OUTPUT_DIR), '')}")
 
 
 def generate_rst(stub_dir: str = STUB_OUTPUT_DIR, output_dir: str = DOC_OUTPUT_DIR) -> None:
@@ -112,7 +162,10 @@ def generate_rst(stub_dir: str = STUB_OUTPUT_DIR, output_dir: str = DOC_OUTPUT_D
     :param stub_dir pyi files input dir
     :param output_dir: save path for generated rst files
     """
-    for pyi_file in glob(os.path.join(stub_dir, "**", PYI_FILE_SUFFIX), recursive=True):
+    for pyi_file in glob(os.path.join(stub_dir, f"*{PYI_FILE_SUFFIX}"), recursive=False):
+        if Path(pyi_file).stem in SKIP_PYTHON_MODULES:
+            continue
+
         with open(pyi_file, encoding="utf-8") as f:
             source = f.read()
 
@@ -120,7 +173,8 @@ def generate_rst(stub_dir: str = STUB_OUTPUT_DIR, output_dir: str = DOC_OUTPUT_D
 
         # Create a subfolder for each module
         module_output_dir = os.path.join(output_dir, Path(pyi_file).stem)
-        os.makedirs(module_output_dir)
+        if not os.path.exists(module_output_dir):
+            os.makedirs(module_output_dir)
 
         for node in tree.body:
             if isinstance(node, ast.ClassDef):
