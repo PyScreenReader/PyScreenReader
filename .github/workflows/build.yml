@@ -60,7 +60,7 @@ jobs:
         uses: actions/setup-python@v5
         with:
           # Note: this python version is the dev tool python version
-          # which is isolated from ${{ matrix.python-version }}, which is the build version
+          # which is different from ${{ matrix.python-version }}
           python-version: '3.13'
 
       - name: Install Anaconda Client
