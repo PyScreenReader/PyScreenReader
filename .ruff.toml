@@ -1,7 +1,7 @@
 line-length = 100
 
-# Assume Python 3.12, since we primarily use 3.12 as the dev version
-target-version = "py312"
+# Assume Python 3.13, since we primarily use 3.13 as the dev version
+target-version = "py313"
 
 # exclude auto-generated pyi files
 exclude = ["src/stubs/*.pyi"]
