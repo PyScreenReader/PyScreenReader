@@ -68,7 +68,7 @@ SOURCE_CODE_ROOT = Path(os.environ.get(BAZEL_WORKSPACE_ENV_KEY, Path.cwd()))
 STUB_OUTPUT_DIR = SOURCE_CODE_ROOT / "src" / "stubs"
 DOC_OUTPUT_DIR = SOURCE_CODE_ROOT / "doc" / "source" / "reference"
 
-SKIP_PYTHON_MODULES = frozenset(("__init__", ))
+SKIP_PYTHON_MODULES = frozenset(("__init__",))
 
 
 def camel_to_snake_case(name: str) -> str:
