@@ -149,7 +149,8 @@ def process_class(cls: ast.ClassDef, output_dir: str) -> None:
             elif isinstance(base, ast.Attribute):
                 base_names.append(ast.unparse(base) if hasattr(ast, "unparse") else "<unknown>")
         if base_names:
-            lines.append(f"   Inherited from {', '.join(base_names)}")
+            base_names_with_ref = map(lambda x: f":class:`{x}`", base_names)
+            lines.append(f"   Inherited from {', '.join(base_names_with_ref)}")
             lines.append("")
 
     for item in cls.body:
@@ -158,7 +159,7 @@ def process_class(cls: ast.ClassDef, output_dir: str) -> None:
             doc = extract_docstring(item)
             if doc:
                 lines.append("")
-                lines.append(doc)
+                lines.append("  " + doc)
                 lines.append("")
 
     with open(filepath, "w", encoding="utf-8") as f:

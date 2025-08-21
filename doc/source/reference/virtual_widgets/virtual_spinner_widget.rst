@@ -6,8 +6,8 @@ VirtualSpinnerWidget
 
    A widget representing a numeric spinner widget.
 
-   Inherited from NumericValueWidget
+   Inherited from :class:`NumericValueWidget`
 
    .. method:: __init__() -> None
 
-   Create a new VirtualSpinnerWidget instance.
+     Create a new VirtualSpinnerWidget instance.

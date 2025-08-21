@@ -6,40 +6,40 @@ NumericValueWidget
 
    A widget that represents a numeric value with optional min/max bounds.
 
-   Inherited from VirtualWidget
+   Inherited from :class:`VirtualWidget`
 
    .. method:: get_max_value() -> int
 
-   Get upper bound of the value.
+     Get upper bound of the value.
 
    :return: Maximum value of the range.
 
    .. method:: get_min_value() -> int
 
-   Get lower bound of the value.
+     Get lower bound of the value.
 
    :return: Minimum value of the range.
 
    .. method:: get_value() -> int
 
-   Get value contained in the widget.
+     Get value contained in the widget.
 
    :return: Value contained in the widget.
 
    .. method:: set_max_value(max_value) -> None
 
-   Set upper bound of the value.
+     Set upper bound of the value.
 
    :param max_value: Maximum value of the range.
 
    .. method:: set_min_value(min_value) -> None
 
-   Set lower bound of the value.
+     Set lower bound of the value.
 
    :param min_value: Minimum value of the range.
 
    .. method:: set_value(value) -> None
 
-   Set value contained in the widget.
+     Set value contained in the widget.
 
    :param value: Number value.

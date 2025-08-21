@@ -13,7 +13,7 @@ VirtualWidget
    .. method:: __str__() -> str
    .. method:: add_child(child) -> None
 
-   Add a child widget to this widget.
+     Add a child widget to this widget.
 
    Note: This does not automatically set the child widget's parent. To preserve tree structure,
    you should also call set_parent() on the child widget to assign this widget as its parent.
@@ -22,7 +22,7 @@ VirtualWidget
 
    .. method:: get_child(index) -> VirtualWidget
 
-   Get the child widget at the given index (starting from 0).
+     Get the child widget at the given index (starting from 0).
 
    Throws an out_of_range exception if there are not that many children.
 
@@ -31,19 +31,19 @@ VirtualWidget
 
    .. method:: get_children() -> list[VirtualWidget]
 
-   Get all children of this widget in the tree.
+     Get all children of this widget in the tree.
 
    :return: List of all children widgets.
 
    .. method:: get_height() -> int
 
-   Get the height of the current widget.
+     Get the height of the current widget.
 
    :return: Height of the widget.
 
    .. method:: get_help_text() -> str
 
-   Get help text.
+     Get help text.
 
    Help text is generally the secondary text content in a widget.
    When you hover the cursor over widgets, if a tooltip pops up,
@@ -53,19 +53,19 @@ VirtualWidget
 
    .. method:: get_native_name() -> str
 
-   Get name of the native widget this virtual widget is mapped from.
+     Get name of the native widget this virtual widget is mapped from.
 
    :return: Native widget name.
 
    .. method:: get_parent() -> VirtualWidget
 
-   Get the parent widget of the current widget.
+     Get the parent widget of the current widget.
 
    :return: Parent widget.
 
    .. method:: get_title_text() -> str
 
-   Get title text.
+     Get title text.
 
    Title text is a string that represents the primary text content of the widget.
    - It can be the content string on the button, which says "Click me"
@@ -75,7 +75,7 @@ VirtualWidget
 
    .. method:: get_widget_name() -> str
 
-   Get the name of the current virtual widget in UpperCamelCase.
+     Get the name of the current virtual widget in UpperCamelCase.
 
    Examples: "VirtualButtonWidget", "VirtualTextWidget", etc.
 
@@ -83,13 +83,13 @@ VirtualWidget
 
    .. method:: get_width() -> int
 
-   Get the width of the current widget.
+     Get the width of the current widget.
 
    :return: Width of the widget.
 
    .. method:: get_x() -> int
 
-   Get the X coordinate of the top-left corner of the widget relative to the screen.
+     Get the X coordinate of the top-left corner of the widget relative to the screen.
 
    The top-left corner of the screen is considered the origin.
 
@@ -97,7 +97,7 @@ VirtualWidget
 
    .. method:: get_y() -> int
 
-   Get the Y coordinate of the top-left corner of the widget relative to the screen.
+     Get the Y coordinate of the top-left corner of the widget relative to the screen.
 
    The top-left corner of the screen is considered the origin.
 
@@ -105,31 +105,31 @@ VirtualWidget
 
    .. method:: is_focused() -> bool
 
-   Get whether the current widget is focused.
+     Get whether the current widget is focused.
 
    :return: True if focused, False otherwise.
 
    .. method:: is_visible() -> bool
 
-   Get whether the current widget is visible to the user.
+     Get whether the current widget is visible to the user.
 
    :return: True if visible, False otherwise.
 
    .. method:: set_focused(focused) -> None
 
-   Set whether the current widget is focused.
+     Set whether the current widget is focused.
 
    :param focused: True if focused, False otherwise.
 
    .. method:: set_height(height) -> None
 
-   Set the height of the current widget.
+     Set the height of the current widget.
 
    :param height: Height of the widget.
 
    .. method:: set_help_text(help_text) -> None
 
-   Set help text.
+     Set help text.
 
    See also: get_help_text()
 
@@ -137,7 +137,7 @@ VirtualWidget
 
    .. method:: set_native_name(native_name) -> None
 
-   Set native widget name.
+     Set native widget name.
 
    See also: get_native_name()
 
@@ -145,13 +145,13 @@ VirtualWidget
 
    .. method:: set_parent(parent) -> None
 
-   Set the parent widget of the current widget.
+     Set the parent widget of the current widget.
 
    :param parent: Parent widget.
 
    .. method:: set_title_text(title_text) -> None
 
-   Set title text.
+     Set title text.
 
    See also: get_title_text()
 
@@ -159,24 +159,24 @@ VirtualWidget
 
    .. method:: set_visible(visible) -> None
 
-   Set whether the current widget is visible to the user.
+     Set whether the current widget is visible to the user.
 
    :param visible: True if visible, False otherwise.
 
    .. method:: set_width(width) -> None
 
-   Set the width of the current widget.
+     Set the width of the current widget.
 
    :param width: Width of the widget.
 
    .. method:: set_x(x_coord) -> None
 
-   Set the X coordinate of the top-left corner of the widget.
+     Set the X coordinate of the top-left corner of the widget.
 
    :param x_coord: X coordinate.
 
    .. method:: set_y(y_coord) -> None
 
-   Set the Y coordinate of the top-left corner of the widget.
+     Set the Y coordinate of the top-left corner of the widget.
 
    :param y_coord: Y coordinate.

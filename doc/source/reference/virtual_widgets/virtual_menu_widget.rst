@@ -6,8 +6,8 @@ VirtualMenuWidget
 
    A widget representing a menu widget.
 
-   Inherited from VirtualWidget
+   Inherited from :class:`VirtualWidget`
 
    .. method:: __init__() -> None
 
-   Create a new VirtualMenuWidget instance.
+     Create a new VirtualMenuWidget instance.

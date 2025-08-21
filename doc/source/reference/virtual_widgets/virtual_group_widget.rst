@@ -13,8 +13,8 @@ VirtualGroupWidget
    If the native widget has specific interactive behaviors or functionalities,
    it should generally not be mapped to a VirtualGroupWidget.
 
-   Inherited from VirtualWidget
+   Inherited from :class:`VirtualWidget`
 
    .. method:: __init__() -> None
 
-   Initialize a VirtualGroupWidget instance.
+     Initialize a VirtualGroupWidget instance.

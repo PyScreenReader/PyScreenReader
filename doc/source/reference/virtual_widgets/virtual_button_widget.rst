@@ -6,8 +6,8 @@ VirtualButtonWidget
 
    A widget representing a button widget.
 
-   Inherited from VirtualWidget
+   Inherited from :class:`VirtualWidget`
 
    .. method:: __init__() -> None
 
-   Create a new VirtualButtonWidget instance.
+     Create a new VirtualButtonWidget instance.

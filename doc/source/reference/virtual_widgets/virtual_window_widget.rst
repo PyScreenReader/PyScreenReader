@@ -6,15 +6,15 @@ VirtualWindowWidget
 
    A widget representing a window, which can be modal or non-modal.
 
-   Inherited from VirtualWidget
+   Inherited from :class:`VirtualWidget`
 
    .. method:: __init__() -> None
 
-   Create a new VirtualWindowWidget instance.
+     Create a new VirtualWindowWidget instance.
 
    .. method:: is_modal() -> bool
 
-   Check if the current window is a modal.
+     Check if the current window is a modal.
 
    Depending on the native system, a "modal" generally means a pop-up window that
    appears on top of its main content and blocks user interaction with the rest of the UI
@@ -24,6 +24,6 @@ VirtualWindowWidget
 
    .. method:: set_is_modal(is_modal) -> None
 
-   Set whether the current window is a modal.
+     Set whether the current window is a modal.
 
    :param is_modal: True if the window is modal, otherwise False.

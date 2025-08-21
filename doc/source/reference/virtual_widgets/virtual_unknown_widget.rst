@@ -9,8 +9,8 @@ VirtualUnknownWidget
    This widget indicates that PyScreenReader cannot find a corresponding virtual widget
    to represent the native widget.
 
-   Inherited from VirtualWidget
+   Inherited from :class:`VirtualWidget`
 
    .. method:: __init__() -> None
 
-   Initialize a VirtualUnknownWidget instance.
+     Initialize a VirtualUnknownWidget instance.

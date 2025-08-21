@@ -6,20 +6,20 @@ VirtualTextWidget
 
    A widget representing static text content with selectable regions.
 
-   Inherited from VirtualWidget
+   Inherited from :class:`VirtualWidget`
 
    .. method:: __init__() -> None
 
-   Create a new VirtualTextWidget instance.
+     Create a new VirtualTextWidget instance.
 
    .. method:: get_selected_text() -> str
 
-   Get the cursor-selected text in the static text widget.
+     Get the cursor-selected text in the static text widget.
 
    :return: Selected text.
 
    .. method:: set_selected_text(selected_text) -> None
 
-   Set the cursor-selected text in the static text widget.
+     Set the cursor-selected text in the static text widget.
 
    :param selected_text: Selected text string.

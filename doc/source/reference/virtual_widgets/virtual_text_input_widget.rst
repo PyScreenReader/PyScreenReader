@@ -8,15 +8,15 @@ VirtualTextInputWidget
 
    Provides functionality for selection, cursor insertion point, and text area mode.
 
-   Inherited from VirtualWidget
+   Inherited from :class:`VirtualWidget`
 
    .. method:: __init__() -> None
 
-   Create a new VirtualTextInputWidget instance.
+     Create a new VirtualTextInputWidget instance.
 
    .. method:: get_insertion_point() -> int
 
-   Get the current cursor location in the text input, represented by an index starting at 0.
+     Get the current cursor location in the text input, represented by an index starting at 0.
 
    For example, in "A|BCDEFG", this function returns 1.
 
@@ -24,19 +24,19 @@ VirtualTextInputWidget
 
    .. method:: get_selected_text() -> str
 
-   Get the currently selected text in the input field.
+     Get the currently selected text in the input field.
 
    :return: Selected text.
 
    .. method:: is_text_area() -> bool
 
-   Check if the current input widget is a text area.
+     Check if the current input widget is a text area.
 
    :return: True if it's a text area, otherwise False.
 
    .. method:: set_insertion_point(insertion_point) -> None
 
-   Set the current cursor location index in the text input.
+     Set the current cursor location index in the text input.
 
    See also: get_insertion_point()
 
@@ -44,12 +44,12 @@ VirtualTextInputWidget
 
    .. method:: set_is_text_area(is_text_area) -> None
 
-   Set whether the input widget is a text area.
+     Set whether the input widget is a text area.
 
    :param is_text_area: True if it's a text area, otherwise False.
 
    .. method:: set_selected_text(selected_text) -> None
 
-   Set the currently selected text in the input field.
+     Set the currently selected text in the input field.
 
    :param selected_text: Selected text string.
