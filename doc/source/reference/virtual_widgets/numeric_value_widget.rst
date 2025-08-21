@@ -4,9 +4,6 @@
 
    A widget that represents a numeric value with optional min/max bounds.
 
-   Inherits from VirtualWidget and adds properties for numeric value,
-   minimum and maximum constraints.
-
    Inherited from VirtualWidget
 
    .. method:: get_max_value() -> int

@@ -196,9 +196,6 @@ Get all children of this widget in the tree.
   py::class_<NumericValueWidget, VirtualWidget, std::shared_ptr<NumericValueWidget>>(
       module, "NumericValueWidget", R"doc(
 A widget that represents a numeric value with optional min/max bounds.
-
-Inherits from VirtualWidget and adds properties for numeric value,
-minimum and maximum constraints.
 )doc")
       .def("get_value", &NumericValueWidget::GetValue, R"doc(
 Get value contained in the widget.
@@ -235,8 +232,6 @@ Set upper bound of the value.
   py::class_<VirtualButtonWidget, VirtualWidget, std::shared_ptr<VirtualButtonWidget>>(
       module, "VirtualButtonWidget", R"doc(
 A widget representing a button widget.
-
-Inherits from VirtualWidget.
 )doc")
       .def(py::init<>(), R"doc(
 Create a new VirtualButtonWidget instance.
@@ -246,8 +241,6 @@ Create a new VirtualButtonWidget instance.
   py::class_<VirtualMenuItemWidget, VirtualWidget, std::shared_ptr<VirtualMenuItemWidget>>(
       module, "VirtualMenuItemWidget", R"doc(
 A widget representing a menu item widget.
-
-Inherits from VirtualWidget.
 )doc")
       .def(py::init<>(), R"doc(
 Create a new VirtualMenuItemWidget instance.
@@ -257,8 +250,6 @@ Create a new VirtualMenuItemWidget instance.
   py::class_<VirtualMenuWidget, VirtualWidget, std::shared_ptr<VirtualMenuWidget>>(
       module, "VirtualMenuWidget", R"doc(
 A widget representing a menu widget.
-
-Inherits from VirtualWidget.
 )doc")
       .def(py::init<>(), R"doc(
 Create a new VirtualMenuWidget instance.
@@ -268,8 +259,6 @@ Create a new VirtualMenuWidget instance.
   py::class_<VirtualProgressBarWidget, NumericValueWidget,
              std::shared_ptr<VirtualProgressBarWidget>>(module, "VirtualProgressBarWidget", R"doc(
 A widget representing a progress bar with a numeric value and orientation.
-
-Inherits from NumericValueWidget and adds orientation widget.
 )doc")
       .def(py::init<>(), R"doc(
 Create a new VirtualProgressBarWidget instance.
@@ -290,8 +279,6 @@ Set the current orientation of the progress bar widget.
   py::class_<VirtualScrollbarWidget, NumericValueWidget, std::shared_ptr<VirtualScrollbarWidget>>(
       module, "VirtualScrollbarWidget", R"doc(
 A widget representing a scrollbar widget with numeric value and orientation.
-
-Inherits from NumericValueWidget and adds orientation property.
 )doc")
       .def(py::init<>(), R"doc(
 Create a new VirtualScrollbarWidget instance.
@@ -312,8 +299,6 @@ Set the current orientation of the scrollbar widget.
   py::class_<VirtualSliderWidget, NumericValueWidget, std::shared_ptr<VirtualSliderWidget>>(
       module, "VirtualSliderWidget", R"doc(
 A widget representing a slider widget with numeric value and orientation.
-
-Inherits from NumericValueWidget and adds orientation property.
 )doc")
       .def(py::init<>(), R"doc(
 Create a new VirtualSliderWidget instance.
@@ -333,8 +318,6 @@ Set the current orientation of the slider widget.
   py::class_<VirtualSpinnerWidget, NumericValueWidget, std::shared_ptr<VirtualSpinnerWidget>>(
       module, "VirtualSpinnerWidget", R"doc(
 A widget representing a numeric spinner widget.
-
-Inherits from NumericValueWidget.
 )doc")
       .def(py::init<>(), R"doc(
 Create a new VirtualSpinnerWidget instance.
@@ -346,7 +329,6 @@ Create a new VirtualSpinnerWidget instance.
 A widget representing a text input field or text area.
 
 Provides functionality for selection, cursor insertion point, and text area mode.
-Inherits from VirtualWidget.
 )doc")
       .def(py::init<>(), R"doc(
 Create a new VirtualTextInputWidget instance.
@@ -393,8 +375,6 @@ Set whether the input widget is a text area.
   py::class_<VirtualTextWidget, VirtualWidget, std::shared_ptr<VirtualTextWidget>>(
       module, "VirtualTextWidget", R"doc(
 A widget representing static text content with selectable regions.
-
-Inherits from VirtualWidget and allows retrieval and modification of selected text.
 )doc")
       .def(py::init<>(), R"doc(
 Create a new VirtualTextWidget instance.
@@ -427,8 +407,6 @@ Initialize a VirtualUnknownWidget instance.
   py::class_<VirtualWindowWidget, VirtualWidget, std::shared_ptr<VirtualWindowWidget>>(
       module, "VirtualWindowWidget", R"doc(
 A widget representing a window, which can be modal or non-modal.
-
-Inherits from VirtualWidget.
 )doc")
       .def(py::init<>(), R"doc(
 Create a new VirtualWindowWidget instance.

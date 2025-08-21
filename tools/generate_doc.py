@@ -1,11 +1,11 @@
 """
-Script to generate Python stubs (.pyi) and reStructuredText (RST) documentation
+Script to generate Python stubs (.pyi) and reStructuredText (.rst) documentation
 from PyScreenReader wheels or existing stub directories.
 
 Usage
 -----
 
-    $ bazel //tools:generate_doc -- <input_path> [--stub] [--doc] [--test]
+    $ bazel //tools:generate_doc -- <input_path> [--stub] [--doc]
 
 Arguments
 ---------

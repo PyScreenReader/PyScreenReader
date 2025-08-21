@@ -5,7 +5,6 @@
    A widget representing a text input field or text area.
 
    Provides functionality for selection, cursor insertion point, and text area mode.
-   Inherits from VirtualWidget.
 
    Inherited from VirtualWidget
 

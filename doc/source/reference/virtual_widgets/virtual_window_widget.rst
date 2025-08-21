@@ -4,8 +4,6 @@
 
    A widget representing a window, which can be modal or non-modal.
 
-   Inherits from VirtualWidget.
-
    Inherited from VirtualWidget
 
    .. method:: __init__() -> None

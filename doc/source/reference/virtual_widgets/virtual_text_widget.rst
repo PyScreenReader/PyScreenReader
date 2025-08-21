@@ -4,8 +4,6 @@
 
    A widget representing static text content with selectable regions.
 
-   Inherits from VirtualWidget and allows retrieval and modification of selected text.
-
    Inherited from VirtualWidget
 
    .. method:: __init__() -> None

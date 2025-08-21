@@ -4,8 +4,6 @@
 
    A widget representing a progress bar with a numeric value and orientation.
 
-   Inherits from NumericValueWidget and adds orientation widget.
-
    Inherited from NumericValueWidget
 
    .. method:: __init__() -> None

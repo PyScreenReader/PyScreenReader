@@ -4,8 +4,6 @@
 
    A widget representing a menu item widget.
 
-   Inherits from VirtualWidget.
-
    Inherited from VirtualWidget
 
    .. method:: __init__() -> None

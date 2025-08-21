@@ -8,9 +8,6 @@ class NumericValueWidget(VirtualWidget):
     """
     
     A widget that represents a numeric value with optional min/max bounds.
-    
-    Inherits from VirtualWidget and adds properties for numeric value,
-    minimum and maximum constraints.
     """
     def get_max_value(self) -> int:
         """
@@ -93,8 +90,6 @@ class VirtualButtonWidget(VirtualWidget):
     """
     
     A widget representing a button widget.
-    
-    Inherits from VirtualWidget.
     """
     def __init__(self) -> None:
         """
@@ -104,8 +99,6 @@ class VirtualMenuItemWidget(VirtualWidget):
     """
     
     A widget representing a menu item widget.
-    
-    Inherits from VirtualWidget.
     """
     def __init__(self) -> None:
         """
@@ -115,8 +108,6 @@ class VirtualMenuWidget(VirtualWidget):
     """
     
     A widget representing a menu widget.
-    
-    Inherits from VirtualWidget.
     """
     def __init__(self) -> None:
         """
@@ -126,8 +117,6 @@ class VirtualProgressBarWidget(NumericValueWidget):
     """
     
     A widget representing a progress bar with a numeric value and orientation.
-    
-    Inherits from NumericValueWidget and adds orientation widget.
     """
     def __init__(self) -> None:
         """
@@ -149,8 +138,6 @@ class VirtualScrollbarWidget(NumericValueWidget):
     """
     
     A widget representing a scrollbar widget with numeric value and orientation.
-    
-    Inherits from NumericValueWidget and adds orientation property.
     """
     def __init__(self) -> None:
         """
@@ -172,8 +159,6 @@ class VirtualSliderWidget(NumericValueWidget):
     """
     
     A widget representing a slider widget with numeric value and orientation.
-    
-    Inherits from NumericValueWidget and adds orientation property.
     """
     def __init__(self) -> None:
         """
@@ -195,8 +180,6 @@ class VirtualSpinnerWidget(NumericValueWidget):
     """
     
     A widget representing a numeric spinner widget.
-    
-    Inherits from NumericValueWidget.
     """
     def __init__(self) -> None:
         """
@@ -208,7 +191,6 @@ class VirtualTextInputWidget(VirtualWidget):
     A widget representing a text input field or text area.
     
     Provides functionality for selection, cursor insertion point, and text area mode.
-    Inherits from VirtualWidget.
     """
     def __init__(self) -> None:
         """
@@ -258,8 +240,6 @@ class VirtualTextWidget(VirtualWidget):
     """
     
     A widget representing static text content with selectable regions.
-    
-    Inherits from VirtualWidget and allows retrieval and modification of selected text.
     """
     def __init__(self) -> None:
         """
@@ -475,8 +455,6 @@ class VirtualWindowWidget(VirtualWidget):
     """
     
     A widget representing a window, which can be modal or non-modal.
-    
-    Inherits from VirtualWidget.
     """
     def __init__(self) -> None:
         """
