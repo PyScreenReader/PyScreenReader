@@ -31,7 +31,7 @@ From there, you can navigate through its children and inspect each widget's prop
 - Focus state
 - ...
 
-Code snippet below shows an example of BFS that traverses every node of
+Code snippet below shows an example of BFS that traverses every node.
 ```python
 def print_tree(root: VirtualWidget) -> None:
     """Print a virtual widget tree using DFS.
