@@ -48,7 +48,10 @@ py_wheel(
     python_tag = python_tag,
     summary = "PyScreenReader is a cross-platform Python library that wraps native accessibility APIs to collect widget tree information on the screen.",
     version = release_version,
-    deps = [":PyScreenReader"],
+    deps = [
+        ":PyScreenReader",
+        "//src/stubs:py_stubs",
+    ],
 )
 
 py_wheel_dist(

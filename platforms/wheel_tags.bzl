@@ -4,7 +4,7 @@ In this file, we provide all the necessary information to define a python wheel 
 https://packaging.python.org/en/latest/specifications/platform-compatibility-tags/
 """
 
-python_version_string = "3.13"
+python_version_string = "3.12"
 abi_tag = "abi3"
 release_version = "0.0.1"
 

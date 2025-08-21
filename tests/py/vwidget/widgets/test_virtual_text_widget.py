@@ -1,5 +1,5 @@
 import pytest
-from PyScreenReader import VirtualTextWidget, VirtualWidget
+from PyScreenReader.virtual_widgets import VirtualTextWidget, VirtualWidget
 
 from tests.py.tools.utils import (
     assert_all_base_functions_exist,

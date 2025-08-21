@@ -1,4 +1,4 @@
-from PyScreenReader import NumericValueWidget, VirtualWidget
+from PyScreenReader.virtual_widgets import NumericValueWidget, VirtualWidget
 
 from tests.py.tools.utils import (
     assert_abstract_class,

@@ -1,5 +1,10 @@
 import pytest
-from PyScreenReader import NumericValueWidget, Orientation, VirtualProgressBarWidget, VirtualWidget
+from PyScreenReader.virtual_widgets import (
+    NumericValueWidget,
+    Orientation,
+    VirtualProgressBarWidget,
+    VirtualWidget,
+)
 
 from tests.py.tools.utils import (
     assert_all_base_functions_exist,
