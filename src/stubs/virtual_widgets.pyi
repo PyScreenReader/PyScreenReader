@@ -3,7 +3,7 @@ A submodule containing virtual widgets definitions
 """
 from __future__ import annotations
 import typing
-__all__ = ['HORIZONTAL', 'NumericValueWidget', 'Orientation', 'VERTICAL', 'VirtualButtonWidget', 'VirtualMenuItemWidget', 'VirtualMenuWidget', 'VirtualProgressBarWidget', 'VirtualScrollbarWidget', 'VirtualSliderWidget', 'VirtualSpinnerWidget', 'VirtualTextInputWidget', 'VirtualTextWidget', 'VirtualUnknownWidget', 'VirtualWidget', 'VirtualWindowWidget']
+__all__ = ['HORIZONTAL', 'NumericValueWidget', 'Orientation', 'VERTICAL', 'VirtualButtonWidget', 'VirtualGroupWidget', 'VirtualMenuItemWidget', 'VirtualMenuWidget', 'VirtualProgressBarWidget', 'VirtualScrollbarWidget', 'VirtualSliderWidget', 'VirtualSpinnerWidget', 'VirtualTextInputWidget', 'VirtualTextWidget', 'VirtualUnknownWidget', 'VirtualWidget', 'VirtualWindowWidget']
 class NumericValueWidget(VirtualWidget):
     """
     
@@ -94,6 +94,22 @@ class VirtualButtonWidget(VirtualWidget):
     def __init__(self) -> None:
         """
         Create a new VirtualButtonWidget instance.
+        """
+class VirtualGroupWidget(VirtualWidget):
+    """
+    
+    A VirtualGroupWidget represents a container-like native widget
+    that groups other widgets together in the accessibility tree.
+    Examples include rows, columns, lists, or generic grouping elements.
+    
+    This abstraction models the hierarchical structure of the widget tree.
+    A VirtualGroupWidget typically does not handle direct user interactions itself.
+    If the native widget has specific interactive behaviors or functionalities,
+    it should generally not be mapped to a VirtualGroupWidget.
+    """
+    def __init__(self) -> None:
+        """
+        Initialize a VirtualGroupWidget instance.
         """
 class VirtualMenuItemWidget(VirtualWidget):
     """

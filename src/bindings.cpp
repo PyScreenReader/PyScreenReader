@@ -16,6 +16,7 @@
 #include "include/vwidget/widgets/virtual_text_widget.h"
 #include "include/vwidget/widgets/virtual_unknown_widget.h"
 #include "include/vwidget/widgets/virtual_window_widget.h"
+#include "include/vwidget/widgets/virtual_group_widget.h"
 
 namespace bindings {
 namespace py = pybind11;
@@ -401,6 +402,22 @@ to represent the native widget.
 )doc")
       .def(py::init<>(), R"doc(
 Initialize a VirtualUnknownWidget instance.
+)doc");
+
+  // VirtualGroupWidget
+  py::class_<VirtualGroupWidget, VirtualWidget, std::shared_ptr<VirtualGroupWidget>>(
+      module, "VirtualGroupWidget", R"doc(
+A VirtualGroupWidget represents a container-like native widget
+that groups other widgets together in the accessibility tree.
+Examples include rows, columns, lists, or generic grouping elements.
+
+This abstraction models the hierarchical structure of the widget tree.
+A VirtualGroupWidget typically does not handle direct user interactions itself.
+If the native widget has specific interactive behaviors or functionalities,
+it should generally not be mapped to a VirtualGroupWidget.
+)doc")
+      .def(py::init<>(), R"doc(
+Initialize a VirtualGroupWidget instance.
 )doc");
 
   // VirtualWindowWidget
