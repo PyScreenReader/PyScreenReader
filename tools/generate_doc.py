@@ -1,5 +1,4 @@
-"""
-Script to generate Python stubs (.pyi) and reStructuredText (.rst) documentation
+"""Script to generate Python stubs (.pyi) and reStructuredText (.rst) documentation
 from PyScreenReader wheels or existing stub directories.
 
 Usage
@@ -7,9 +6,8 @@ Usage
 
     $ bazel //tools:generate_doc -- <input_path> [--stub] [--doc]
 
-Arguments
+Arguments:
 ---------
-
 - input_path
   Path to a wheel file (when generating stubs) or a directory containing
   existing stubs (when generating docs only).
@@ -33,9 +31,8 @@ Dependencies
 - pybind11-stubgen (for stub generation)
 - pip (to install the wheel into a temporary directory)
 
-Examples
+Examples:
 --------
-
 Generate both stubs and docs from a wheel::
 
     $ bazel //tools:generate_doc -- dist/PyScreenReader-0.1.0-py3-none-any.whl --stub --doc
@@ -43,6 +40,7 @@ Generate both stubs and docs from a wheel::
 Generate only docs from an existing stub directory::
 
     $ bazel //tools:generate_doc -- src/stubs --doc
+
 """
 
 import argparse
@@ -58,7 +56,6 @@ from glob import glob
 from pathlib import Path
 
 from pybind11_stubgen import main as stubgen_main
-
 
 PYI_FILE_SUFFIX = ".pyi"
 MODULE_NAME = "PyScreenReader"
@@ -244,7 +241,10 @@ if __name__ == "__main__":
         help="Input path (can be a wheel for stub and doc generation, or a dir of stubs just for doc generation)",
     )
     parser.add_argument(
-        "-s", "--stub", action="store_true", help="Generate stubs (default to False)"
+        "-s",
+        "--stub",
+        action="store_true",
+        help="Generate stubs (default to False)",
     )
     parser.add_argument("-d", "--doc", action="store_true", help="Generate docs (default to False)")
     args = parser.parse_args()
