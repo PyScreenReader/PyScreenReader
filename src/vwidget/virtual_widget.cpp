@@ -1,5 +1,6 @@
 #include "include/vwidget/virtual_widget.h"
 
+#include <iostream>
 #include <sstream>
 
 #include <ostream>

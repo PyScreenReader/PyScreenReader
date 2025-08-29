@@ -1,4 +1,5 @@
 #include "vwidget_factory_win.h"
+#include "src/native/win/utils/system_utils.h"
 #include <comutil.h>
 
 template <>
@@ -8,7 +9,9 @@ std::shared_ptr<VirtualButtonWidget> vwidget_factory::CreateWidget(IUIAutomation
 
 template <>
 std::shared_ptr<VirtualTextWidget> vwidget_factory::CreateWidget(IUIAutomationElement* element) {
-  return vwidget_factory::CreateWidgetWithAttributes<VirtualTextWidget>(element);
+  auto widget = vwidget_factory::CreateWidgetWithAttributes<VirtualTextWidget>(element);
+  system_utils::ParseProvider<IUIAutomationTextPattern>(*widget, element);
+  return widget;
 }
 
 template <>
@@ -83,7 +86,7 @@ void vwidget_factory::PopulateSharedAttributes(std::shared_ptr<VirtualWidget> wi
   BSTR current_name = nullptr;
   hresult = element->get_CurrentName(&current_name);
   if (current_name && SUCCEEDED(hresult)) {
-    const std::string title_string(_com_util::ConvertBSTRToString(current_name));
+    const std::string title_string(system_utils::BSTRtoUTF8(current_name));
     widget->SetTitleText(title_string);
   }
   SysFreeString(current_name);
@@ -93,7 +96,7 @@ void vwidget_factory::PopulateSharedAttributes(std::shared_ptr<VirtualWidget> wi
   BSTR control_type = nullptr;
   hresult = element->get_CurrentLocalizedControlType(&control_type);
   if (control_type && SUCCEEDED(hresult)) {
-    const std::string title_string(_com_util::ConvertBSTRToString(control_type));
+    const std::string title_string(system_utils::BSTRtoUTF8(control_type));
     widget->SetNativeName(title_string);
   }
   SysFreeString(control_type);
@@ -103,7 +106,7 @@ void vwidget_factory::PopulateSharedAttributes(std::shared_ptr<VirtualWidget> wi
   BSTR help_text = nullptr;
   hresult = element->get_CurrentHelpText(&help_text);
   if (help_text && SUCCEEDED(hresult)) {
-    const std::string title_string(_com_util::ConvertBSTRToString(help_text));
+    const std::string title_string(system_utils::BSTRtoUTF8(help_text));
     widget->SetHelpText(title_string);
   }
   SysFreeString(help_text);

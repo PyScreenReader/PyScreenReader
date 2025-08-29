@@ -7,7 +7,8 @@ Run ScreenReader from Python bindings:
 
 import argparse
 
-from PyScreenReader import ScreenReader, VirtualWidget
+from PyScreenReader.virtual_widgets import VirtualWidget
+from PyScreenReader.screen_reader import ScreenReader
 
 
 def print_tree(root: VirtualWidget) -> None:
