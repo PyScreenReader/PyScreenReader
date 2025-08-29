@@ -9,10 +9,10 @@ namespace system_utils {
 std::string BSTRtoUTF8(BSTR bstr);
 
 template <typename T>
-bool ParseProvider(VirtualWidget& widget, IUIAutomationElement* element);
+bool ParseControlPattern(VirtualWidget& widget, IUIAutomationElement* element);
 
 template<>
-bool ParseProvider<ITextProvider>(VirtualWidget& widget, IUIAutomationElement* element);
+bool ParseControlPattern<ITextProvider>(VirtualWidget& widget, IUIAutomationElement* element);
 
 } // system_utils
 

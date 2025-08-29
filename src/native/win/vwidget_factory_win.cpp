@@ -10,7 +10,7 @@ std::shared_ptr<VirtualButtonWidget> vwidget_factory::CreateWidget(IUIAutomation
 template <>
 std::shared_ptr<VirtualTextWidget> vwidget_factory::CreateWidget(IUIAutomationElement* element) {
   auto widget = vwidget_factory::CreateWidgetWithAttributes<VirtualTextWidget>(element);
-  system_utils::ParseProvider<IUIAutomationTextPattern>(*widget, element);
+  system_utils::ParseControlPattern<IUIAutomationTextPattern>(*widget, element);
   return widget;
 }
 

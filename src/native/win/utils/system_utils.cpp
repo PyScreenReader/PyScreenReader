@@ -20,7 +20,7 @@ std::string BSTRtoUTF8(BSTR bstr) {
 }
 
 template <>
-bool ParseProvider<IUIAutomationTextPattern>(VirtualWidget& widget, IUIAutomationElement* element) {
+bool ParseControlPattern<IUIAutomationTextPattern>(VirtualWidget& widget, IUIAutomationElement* element) {
   IUIAutomationTextPattern* text_pattern = nullptr;
   if (FAILED(element->GetCurrentPattern(UIA_TextPatternId,
                                            reinterpret_cast<IUnknown**>(&text_pattern)))) {
