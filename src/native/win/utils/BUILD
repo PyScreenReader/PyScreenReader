@@ -13,6 +13,13 @@ pybind_library(
         "comsuppw.lib",
     ],
     deps = [
+        "//src/native/win/utils:pattern_data",
         "//src/vwidget:all_virtual_widgets",
     ],
+)
+
+pybind_library(
+    name = "pattern_data",
+    srcs = [":pattern_data.cpp"],
+    hdrs = [":pattern_data.h"],
 )

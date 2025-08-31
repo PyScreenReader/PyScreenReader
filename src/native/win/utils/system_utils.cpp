@@ -22,9 +22,10 @@ std::string BSTRtoUTF8(BSTR bstr) {
 }
 
 template <>
-const TextPatternData& ParseControlPatternToData<TextPatternData>(IUIAutomationElement* element) {
+std::unique_ptr<const TextPatternData> ParseControlPatternToData<TextPatternData>(
+    IUIAutomationElement* element) {
   IUIAutomationTextPattern* text_pattern = nullptr;
-  TextPatternData pattern_data;
+  auto pattern_data = std::make_unique<TextPatternData>();
   if (FAILED(element->GetCurrentPattern(UIA_TextPatternId,
                                         reinterpret_cast<IUnknown**>(&text_pattern)))) {
     return std::move(pattern_data);
@@ -35,16 +36,16 @@ const TextPatternData& ParseControlPatternToData<TextPatternData>(IUIAutomationE
     return std::move(pattern_data);
   }
 
-  int rangeCount = 0;
-  selected_text_array->get_Length(&rangeCount);
+  int selected_length = 0;
+  selected_text_array->get_Length(&selected_length);
   std::stringstream selected_text;
   IUIAutomationTextRange* text_range = nullptr;
   BSTR text = nullptr;
-  for (int i = 0; i < rangeCount; i++) {
+  for (int i = 0; i < selected_length; i++) {
     if (SUCCEEDED(selected_text_array->GetElement(i, &text_range))) {
       // The -1 argument for GetText means to retrieve the entire range.
       if (SUCCEEDED(text_range->GetText(-1, &text)) && text) {
-        selected_text << BSTRtoUTF8(text);
+        selected_text << std::string(BSTRtoUTF8(text));
       }
       // Cleanup text and text_range
       SysFreeString(text);
@@ -55,14 +56,15 @@ const TextPatternData& ParseControlPatternToData<TextPatternData>(IUIAutomationE
       }
     }
   }
-  pattern_data.selected_text =  selected_text.str();
+  pattern_data->selected_text = selected_text.str();
   selected_text_array->Release();
   text_pattern->Release();
   return std::move(pattern_data);
 }
 
-void ApplyData(const TextPatternData& data, const std::shared_ptr<VirtualTextWidget>& widget) {
-  widget->SetSelectedText(data.selected_text);
+void ApplyData(std::unique_ptr<const TextPatternData> data,
+               std::shared_ptr<VirtualTextWidget> widget) {
+  widget->SetSelectedText(data->selected_text);
 }
 
 }  // namespace system_utils

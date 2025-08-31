@@ -2,15 +2,12 @@
 #include <uiautomationclient.h>
 #include <string>
 
-#include "include/vwidget/virtual_widget.h"
-#include "include/vwidget/widgets/virtual_text_input_widget.h"
 #include "include/vwidget/widgets/virtual_text_widget.h"
+#include "src/native/win/utils/pattern_data.h"
 
 namespace system_utils {
 
-struct TextPatternData {
-  std::string selected_text;
-};
+using namespace pattern_data;
 
 /**
  * Function for processing native windows strings into UTF-8 format
@@ -29,11 +26,13 @@ std::string BSTRtoUTF8(BSTR bstr);
  * @return true on success, false otherwise
  */
 template <typename T>
-const T& ParseControlPatternToData(IUIAutomationElement* element);
+std::unique_ptr<const T> ParseControlPatternToData(IUIAutomationElement* element);
 
 template <>
-const TextPatternData& ParseControlPatternToData<TextPatternData>(IUIAutomationElement* element);
+std::unique_ptr<const TextPatternData> ParseControlPatternToData<TextPatternData>(
+    IUIAutomationElement* element);
 
-void ApplyData(const TextPatternData& data, const std::shared_ptr<VirtualTextWidget>& widget);
+void ApplyData(std::unique_ptr<const TextPatternData> data,
+               std::shared_ptr<VirtualTextWidget> widget);
 
 }  // namespace system_utils

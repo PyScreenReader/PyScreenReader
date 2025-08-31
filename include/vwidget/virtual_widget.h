@@ -204,7 +204,7 @@ class VirtualWidget {
    *
    * @return formatted printable string
    */
-  std::string ToString() const;
+  virtual std::string ToString() const;
 
   virtual ~VirtualWidget() = default;
 

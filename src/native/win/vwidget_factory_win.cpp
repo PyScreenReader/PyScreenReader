@@ -9,22 +9,26 @@ std::shared_ptr<VirtualButtonWidget> vwidget_factory::CreateWidget(IUIAutomation
 
 template <>
 std::shared_ptr<VirtualTextWidget> vwidget_factory::CreateWidget(IUIAutomationElement* element) {
-  using system_utils::TextPatternData;
+  using pattern_data::TextPatternData;
+
   auto widget = vwidget_factory::CreateWidgetWithAttributes<VirtualTextWidget>(element);
-  const TextPatternData& text_pattern_data =
+  std::unique_ptr<const TextPatternData> text_pattern_data =
       system_utils::ParseControlPatternToData<TextPatternData>(element);
-  system_utils::ApplyData(text_pattern_data, widget);
+
+  system_utils::ApplyData(std::move(text_pattern_data), widget);
   return widget;
 }
 
 template <>
 std::shared_ptr<VirtualTextInputWidget> vwidget_factory::CreateWidget(
     IUIAutomationElement* element) {
-  using system_utils::TextPatternData;
+  using pattern_data::TextPatternData;
+
   auto widget = vwidget_factory::CreateWidgetWithAttributes<VirtualTextInputWidget>(element);
-  // const TextPatternData& text_pattern_data =
-  //     system_utils::ParseControlPatternToData<TextPatternData>(element);
-  // system_utils::ApplyData(text_pattern_data, widget);
+  std::unique_ptr<const TextPatternData> text_pattern_data =
+      system_utils::ParseControlPatternToData<TextPatternData>(element);
+
+  system_utils::ApplyData(std::move(text_pattern_data), widget);
   return widget;
 }
 
