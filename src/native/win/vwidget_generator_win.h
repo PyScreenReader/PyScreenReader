@@ -57,13 +57,13 @@ const RoleHandlerMap kRoleWidgetMap = {
     REGISTER_HANDLER(UIA_RadioButtonControlTypeId, VirtualButtonWidget),
 
     // ITextProvider
-    // REGISTER_HANDLER(UIA_EditControlTypeId, VirtualTextInputWidget),
+    REGISTER_HANDLER(UIA_EditControlTypeId, VirtualTextInputWidget),
     // ITextProvider
     REGISTER_HANDLER(UIA_TextControlTypeId, VirtualTextWidget),
     // ITextProvider
-    // REGISTER_HANDLER(UIA_DocumentControlTypeId, VirtualTextWidget),
+    REGISTER_HANDLER(UIA_DocumentControlTypeId, VirtualTextWidget),
     // ITextProvider
-    // REGISTER_HANDLER(UIA_ToolTipControlTypeId, VirtualTextWidget),
+    REGISTER_HANDLER(UIA_ToolTipControlTypeId, VirtualTextWidget),
     // Value
     REGISTER_HANDLER(UIA_ProgressBarControlTypeId, VirtualProgressBarWidget),
 

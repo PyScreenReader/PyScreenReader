@@ -6,6 +6,7 @@
 class VirtualTextWidget : public VirtualWidget {
  public:
   VirtualTextWidget();
+  explicit VirtualTextWidget(std::string widget_name);
   ~VirtualTextWidget() override = default;
 
   /**
@@ -22,6 +23,6 @@ class VirtualTextWidget : public VirtualWidget {
    */
   void SetSelectedText(const std::string& selected_text) { selected_text_ = selected_text; }
 
- private:
+ protected:
   std::string selected_text_;
 };

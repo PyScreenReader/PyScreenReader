@@ -1,6 +1,6 @@
 #include "vwidget_factory_win.h"
-#include "src/native/win/utils/system_utils.h"
 #include <comutil.h>
+#include "src/native/win/utils/system_utils.h"
 
 template <>
 std::shared_ptr<VirtualButtonWidget> vwidget_factory::CreateWidget(IUIAutomationElement* element) {
@@ -9,15 +9,23 @@ std::shared_ptr<VirtualButtonWidget> vwidget_factory::CreateWidget(IUIAutomation
 
 template <>
 std::shared_ptr<VirtualTextWidget> vwidget_factory::CreateWidget(IUIAutomationElement* element) {
+  using system_utils::TextPatternData;
   auto widget = vwidget_factory::CreateWidgetWithAttributes<VirtualTextWidget>(element);
-  system_utils::ParseControlPattern<IUIAutomationTextPattern>(*widget, element);
+  const TextPatternData& text_pattern_data =
+      system_utils::ParseControlPatternToData<TextPatternData>(element);
+  system_utils::ApplyData(text_pattern_data, widget);
   return widget;
 }
 
 template <>
 std::shared_ptr<VirtualTextInputWidget> vwidget_factory::CreateWidget(
     IUIAutomationElement* element) {
-  return vwidget_factory::CreateWidgetWithAttributes<VirtualTextInputWidget>(element);
+  using system_utils::TextPatternData;
+  auto widget = vwidget_factory::CreateWidgetWithAttributes<VirtualTextInputWidget>(element);
+  // const TextPatternData& text_pattern_data =
+  //     system_utils::ParseControlPatternToData<TextPatternData>(element);
+  // system_utils::ApplyData(text_pattern_data, widget);
+  return widget;
 }
 
 template <>
