@@ -6,7 +6,7 @@
 class VirtualTextWidget : public VirtualWidget {
  public:
   VirtualTextWidget();
-  explicit VirtualTextWidget(std::string widget_name);
+  explicit VirtualTextWidget(std::string&& widget_name);
   ~VirtualTextWidget() override = default;
 
   /**

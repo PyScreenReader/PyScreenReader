@@ -13,14 +13,16 @@ std::shared_ptr<VirtualWidget> GenerateVWidgetTree(IUIAutomationElement* root_el
   std::queue<std::pair<std::shared_ptr<VirtualWidget>, IUIAutomationElement*>> queue;
   queue.emplace(root, root_element);
   HRESULT hresult = S_OK;
+  IUIAutomationElement* current_element = nullptr;
   while (!queue.empty()) {
     // This is the first child of the clade
     auto [parent_vwidget, curr] = queue.front();
     queue.pop();
 
     std::shared_ptr<VirtualWidget> curr_vwidget = nullptr;
-    IUIAutomationElement* current_element = curr;
     IUIAutomationElement* first_child_element = nullptr;
+    current_element = curr;
+
     while (current_element) {
       // Check next sibling, add their first child to queue and bind
       // parent/child

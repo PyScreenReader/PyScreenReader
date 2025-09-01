@@ -55,5 +55,5 @@ class NumericValueWidget : public VirtualWidget {
   int max_value_ = -1;
 
  protected:
-  explicit NumericValueWidget(const std::string& widget_name);
+  explicit NumericValueWidget(std::string&& widget_name);
 };
