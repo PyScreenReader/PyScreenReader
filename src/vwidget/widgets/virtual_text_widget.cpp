@@ -3,8 +3,6 @@
 #include <sstream>
 #include "include/vwidget/widgets/virtual_text_widget.h"
 
-#include <ostream>
-
 VirtualTextWidget::VirtualTextWidget() : VirtualWidget("VirtualTextWidget") {}
 VirtualTextWidget::VirtualTextWidget(std::string widget_name)
     : VirtualWidget(std::move(widget_name)) {}

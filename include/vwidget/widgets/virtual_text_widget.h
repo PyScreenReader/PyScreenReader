@@ -24,10 +24,10 @@ class VirtualTextWidget : public VirtualWidget {
   void SetSelectedText(const std::string& selected_text) { selected_text_ = selected_text; }
 
   /**
-     * Convert this object to a formatted printable string.
-     *
-     * @return formatted printable string
-     */
+   * Convert this object to a formatted printable string.
+   *
+   * @return formatted printable string
+   */
   std::string ToString() const override;
 
  protected:

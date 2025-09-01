@@ -7,4 +7,4 @@ struct TextPatternData {
   std::string selected_text;
 };
 
-};
+};  // namespace pattern_data
