@@ -36,6 +36,7 @@ pybind_library(
         "comsuppw.lib",
     ],
     deps = [
+        "//src/native/win/utils:system_utils",
         "//src/vwidget/widgets:virtual_components",
     ],
 )

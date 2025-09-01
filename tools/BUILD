@@ -32,7 +32,7 @@ cc_binary(
 py_binary(
     name = "py_inspect",
     srcs = ["py_inspect.py"],
-    deps = [
+    data = [
         "//:PyScreenReader",
     ],
 )

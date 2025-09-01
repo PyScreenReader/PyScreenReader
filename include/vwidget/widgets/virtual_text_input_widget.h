@@ -1,25 +1,14 @@
 #pragma once
 
 #include <string>
-#include "include/vwidget/virtual_widget.h"
 
-class VirtualTextInputWidget : public VirtualWidget {
+#include "include/vwidget/virtual_widget.h"
+#include "virtual_text_widget.h"
+
+class VirtualTextInputWidget : public VirtualTextWidget {
  public:
   VirtualTextInputWidget();
   ~VirtualTextInputWidget() override = default;
-
-  /**
-   * Get cursor selected text in text input
-   *
-   * @return selected text
-   */
-  const std::string& GetSelectedText() const { return selected_text_; }
-  /**
-   * Set cursor selected text
-   *
-   * @param selected_text selected text string
-   */
-  void SetSelectedText(const std::string& selected_text) { selected_text_ = selected_text; }
 
   /**
    * Get current cursor location in the text input, represented by an index number
@@ -52,7 +41,6 @@ class VirtualTextInputWidget : public VirtualWidget {
   void SetIsTextArea(bool is_text_area) { is_text_area_ = is_text_area; }
 
  private:
-  std::string selected_text_;
   int insertion_point_ = -1;
   bool is_text_area_ = false;
 };
