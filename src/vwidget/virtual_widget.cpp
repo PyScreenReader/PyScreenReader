@@ -5,7 +5,7 @@
 #include <ostream>
 #include <utility>
 
-VirtualWidget::VirtualWidget(std::string widget_name) : widget_name_(std::move(widget_name)) {}
+VirtualWidget::VirtualWidget(std::string&& widget_name) : widget_name_(std::move(widget_name)) {}
 
 void VirtualWidget::AddChild(const std::shared_ptr<VirtualWidget>& child) {
   children_.emplace_back(child);

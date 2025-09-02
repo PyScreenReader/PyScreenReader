@@ -5,7 +5,14 @@
 #include <vector>
 
 class VirtualWidget {
+ protected:
+  explicit VirtualWidget(std::string&& widget_name);
+
  public:
+  virtual ~VirtualWidget() = default;
+  VirtualWidget(const VirtualWidget& other) = delete;
+  VirtualWidget& operator=(const VirtualWidget& other) = delete;
+
   //  Getters
   /**
    * Get title text
@@ -206,8 +213,6 @@ class VirtualWidget {
    */
   virtual std::string ToString() const;
 
-  virtual ~VirtualWidget() = default;
-
  private:
   std::string title_text_;
   std::string help_text_;
@@ -221,7 +226,4 @@ class VirtualWidget {
   bool is_focused_ = false;
   std::weak_ptr<VirtualWidget> parent_;
   std::vector<std::shared_ptr<VirtualWidget>> children_;
-
- protected:
-  explicit VirtualWidget(std::string widget_name);
 };
