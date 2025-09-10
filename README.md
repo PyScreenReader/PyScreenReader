@@ -1,4 +1,6 @@
-<img src=".github/assets/right_side_text.svg" alt="PyScreenReader">
+<p align="center">
+  <img src=".github/assets/right_side_text.svg" alt="PyScreenReader">
+</p>
 
 # PyScreenReader
 
@@ -106,7 +108,7 @@ Feedback is a gift! We appreciate any kind of feedback/questions/concerns in the
   next version of PyScreenReader.
 - Found Security concerns and vulnerabilities? Oh no, now we have trouble! But the good news is you found it and
   alerted us, so nothing bad will happen. Please refer to our [SECURITY](SECURITY.md) page and report them through
-  the [Security Page](https://github.com/Lmh-java/PyScreenReader/security).
+  the [GitHub Security Portal](https://github.com/Lmh-java/PyScreenReader/security).
 
 ## Licensing
 
