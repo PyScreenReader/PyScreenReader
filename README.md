@@ -15,13 +15,12 @@ Key features:
 - **Cross-platform support:** Write once, works (mostly) everywhere! Compatible with Windows, macOS, and Linux.
 - **Unified UI model:** Abstracts diverse native UI controls into a single consistent tree-like data structure.
 - **Abstracted System APIs:**  Avoid delving in to the complexity of native per-platform system APIs to interact with
-  the
-  screen
-- **Lightweight and Pythonic:**  No need for compilers or special toolchain setup, just use Python
+  the screen.  
+- **Lightweight and Pythonic:**  No need for compilers or special toolchain setup, just use Python.  
 
 > [!WARNING]
 > PyScreenReader is not yet released and is still in testing. Stay tuned for its public release on PyPi in the near
-> future
+> future.
 
 ## Table of Content
 
@@ -51,7 +50,7 @@ pip install PyScreenReader
 
 [//]: # (</details>)
 
-In your Python script, import PyScreenReader
+In your Python script, import PyScreenReader -
 
 ```py
 # Import the reader itself
