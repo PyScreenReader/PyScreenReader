@@ -11,5 +11,5 @@
  */
 TEST(ScreenReaderImplLinuxTest, TestPidSanityCheck) {
   screen_reader::ScreenReaderImpl impl;
-  impl.GetVirtualWidgetTreeByPID("82534");
+  impl.GetVirtualWidgetTreeByPID(82534);
 }

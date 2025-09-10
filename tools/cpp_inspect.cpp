@@ -54,7 +54,7 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  const std::string pid = std::to_string(result["pid"].as<int>());
+  const pid_t pid = result["pid"].as<pid_t>();
   std::cout << "Running cpp_inspect on PID: " << pid << '\n';
 
   ScreenReader screen_reader;

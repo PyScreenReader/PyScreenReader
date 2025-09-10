@@ -39,14 +39,10 @@ ScreenReaderImpl::~ScreenReaderImpl() {
   }
 }
 
-std::shared_ptr<VirtualWidget> ScreenReaderImpl::GetVirtualWidgetTreeByPID(
-    const std::string& pid) const {
-  if (pid.empty())
-    throw std::invalid_argument("PID cannot be empty");
-
+std::shared_ptr<VirtualWidget> ScreenReaderImpl::GetVirtualWidgetTreeByPID(const pid_t pid) const {
   VARIANT var_prop;
   var_prop.vt = VT_INT;
-  var_prop.intVal = std::stoi(pid);
+  var_prop.intVal = pid;
 
   IUIAutomationCondition* match_condition = nullptr;
   IUIAutomationElement* matched_element = nullptr;
