@@ -1,5 +1,4 @@
 name: setup-ci-env
-author: Lmh-java
 description: setup CI environment
 
 runs:
