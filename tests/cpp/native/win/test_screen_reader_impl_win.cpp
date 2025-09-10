@@ -3,7 +3,7 @@
 
 class ScreenReaderTest : public ::testing::Test {
  protected:
-  const std::string TEST_PID = "14480";
+  const pid_t TEST_PID = 14480;
 
   void SetUp() override {}
   ScreenReader screen_reader_;

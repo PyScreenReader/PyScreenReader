@@ -9,7 +9,6 @@
 
 namespace screen_reader {
 std::shared_ptr<VirtualWidget> ScreenReaderImpl::GetVirtualWidgetTreeByPID(const pid_t pid) {
-
   AXUIElementRef axui_element = system_utils::GetAXUIElementRefByPID(pid);
   if (axui_element == nullptr) {
     throw std::runtime_error("Failed to create AXUIElement");

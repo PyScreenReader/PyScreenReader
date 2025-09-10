@@ -25,8 +25,7 @@ ScreenReaderImpl::~ScreenReaderImpl() {
   atspi_exit();
 }
 
-std::shared_ptr<VirtualWidget> ScreenReaderImpl::GetVirtualWidgetTreeByPID(
-    const pid_t pid) const {
+std::shared_ptr<VirtualWidget> ScreenReaderImpl::GetVirtualWidgetTreeByPID(const pid_t pid) const {
   // According to ATSPI documentation, any desktop index different from 0 will return NULL.
   // https://docs.gtk.org/atspi2/func.get_desktop.html
   AtspiAccessible* desktop = atspi_get_desktop(0);

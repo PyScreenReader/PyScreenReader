@@ -39,9 +39,7 @@ ScreenReaderImpl::~ScreenReaderImpl() {
   }
 }
 
-std::shared_ptr<VirtualWidget> ScreenReaderImpl::GetVirtualWidgetTreeByPID(
-    const pid_t pid) const {
-
+std::shared_ptr<VirtualWidget> ScreenReaderImpl::GetVirtualWidgetTreeByPID(const pid_t pid) const {
   VARIANT var_prop;
   var_prop.vt = VT_INT;
   var_prop.intVal = pid;

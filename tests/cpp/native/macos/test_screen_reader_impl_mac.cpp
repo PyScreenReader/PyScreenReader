@@ -12,5 +12,5 @@
  * for debugging with IDE breakpoints.
  */
 TEST(ScreenReaderImplMacTest, TestPidSanityCheck) {
-  screen_reader::ScreenReaderImpl::GetVirtualWidgetTreeByPID("82534");
+  screen_reader::ScreenReaderImpl::GetVirtualWidgetTreeByPID(82534);
 }
