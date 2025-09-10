@@ -27,7 +27,7 @@ trove_classifiers = [
     "Operating System :: MacOS",
     "Operating System :: POSIX :: Linux",
     "Topic :: Desktop Environment :: Gnome",
-    "Development Status :: 2 - Pre-Alpha",
+    "Development Status :: 3 - Alpha",
     "Programming Language :: C++",
     "Topic :: Software Development :: Libraries :: Application Frameworks",
     "Topic :: Software Development :: Libraries",
