@@ -40,7 +40,7 @@ def main() -> None:
     print(f"Running py_inspect on PID: {pid}")
 
     screen_reader = ScreenReader()
-    root = screen_reader.get_virtual_widget_tree_by_pid(str(pid))
+    root = screen_reader.get_virtual_widget_tree_by_pid(pid)
 
     print_tree(root)
 

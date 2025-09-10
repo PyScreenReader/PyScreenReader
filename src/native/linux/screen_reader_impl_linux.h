@@ -10,7 +10,7 @@ class ScreenReaderImpl {
   ScreenReaderImpl();
   ~ScreenReaderImpl();
 
-  std::shared_ptr<VirtualWidget> GetVirtualWidgetTreeByPID(const std::string& pid) const;
+  std::shared_ptr<VirtualWidget> GetVirtualWidgetTreeByPID(const pid_t pid) const;
 
  private:
   AtspiAccessible* FindAtspiAccessibleByPID(AtspiAccessible* node, pid_t pid) const;

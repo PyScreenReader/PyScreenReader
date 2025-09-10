@@ -28,7 +28,7 @@ class ScreenReader {
    * @return pointer to the VirtualWidget corresponding to the given PID
    */
   [[nodiscard]] std::shared_ptr<VirtualWidget> GetVirtualWidgetTreeByPID(
-      const std::string& pid) const;
+      const pid_t pid) const;
 
  private:
   screen_reader::ScreenReaderImpl screen_reader_impl_;

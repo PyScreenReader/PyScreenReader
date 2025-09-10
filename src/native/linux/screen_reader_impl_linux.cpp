@@ -26,7 +26,7 @@ ScreenReaderImpl::~ScreenReaderImpl() {
 }
 
 std::shared_ptr<VirtualWidget> ScreenReaderImpl::GetVirtualWidgetTreeByPID(
-    const std::string& pid) const {
+    const pid_t pid) const {
   // According to ATSPI documentation, any desktop index different from 0 will return NULL.
   // https://docs.gtk.org/atspi2/func.get_desktop.html
   AtspiAccessible* desktop = atspi_get_desktop(0);
@@ -35,7 +35,7 @@ std::shared_ptr<VirtualWidget> ScreenReaderImpl::GetVirtualWidgetTreeByPID(
   }
 
   // TODO: (#46) remove redundant conversion for pid
-  AtspiAccessible* target_app = FindAtspiAccessibleByPID(desktop, std::stoi(pid));
+  AtspiAccessible* target_app = FindAtspiAccessibleByPID(desktop, pid);
   g_object_unref(desktop);
 
   std::shared_ptr<VirtualWidget> widget_tree = vwidget_generator::GenerateVWidgetTree(target_app);
