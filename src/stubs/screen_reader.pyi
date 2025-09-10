@@ -13,7 +13,7 @@ class ScreenReader:
         """
         Create a new ScreenReader instance.
         """
-    def get_virtual_widget_tree_by_pid(self, pid: str) -> PyScreenReader.virtual_widgets.VirtualWidget:
+    def get_virtual_widget_tree_by_pid(self, pid: int) -> PyScreenReader.virtual_widgets.VirtualWidget:
         """
         Retrieve the virtual widget tree associated with the specified process ID (PID).
         
