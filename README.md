@@ -1,5 +1,5 @@
 <p align="center">
-  <img src=".github/assets/right_side_text.svg" alt="PyScreenReader">
+  <img src=".github/assets/right_side_text.svg" alt="PyScreenReader" width="100%">
 </p>
 
 # PyScreenReader
