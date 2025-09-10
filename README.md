@@ -37,12 +37,17 @@ Install PyScreenReader latest release from pip registries.
 pip install PyScreenReader
 ```
 
-<details>
-<summary>For Linux Users</summary>
-```bash
-sudo apt-get install libatk-bridge2.0-0 at-spi2-core libatspi2.0-dev libglib2.0-dev libsystemd-dev
-```
-</details>
+[//]: # (<details>)
+
+[//]: # (<summary>For Linux Users</summary>)
+
+[//]: # (```bash)
+
+[//]: # (sudo apt-get install libatk-bridge2.0-0 at-spi2-core libatspi2.0-dev libglib2.0-dev libsystemd-dev)
+
+[//]: # (```)
+
+[//]: # (</details>)
 
 In your Python script, import PyScreenReader
 
