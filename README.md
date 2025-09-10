@@ -105,9 +105,8 @@ Feedback is a gift! We appreciate any kind of feedback/questions/concerns in the
   Once approved by the maintainers, new issues will be assigned and worked on, and hopefully will be released in the
   next version of PyScreenReader.
 - Found Security concerns and vulnerabilities? Oh no, now we have trouble! But the good news is you found it and
-  alerted us, so nothing bad happened. Please report them through
-  the [Security Page](https://github.com/Lmh-java/PyScreenReader/security),
-  so it does not get exposed to the public.
+  alerted us, so nothing bad will happen. Please refer to our [SECURITY](SECURITY.md) page and report them through
+  the [Security Page](https://github.com/Lmh-java/PyScreenReader/security).
 
 ## Licensing
 
