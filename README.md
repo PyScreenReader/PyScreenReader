@@ -1,4 +1,4 @@
-<img src=".github/assets/PyScreenReader_LOGO_Full_Resolution.png" alt="PyScreenReader">
+<img src=".github/assets/right_side_text.svg" alt="PyScreenReader">
 
 # PyScreenReader
 
