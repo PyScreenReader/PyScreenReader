@@ -60,7 +60,7 @@ from PyScreenReader.virtual_widgets import VirtualWidget
 # Create a screen reader instance
 screen_reader = ScreenReader()
 # Read the virtual widget tree by your program's PID
-root = screen_reader.get_virtual_widget_tree_by_pid("20880")
+root = screen_reader.get_virtual_widget_tree_by_pid(20880)
 # Print the location of the root widget extracted
 print(f"Position of Root Widget (X: {root.get_x()}, Y: {root.get_y()})")
 
@@ -124,7 +124,3 @@ Special thanks to:
 
 - [NumPy](https://github.com/numpy/numpy) for inspiration for our release workflow
 - [Typer](https://github.com/fastapi/typer) for reference for our `README`
-
-[//]: # (- [PySide6]&#40;https://pypi.org/project/PySide6/&#41; &#40;Only used for building integration test targets and is not distributed)
-
-[//]: # (  with the releases&#41;)
