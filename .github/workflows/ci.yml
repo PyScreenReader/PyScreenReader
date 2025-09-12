@@ -35,7 +35,26 @@ jobs:
 
       - name: Build All Linux Targets
         run: |
-          bazel build //src/api/... //src/base/... //src/native/linux/... //src/vwidget/... //tools/...
+          bazel build //src/api/... //src/base/... //src/native/linux/... //src/vwidget/... //tools/... //:dist
+
+  windows-test:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: "./.github/actions/setup"
+
+      - name: Run Basic Python Test Suite
+        run: |
+          bazel test //tests/py/...
+
+      - name: Run Basic C++ Test Suite
+        run: |
+          bazel test //tests/cpp/... --test_tag_filters=-no_ci
+
+      - name: Build All Windows Targets
+        run: |
+          bazel build //src/api/... //src/base/... //src/native/win/... //src/vwidget/... //tools/... //:dist
 
   lint:
     runs-on: ubuntu-latest
