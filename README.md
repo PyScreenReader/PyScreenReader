@@ -18,6 +18,8 @@ Key features:
   the screen.  
 - **Lightweight and Pythonic:**  No need for compilers or special toolchain setup, just use Python.  
 
+**Full documentation of PyScreenReader can be found** [HERE](https://pyscreenreader.readthedocs.io/en/latest/index.html).
+
 > [!WARNING]
 > PyScreenReader is not yet released and is still in testing. Stay tuned for its public release on PyPi in the near
 > future.
@@ -69,8 +71,7 @@ print(f"Position of Root Widget (X: {root.get_x()}, Y: {root.get_y()})")
 children = root.get_children()
 ```
 
-[//]: # (TODO #15, link our documentation once the doc system is up)
-This is just a quick start. For more information, please refer to our official documentation.
+This is just a quick start. For more information, please refer to our [full documentation](https://pyscreenreader.readthedocs.io/en/latest/index.html).
 
 [//]: # (TODO #19 Until integration test PR is merged, then we can link this to e2e test cases)
 
@@ -92,14 +93,6 @@ This is just a quick start. For more information, please refer to our official d
 ## Feedback & Support
 
 Feedback is a gift! We appreciate any kind of feedback/questions/concerns in the following forms:
-
-[//]: # (- Visit our Discussion Page - We will create a discussion for each version of PyScreenReader. In the discussion forum,)
-
-[//]: # (  feel)
-
-[//]: # (  free to asking questions about this project. It is always great to see people sharing knowledge with and actively)
-
-[//]: # (  helping each other. :&#41;)
 
 - [File an issue ticket](https://github.com/Lmh-java/PyScreenReader/issues). Issue board is another place where we track
   technical questions.
