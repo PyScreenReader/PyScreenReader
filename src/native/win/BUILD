@@ -18,6 +18,7 @@ pybind_library(
     ],
     deps = [
         ":vwidget_generator_win",
+        "//src/base:types",
     ],
 )
 

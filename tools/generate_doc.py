@@ -198,7 +198,7 @@ def generate_pyi(wheel_path: str, output_dir: str = STUB_OUTPUT_DIR) -> None:
     wheel_path = os.path.expanduser(wheel_path)
     output_dir = os.path.expanduser(output_dir)
 
-    with tempfile.TemporaryDirectory() as tmp_install_dir:
+    with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as tmp_install_dir:
         subprocess.check_call(
             [
                 sys.executable,
@@ -252,6 +252,7 @@ if __name__ == "__main__":
     input_path = Path.expanduser(Path(args.input_path))
     if not Path.exists(input_path):
         error_msg = "Given input path does not exist."
+        print(input_path)
         raise RuntimeError(error_msg)
 
     if not Path.is_file(input_path) and args.stub:

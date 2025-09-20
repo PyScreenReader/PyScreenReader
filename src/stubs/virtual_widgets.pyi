@@ -27,19 +27,19 @@ class NumericValueWidget(VirtualWidget):
         
         :return: Value contained in the widget.
         """
-    def set_max_value(self, max_value: int) -> None:
+    def set_max_value(self, max_value: typing.SupportsInt) -> None:
         """
         Set upper bound of the value.
         
         :param max_value: Maximum value of the range.
         """
-    def set_min_value(self, min_value: int) -> None:
+    def set_min_value(self, min_value: typing.SupportsInt) -> None:
         """
         Set lower bound of the value.
         
         :param min_value: Minimum value of the range.
         """
-    def set_value(self, value: int) -> None:
+    def set_value(self, value: typing.SupportsInt) -> None:
         """
         Set value contained in the widget.
         
@@ -68,7 +68,7 @@ class Orientation:
         ...
     def __index__(self) -> int:
         ...
-    def __init__(self, value: int) -> None:
+    def __init__(self, value: typing.SupportsInt) -> None:
         ...
     def __int__(self) -> int:
         ...
@@ -76,7 +76,7 @@ class Orientation:
         ...
     def __repr__(self) -> str:
         ...
-    def __setstate__(self, state: int) -> None:
+    def __setstate__(self, state: typing.SupportsInt) -> None:
         ...
     def __str__(self) -> str:
         ...
@@ -232,7 +232,7 @@ class VirtualTextInputWidget(VirtualWidget):
         
         :return: True if it's a text area, otherwise False.
         """
-    def set_insertion_point(self, insertion_point: int) -> None:
+    def set_insertion_point(self, insertion_point: typing.SupportsInt) -> None:
         """
         Set the current cursor location index in the text input.
         
@@ -306,7 +306,7 @@ class VirtualWidget:
         
         :param child: Child widget.
         """
-    def get_child(self, index: int) -> VirtualWidget:
+    def get_child(self, index: typing.SupportsInt) -> VirtualWidget:
         """
         Get the child widget at the given index (starting from 0).
         
@@ -407,7 +407,7 @@ class VirtualWidget:
         
         :param focused: True if focused, False otherwise.
         """
-    def set_height(self, height: int) -> None:
+    def set_height(self, height: typing.SupportsInt) -> None:
         """
         Set the height of the current widget.
         
@@ -449,19 +449,19 @@ class VirtualWidget:
         
         :param visible: True if visible, False otherwise.
         """
-    def set_width(self, width: int) -> None:
+    def set_width(self, width: typing.SupportsInt) -> None:
         """
         Set the width of the current widget.
         
         :param width: Width of the widget.
         """
-    def set_x(self, x_coord: int) -> None:
+    def set_x(self, x_coord: typing.SupportsInt) -> None:
         """
         Set the X coordinate of the top-left corner of the widget.
         
         :param x_coord: X coordinate.
         """
-    def set_y(self, y_coord: int) -> None:
+    def set_y(self, y_coord: typing.SupportsInt) -> None:
         """
         Set the Y coordinate of the top-left corner of the widget.
         
