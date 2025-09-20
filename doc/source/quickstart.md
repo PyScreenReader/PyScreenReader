@@ -31,7 +31,7 @@ children = root.get_children()
 Virtual widgets (such as VirtualButtonWidget, etc.) are high-level abstractions of native system UI elements.
 They are organized into a hierarchical structure — a virtual widget tree — where each node represents a single widget on the screen.
 
-In the example above, the `root` variable refers to the root node of the widget tree of program with PID "424242".  
+In the example above, the `root` variable refers to the root node of the widget tree of program with PID 20880.  
 From there, you can navigate through its children and inspect each widget's properties, including:
 - Control type
 - Bounding rectangle
