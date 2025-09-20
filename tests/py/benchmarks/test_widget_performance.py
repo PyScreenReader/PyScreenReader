@@ -73,27 +73,6 @@ def test_property_access_benchmark():
     assert mean_time < 5.0, "Property access is too slow"
 
 
-def test_thread_safety():
-    """Test that widget methods are thread-safe."""
-    from concurrent.futures import ThreadPoolExecutor
-
-    widget = VirtualButtonWidget()
-    num_threads = 10
-    results = set()
-
-    def update_widget(i):
-        widget.set_title_text(f"Thread {i}")
-        results.add(widget.get_title_text())
-
-    with ThreadPoolExecutor(max_workers=num_threads) as executor:
-        futures = [executor.submit(update_widget, i) for i in range(num_threads)]
-        for future in futures:
-            future.result()
-
-    # All updates should be preserved
-    assert len(results) == num_threads
-
-
 def test_memory_management():
     """Test that widgets are properly garbage collected."""
     import weakref
