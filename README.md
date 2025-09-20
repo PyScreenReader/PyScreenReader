@@ -29,8 +29,7 @@ Key features:
 - [Quick Start](#quick-start)
 - [Feedback & Support](#feedback--support)
 - [Licensing](#licensing)
-
-[//]: # (- [Contributing]&#40;#contributing&#41;)
+- [Contributing](#contributing)
 
 ## Quick Start
 
@@ -78,17 +77,10 @@ This is just a quick start. For more information, please refer to our [full docu
 [//]: # (You can see more examples from our [integration test cases]&#40;tests&#41;)
 
 
-[//]: # (## Contributing)
+## Contributing
 
-[//]: # ()
-
-[//]: # ([//]: # &#40;TODO #35, link to our contributing guideline&#41;)
-
-[//]: # (Yay! We are glad to hear that you are interested in contributing to PyScreenReader! Please see the contribution)
-
-[//]: # (guideline)
-
-[//]: # (for more information. The guideline includes how to file a GitHub issue, open a GitHub Pull Request, etc.)
+We are glad to hear that you are interested in contributing to PyScreenReader! Please see the [contribution guideline](https://pyscreenreader.readthedocs.io/en/latest/contributing/index.html) for more information.   
+The guideline includes how to file a GitHub issue, open a GitHub Pull Request, set up local dev environment, etc.
 
 ## Feedback & Support
 
