@@ -98,8 +98,7 @@ Feedback is a gift! We appreciate any kind of feedback/questions/concerns in the
   technical questions.
   Once approved by the maintainers, new issues will be assigned and worked on, and hopefully will be released in the
   next version of PyScreenReader.
-- Found Security concerns and vulnerabilities? Oh no, now we have trouble! But the good news is you found it and
-  alerted us, so nothing bad will happen. Please refer to our [SECURITY](SECURITY.md) page and report them through
+- Found Security concerns and vulnerabilities? Please refer to our [SECURITY](SECURITY.md) page and report them through
   the [GitHub Security Portal](https://github.com/PyScreenReader/PyScreenReader/security).
 
 ## Licensing
@@ -116,4 +115,4 @@ PyScreenReader greatly relies on:
 Special thanks to:
 
 - [NumPy](https://github.com/numpy/numpy) for inspiration for our release workflow
-- [Typer](https://github.com/fastapi/typer) for reference for our `README`
+- [Typer](https://github.com/fastapi/typer) for inspiration for our `README` file
