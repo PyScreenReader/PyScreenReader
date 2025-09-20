@@ -74,8 +74,9 @@ Currently, only PyPi installation via `pip` is supported.
 Useful Links
 ------------
 
-* `GitHub Repository <https://github.com/Lmh-java/PyScreenReader>`_
-* `Issue Tracker <https://github.com/Lmh-java/PyScreenReader/issues>`_
+* `GitHub Repository <https://github.com/PyScreenReader/PyScreenReader>`_
+* `Issue Tracker <https://github.com/PyScreenReader/PyScreenReader/issues>`_
+* `Documentation <https://pyscreenreader.readthedocs.io/en/latest>`_
 * `PyPI Project <https://pypi.org/project/PyScreenReader/>`_
 
 .. toctree::

@@ -42,7 +42,7 @@ py_wheel(
     description_content_type = "text/markdown; charset=UTF-8; variant=GFM",
     description_file = ":readme",
     distribution = project_name,
-    homepage = "https://github.com/Lmh-java/PyScreenReader",
+    homepage = "https://github.com/PyScreenReader/PyScreenReader",
     license = "MIT",
     platform = platform_tag,
     python_tag = python_tag,

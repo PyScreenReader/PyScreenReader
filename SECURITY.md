@@ -5,7 +5,7 @@ The PyScreenReader team and community take security issues seriously. We appreci
 
 ## Reporting a Vulnerability
 
-To report a security issue, please use the GitHub Security Advisory **["Report a Vulnerability"](https://github.com/Lmh-java/PyScreenReader/security)** tab. This is the only accepted channel for vulnerability reports. Please do **not** disclose issues in public issues, pull requests, or discussions.
+To report a security issue, please use the GitHub Security Advisory **["Report a Vulnerability"](https://github.com/PyScreenReader/PyScreenReader/security)** tab. This is the only accepted channel for vulnerability reports. Please do **not** disclose issues in public issues, pull requests, or discussions.
 
 
 ## Our Response

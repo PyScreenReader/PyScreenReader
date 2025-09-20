@@ -107,14 +107,14 @@ Feedback is a gift! We appreciate any kind of feedback/questions/concerns in the
   next version of PyScreenReader.
 - Found Security concerns and vulnerabilities? Oh no, now we have trouble! But the good news is you found it and
   alerted us, so nothing bad will happen. Please refer to our [SECURITY](SECURITY.md) page and report them through
-  the [GitHub Security Portal](https://github.com/Lmh-java/PyScreenReader/security).
+  the [GitHub Security Portal](https://github.com/PyScreenReader/PyScreenReader/security).
 
 ## Licensing
 
 PyScreenReader is licensed under [MIT License](LICENSE).
 By using, distributing, or contributing to this project, you agree the terms and conditions of this license.
 
-PyScreenReader uses libraries:
+PyScreenReader greatly relies on:
 
 - [Google Test](https://github.com/google/googletest)
 - [PyBind11](https://github.com/pybind/pybind11)
