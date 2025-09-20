@@ -30,19 +30,6 @@ filegroup(
     srcs = ["README.md"],
 )
 
-genrule(
-    name = project_name + "_bindings_pyd",
-    srcs = [project_name],
-    outs = [project_name + ".pyd"],
-    cmd = """
-    cp $< $@
-    """,
-    target_compatible_with = select({
-        "@platforms//os:windows": [],
-        "//conditions:default": ["@platforms//:incompatible"],
-    }),
-)
-
 # pack the extension to a wheel
 # See Platform Compatibility Tags: https://packaging.python.org/en/latest/specifications/platform-compatibility-tags/
 # See Package Formats: https://packaging.python.org/en/latest/discussions/package-formats/
@@ -64,7 +51,7 @@ py_wheel(
     version = release_version,
     deps = [
         "//src/stubs:py_stubs",
-        project_name + "_bindings_pyd",
+        project_name,
     ],
 )
 

@@ -21,11 +21,6 @@ bazel_dep(name = "bazel_skylib", version = "1.7.1")
 bazel_dep(name = "cxxopts", version = "3.0.0", dev_dependency = True)
 bazel_dep(name = "buildifier_prebuilt", version = "8.2.0.2", dev_dependency = True)
 
-local_path_override(
-    module_name = "pybind11_bazel",
-    path = "../pybind11_bazel",
-)
-
 # TODO: pin the version of bazel_pkg_config
 bazel_dep(name = "bazel_pkg_config", version = "master")
 archive_override(
@@ -33,6 +28,14 @@ archive_override(
     sha256 = "d345697f54112c94cac3371903bfcb4dc868bdb5912516879e1009896687ccd1",
     strip_prefix = "bazel_pkg_config-master",
     url = "https://github.com/Lmh-java/bazel_pkg_config/archive/refs/heads/master.zip",
+)
+
+# TODO #89: Use BCR Version once windows .pyd fixes are merged
+archive_override(
+    module_name = "pybind11_bazel",
+    sha256 = "c1ec904ed32b4407f9122a55d75b9b95becb34a5d0a4a27eb2c10d31f12ec258",
+    strip_prefix = "pybind11_bazel-3eef3db2ab079ec085297831c0afe1298e27883f",
+    url = "https://github.com/Andrewyx/pybind11_bazel/archive/3eef3db2ab079ec085297831c0afe1298e27883f.zip",
 )
 
 # Linux specific dependencies
