@@ -1,5 +1,5 @@
 import pytest
-from PyScreenReader.virtual_widgets import VirtualWidget, VirtualWindowWidget
+from PyScreenReader.virtual_widgets import VirtualWidget, VirtualWindowWidget, VirtualButtonWidget
 
 from tests.py.tools.utils import (
     assert_all_base_functions_exist,
@@ -33,3 +33,21 @@ def test_is_modal_setter_getter(widget: VirtualWindowWidget):
 
 def test_widget_name(widget: VirtualWindowWidget):
     assert widget.get_widget_name() == "VirtualWindowWidget"
+
+
+def test_parent_child_relationships():
+    """Test parent-child widget relationships."""
+    button_widget = VirtualButtonWidget()
+    parent_widget = VirtualWindowWidget()
+
+    # Test setting parent
+    button_widget.set_parent(parent_widget)
+    assert button_widget.get_parent() is parent_widget
+
+    # Test adding as child
+    parent_widget.add_child(button_widget)
+    assert parent_widget.get_child(0) is button_widget
+
+    # Test removing parent
+    button_widget.set_parent(None)
+    assert button_widget.get_parent() is None
