@@ -251,8 +251,7 @@ if __name__ == "__main__":
 
     input_path = Path.expanduser(Path(args.input_path))
     if not Path.exists(input_path):
-        error_msg = "Given input path does not exist."
-        print(input_path)
+        error_msg = f"Given input path does not exist. Given: {input_path}."
         raise RuntimeError(error_msg)
 
     if not Path.is_file(input_path) and args.stub:

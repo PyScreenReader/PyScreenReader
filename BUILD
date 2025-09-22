@@ -1,4 +1,3 @@
-load("@bazel_skylib//rules:copy_file.bzl", "copy_file")
 load("@pybind11_bazel//:build_defs.bzl", "pybind_extension", "pybind_library")
 load("@rules_python//python:packaging.bzl", "py_package", "py_wheel", "py_wheel_dist")
 load("@rules_python//python:py_library.bzl", "py_library")
@@ -50,8 +49,8 @@ py_wheel(
     summary = "PyScreenReader is a cross-platform Python library that wraps native accessibility APIs to collect widget tree information on the screen.",
     version = release_version,
     deps = [
+        ":PyScreenReader",
         "//src/stubs:py_stubs",
-        project_name,
     ],
 )
 
