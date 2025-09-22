@@ -40,7 +40,7 @@ This will pack everything into a wheel package.
 
 2. Generate python stubs (.pyi) and documentations (.rst)
 ```shell
-bazel bazel run //tools:generate_doc -- ./bazel-bin/pyscreenreader-0.0.1-cp312-abi3-macosx_11_0_arm64.whl --stub --doc
+bazel run //tools:generate_doc -- <ABSOLUTE PATH>/bazel-bin/pyscreenreader-<VERSION>-cp312-abi3-<DISTRIBUTION>.whl --stub --doc
 ```
 Make sure the path to the wheel package is valid. This will various depending on your system, project version, and various other factors.  
 
