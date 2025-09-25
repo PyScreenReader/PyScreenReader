@@ -20,6 +20,7 @@ concurrency:
 jobs:
   test:
     runs-on: ${{ matrix.platform.os }}
+    name: ${{ matrix.platform.os }}-test
     strategy:
       matrix:
         platform:
