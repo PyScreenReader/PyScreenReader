@@ -16,8 +16,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        # TODO (#10): Also add macos, windows and different architectures when the repo is public.
-        os: [ubuntu-24.04]
+        os: [ubuntu-24.04, windows-2022, macos-15]
         python-version: [3.11, 3.12, 3.13]
 
     steps:
@@ -33,12 +32,14 @@ jobs:
         run: |
           chmod +x ./.github/workflows/update_release_version.sh
           ./.github/workflows/update_release_version.sh ${{ github.event.inputs.release_tag }}
+        shell: bash
 
       - name: Update Python Version
         working-directory: ${{ github.workspace }}
         run: |
           chmod +x ./.github/workflows/update_python_version.sh
           ./.github/workflows/update_python_version.sh ${{ matrix.python-version }}
+        shell: bash
 
       - name: Run Basic Python Test Suite
         run: |
@@ -55,6 +56,7 @@ jobs:
           bazel build //:dist
           WHEEL_FILE=$(ls bazel-bin/dist/*.whl)
           echo "Created wheel package: $WHEEL_FILE successfully"
+        shell: bash
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -74,3 +76,4 @@ jobs:
           WHEEL_FILE=$(ls bazel-bin/dist/*.whl)
           set +x
           anaconda -t "$ANACONDA_API_TOKEN" upload "$WHEEL_FILE" --user lmh-java --label main --force
+        shell: bash
