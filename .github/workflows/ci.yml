@@ -18,24 +18,32 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  ubuntu-test:
-    runs-on: ubuntu-latest
+  test:
+    runs-on: ${{ matrix.platform.os }}
+    name: ${{ matrix.platform.os }}-test
+    strategy:
+      matrix:
+        platform:
+          - os: ubuntu-latest
+            build_targets: "//src/api/... //src/base/... //src/native/linux/... //src/vwidget/... //tools/... //:dist"
+          - os: windows-latest
+            build_targets: "//src/api/... //src/base/... //src/native/win/... //src/vwidget/... //tools/... //:dist"
 
     steps:
-      - uses: actions/checkout@v4
-      - uses: "./.github/actions/setup"
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-      - name: Run Basic Python Test Suite
-        run: |
-          bazel test //tests/py/...
+      - name: Setup Environment
+        uses: "./.github/actions/setup"
 
-      - name: Run Basic C++ Test Suite
-        run: |
-          bazel test //tests/cpp/... --test_tag_filters=-no_ci
+      - name: Run Python Test Suite
+        run: bazel test //tests/py/...
 
-      - name: Build All Linux Targets
-        run: |
-          bazel build //src/api/... //src/base/... //src/native/linux/... //src/vwidget/... //tools/...
+      - name: Run C++ Test Suite
+        run: bazel test //tests/cpp/... --test_tag_filters=-no_ci
+
+      - name: Build All Targets
+        run: bazel build ${{ matrix.platform.build_targets }}
 
   lint:
     runs-on: ubuntu-latest
