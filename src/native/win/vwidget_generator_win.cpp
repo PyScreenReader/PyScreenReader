@@ -14,6 +14,7 @@ std::shared_ptr<VirtualWidget> GenerateVWidgetTree(IUIAutomationElement* root_el
   queue.emplace(root, root_element);
   HRESULT hresult = S_OK;
   IUIAutomationElement* current_element = nullptr;
+
   while (!queue.empty()) {
     // This is the first child of the clade
     auto [parent_vwidget, curr] = queue.front();
@@ -33,7 +34,11 @@ std::shared_ptr<VirtualWidget> GenerateVWidgetTree(IUIAutomationElement* root_el
       if (first_child_element) {
         queue.emplace(curr_vwidget, first_child_element);
       }
+      if (current_element == root_element) {
+        break;
+      }
       hresult = tree_walker->GetNextSiblingElement(current_element, &current_element);
+
       // TODO: Use DCHECK_EQ in #56
       // if (FAILED(hresult))
       //   throw std::runtime_error("Failed GetNextSiblingElement");
