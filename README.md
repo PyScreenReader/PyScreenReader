@@ -9,6 +9,7 @@
 ![Read the Docs (version)](https://img.shields.io/readthedocs/pyscreenreader/latest)
 ![GitHub License](https://img.shields.io/github/license/PyScreenReader/PyScreenReader)
 ![GitHub Repo stars](https://img.shields.io/github/stars/PyScreenReader/PyScreenReader)
+
 ![GitHub Release](https://img.shields.io/github/v/release/PyScreenReader/PyScreenReader)
 
 [//]: # (TODO: add PyPi flag)
