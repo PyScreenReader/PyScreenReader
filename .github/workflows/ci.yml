@@ -18,7 +18,30 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      python: ${{ steps.filter.outputs.code }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Detect file changes
+        id: filter
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            code:
+              - '**/*.py'
+              - 'requirements-dev.txt'
+              - '**/*.h'
+              - '**/*.cpp'
+              - '**/*.bzl'
+              - '**/*.bazel'
+              - '**/BUILD'
+
   test:
+    needs: changes
+    if: ${{ needs.changes.outputs.code == 'true' }}
     runs-on: ${{ matrix.platform.os }}
     name: ${{ matrix.platform.os }}-test
     strategy:
@@ -46,8 +69,9 @@ jobs:
         run: bazel build ${{ matrix.platform.build_targets }}
 
   lint:
+    needs: changes
+    if: ${{ needs.changes.outputs.code == 'true' }}
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
       - uses: "./.github/actions/setup"
