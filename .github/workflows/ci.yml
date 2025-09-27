@@ -21,7 +21,7 @@ jobs:
   changes:
     runs-on: ubuntu-latest
     outputs:
-      python: ${{ steps.filter.outputs.code }}
+      code: ${{ steps.filter.outputs.code }}
     steps:
       - uses: actions/checkout@v4
 
@@ -38,6 +38,10 @@ jobs:
               - '**/*.bzl'
               - '**/*.bazel'
               - '**/BUILD'
+              - '.github/**/*.yml'
+              - '**/requirements.in'
+              - '**/requirements_lock.txt'
+              - '**/requirements_lock_win.txt'
 
   test:
     needs: changes
