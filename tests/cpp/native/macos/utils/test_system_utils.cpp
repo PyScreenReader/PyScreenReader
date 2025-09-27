@@ -10,7 +10,6 @@ TEST(SystemUtilsTest, ValidPIDReturnsAXUIElementRef) {
   CFRelease(element);
 }
 
-
 TEST(SystemUtilsTest, NonExistentPIDStillReturnsNonNullElement) {
   // AXUIElementCreateApplication still returns a valid ref even for dead PIDs
   pid_t fake_pid = 999999;
