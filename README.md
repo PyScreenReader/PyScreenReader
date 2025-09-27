@@ -4,6 +4,16 @@
 
 # PyScreenReader
 
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/PyScreenReader/PyScreenReader/build.yml)
+![GitHub branch check runs](https://img.shields.io/github/check-runs/PyScreenReader/PyScreenReader/main)
+![Read the Docs (version)](https://img.shields.io/readthedocs/pyscreenreader/latest)
+![GitHub License](https://img.shields.io/github/license/PyScreenReader/PyScreenReader)
+![GitHub Repo stars](https://img.shields.io/github/stars/PyScreenReader/PyScreenReader)
+![GitHub Release](https://img.shields.io/github/v/release/PyScreenReader/PyScreenReader)
+
+[//]: # (TODO: add PyPi flag)
+
+
 PyScreenReader is a library for developers to parse **on-screen** information using the simplicity of **Python**.
 
 It's a cross-platform abstraction of native accessibility APIs for Windows, macOS, and Linux, based around
