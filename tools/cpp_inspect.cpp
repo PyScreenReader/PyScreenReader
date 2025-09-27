@@ -58,7 +58,7 @@ int main(int argc, char* argv[]) {
   std::cout << "Running cpp_inspect on PID: " << pid << '\n';
 
   ScreenReader screen_reader;
-  std::shared_ptr<VirtualWidget> root = screen_reader.GetVirtualWidgetTreeByPID(pid);
+  std::shared_ptr<VirtualWidget> root = screen_reader.FromPID(pid);
 
   PrintTree(root);
   return 0;
