@@ -12,7 +12,7 @@ class ScreenReaderImpl {
  public:
   ScreenReaderImpl();
   ~ScreenReaderImpl();
-  std::shared_ptr<VirtualWidget> GetVirtualWidgetTreeByPID(const pid_t pid) const;
+  std::shared_ptr<VirtualWidget> FromPID(const pid_t pid) const;
 
  private:
   IUIAutomation* automation_;

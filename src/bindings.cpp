@@ -458,8 +458,8 @@ ScreenReader provides access to virtual widget trees for applications identified
       .def(py::init<>(), R"doc(
 Create a new ScreenReader instance.
 )doc")
-      .def("get_virtual_widget_tree_by_pid", &ScreenReader::GetVirtualWidgetTreeByPID,
-           py::arg("pid"), py::return_value_policy::take_ownership, R"doc(
+      .def("from_pid", &ScreenReader::FromPID, py::arg("pid"),
+           py::return_value_policy::take_ownership, R"doc(
 Retrieve the virtual widget tree associated with the specified process ID (PID).
 
 :param pid: The process ID identifying the target application.

@@ -10,6 +10,6 @@ class ScreenReaderImpl {
   ScreenReaderImpl() = default;
   ~ScreenReaderImpl() = default;
 
-  static std::shared_ptr<VirtualWidget> GetVirtualWidgetTreeByPID(const pid_t pid);
+  static std::shared_ptr<VirtualWidget> FromPID(const pid_t pid);
 };
 }  // namespace screen_reader

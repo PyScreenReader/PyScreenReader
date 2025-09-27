@@ -2,6 +2,6 @@
 
 #include "include/api/screen_reader.h"
 
-std::shared_ptr<VirtualWidget> ScreenReader::GetVirtualWidgetTreeByPID(const pid_t pid) const {
-  return screen_reader_impl_.GetVirtualWidgetTreeByPID(pid);
+std::shared_ptr<VirtualWidget> ScreenReader::FromPID(const pid_t pid) const {
+  return screen_reader_impl_.FromPID(pid);
 }
