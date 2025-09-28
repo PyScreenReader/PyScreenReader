@@ -6,7 +6,7 @@ https://packaging.python.org/en/latest/specifications/platform-compatibility-tag
 
 python_version_string = "3.12"
 abi_tag = "abi3"
-release_version = "0.0.1"
+release_version = "dev"
 
 platform_tag = select({
     "//platforms:is_windows_x86_64": "win_amd64",
