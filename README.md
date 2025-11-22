@@ -6,12 +6,11 @@
 
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/PyScreenReader/PyScreenReader/build.yml)
 ![GitHub branch check runs](https://img.shields.io/github/check-runs/PyScreenReader/PyScreenReader/main)
+![PyPI Release](https://img.shields.io/pypi/status/PyScreenReader)
 ![Read the Docs (version)](https://img.shields.io/readthedocs/pyscreenreader/latest)
 ![GitHub License](https://img.shields.io/github/license/PyScreenReader/PyScreenReader)
 ![GitHub Repo stars](https://img.shields.io/github/stars/PyScreenReader/PyScreenReader)
 
-![GitHub Release](https://img.shields.io/github/v/release/PyScreenReader/PyScreenReader)
-![PyPI Release](https://img.shields.io/pypi/status/PyScreenReader)
 
 
 PyScreenReader is a library for developers to parse **on-screen** information using the simplicity of **Python**.
